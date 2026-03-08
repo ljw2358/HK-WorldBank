@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK-WORLD BANK | Global Industrial OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --main-cyan: #00ffcc; --bg-black: #050505; --card-bg: #111111; }
+        body { background-color: var(--bg-black); color: #ffffff; font-family: 'Noto Sans KR', sans-serif; margin: 0; overflow-x: hidden; }
+        .neon-text { font-family: 'Orbitron', sans-serif; color: var(--main-cyan); text-shadow: 0 0 10px rgba(0,255,204,0.5); }
+        
+        header { padding: 120px 20px; text-align: center; background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%); }
+        h1 { font-size: 4rem; margin: 0; letter-spacing: 5px; }
+        p.vision { font-size: 1.2rem; color: #888; margin-top: 20px; min-height: 1.5em; }
+
+        /* 글로벌 언어 선택 바 */
+        .lang-bar { position: absolute; top: 30px; right: 30px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+        .lang-bar button { background: #1a1a1a; border: 1px solid #333; color: #777; padding: 6px 14px; cursor: pointer; border-radius: 4px; transition: 0.3s; font-size: 0.8rem; }
+        .lang-bar button:hover, .lang-bar button.active { border-color: var(--main-cyan); color: white; background: #222; }
+
+        /* 5대 브랜드 그리드 */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; padding: 40px 10%; max-width: 1400px; margin: auto; }
+        .brand-card { background: var(--card-bg); border: 1px solid #222; border-radius: 20px; padding: 40px; transition: 0.4s; }
+        .brand-card:hover { transform: translateY(-10px); border-color: var(--main-cyan); box-shadow: 0 15px 30px rgba(0,255,204,0.1); }
+        .brand-card h2 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; margin-bottom: 20px; color: var(--main-cyan); }
+        .brand-card p { color: #aaa; line-height: 1.7; font-weight: 300; }
+
+        /* 소셜 미디어 섹션 (YouTube & TikTok) */
+        .social-section { background: #0a0a0a; padding: 60px 10%; text-align: center; border-top: 1px solid #222; }
+        .social-links { display: flex; justify-content: center; gap: 40px; margin-top: 30px; }
+        .social-btn { text-decoration: none; color: #fff; font-family: 'Orbitron', sans-serif; border: 1px solid var(--main-cyan); padding: 15px 30px; border-radius: 30px; transition: 0.3s; }
+        .social-btn:hover { background: var(--main-cyan); color: #000; box-shadow: 0 0 20px var(--main-cyan); }
+
+        .status-footer { border-top: 1px solid #222; padding: 40px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 0.8rem; color: #444; }
+        .live-dot { height: 8px; width: 8px; background-color: var(--main-cyan); border-radius: 50%; display: inline-block; margin-right: 10px; box-shadow: 0 0 10px var(--main-cyan); animation: blink 1.5s infinite; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="lang-bar">
+        <button onclick="changeLang('ko')" class="active">KOR</button>
+        <button onclick="changeLang('en')">ENG</button>
+        <button onclick="changeLang('zh')">CHN</button>
+        <button onclick="changeLang('ar')">ARB</button>
+        <button onclick="changeLang('jp')">JPN</button>
+        <button onclick="changeLang('es')">ESP</button>
+    </div>
+
+    <header>
+        <h1 class="neon-text">HK GROUP</h1>
+        <p id="main-vision" class="vision">"18년의 비전, 강철의 미래를 현실로."</p>
+    </header>
+
+    <div class="grid-container">
+        <div class="brand-card">
+            <h2 id="b1-title">HK WORLD BANK</h2>
+            <p id="b1-desc">파이코인 실물 결제 시스템과 글로벌 벤처 캐피탈의 결합. 모든 산업의 자본이 흐르는 중심축입니다.</p>
+        </div>
+        <div class="brand-card">
+            <h2 id="b2-title">HK FIGURE</h2>
+            <p id="b2-desc">POSCO 첨단 특수 강재를 활용한 로봇 프레임과 AI 자율 제어 엔진. 인류 노동의 혁명을 시작합니다.</p>
+        </div>
+        <div class="brand-card">
+            <h2 id="b3-title">HK UMB</h2>
+            <p id="b3-desc">드론 택시 및 자율 비행 물류 네트워크. 도심 항공 모빌리티(UAM)를 통한 공간의 한계 극복.</p>
+        </div>
+        <div class="brand-card">
+            <h2 id="b4-title">HK ETERNAL</h2>
+            <p id="b4-desc">핵융합 무한 에너지와 양자 컴퓨팅 인프라. 지구를 넘어 우주로 향하는 영속적인 동력을 제공합니다.</p>
+        </div>
+        <div class="brand-card">
+            <h2 id="b5-title">FUTURE FOUNDATION</h2>
+            <p id="b5-desc">디지털 울산 스마트 시티 프로젝트와 남북 경제 통합 재단. 인류의 상생과 평화를 설계합니다.</p>
+        </div>
+    </div>
+
+    <div class="social-section">
+        <h2 class="neon-text" style="font-size: 1.5rem;">GLOBAL LIVE COMMUNICATION</h2>
+        <p style="color: #666; margin-bottom: 30px;">실시간 투자자 소통 및 비전 공유</p>
+        <div class="social-links">
+            <a href="#" class="social-btn">YOUTUBE</a>
+            <a href="#" class="social-btn">TIKTOK</a>
+        </div>
+    </div>
+
+    <div class="status-footer">
+        <span class="live-dot"></span> PI NETWORK MAINNET ECOSYSTEM STATUS: <span style="color: var(--main-cyan);">ACTIVE (NODE 2059)</span>
+        <br><br>
+        © 2026 HK GROUP | GLOBAL INDUSTRIAL PLATFORM
+    </div>
+
+    <script>
+        const content = {
+            ko: {
+                vision: "18년의 고뇌, 로봇으로 인류를 구원하다.",
+                b1: ["HK 월드 뱅크", "파이코인 실물 결제 및 글로벌 자산 관리 플랫폼."],
+                b2: ["HK 피규어", "POSCO 합작 기반 초정밀 휴머노이드 로봇 개발."],
+                b3: ["HK UMB", "드론 택시 및 차세대 도심 항공 모빌리티 시스템."],
+                b4: ["HK 이터널", "핵융합 에너지 및 양자 컴퓨팅 미래 인프라."],
+                b5: ["미래 재단", "디지털 울산 및 남북 경제 통합 비전 실현."]
+            },
+            en: {
+                vision: "18-Year Vision. Saving Humanity through Robotics.",
+                b1: ["HK WORLD BANK", "Global Finance & Pi Network Payment Platform."],
+                b2: ["HK FIGURE", "Humanoid Robotics with POSCO Advanced Steel."],
+                b3: ["HK UMB", "Drone Taxi & Next-Gen Urban Mobility Systems."],
+                b4: ["HK ETERNAL", "Nuclear Fusion Energy & Quantum Computing."],
+                b5: ["FUTURE FOUNDATION", "Digital Ulsan & Inter-Korean Economic Vision."]
+            },
+            zh: {
+                vision: "18年的愿景。用机器人拯救人类。",
+                b1: ["HK 世界银行", "全球金融与派币支付平台。"],
+                b2: ["HK 机器人", "基于浦项制铁合作的高精度人形机器人。"],
+                b3: ["HK 飞行汽车", "无人机出租车与下一代城市交通。"],
+                b4: ["HK 永恒", "核聚变能源与量子计算基础设施。"],
+                b5: ["未来基金会", "数字蔚山与南北经济统一愿景。"]
+            },
+            ar: {
+                vision: "رؤية 18 عامًا. إنقاذ البشرية من خلال الروبوتات.",
+                b1: ["HK وورلد بنك", "التمويل العالمي ومنصة دفع Pi Network."],
+                b2: ["HK فيجير", "روبوتات بشرية بتكنولوجيا فولاذ POSCO."],
+                b3: ["HK يو إم بي", "تاكسي الطائرة وأنظمة التنقل الحضري."],
+                b4: ["HK إيتيرنال", "طاقة الاندماج النووي والحوسبة الكمومية."],
+                b5: ["مؤسسة المستقبل", "مشروع أولسان الرقمي ورؤية التكامل الاقتصادي."]
+            },
+            jp: {
+                vision: "18年の執念。ロボットで人類を救う。",
+                b1: ["HK ワールドバンク", "パイコイン決済とグローバル資産管理。"],
+                b2: ["HK フィギュア", "POSCO提携の超精密ヒューマノイド開発。"],
+                b3: ["HK UMB", "ド론タクシーと次世代都市航空交通。"],
+                b4: ["HK エターナル", "核融合エネルギーと量子コンピューティング。"],
+                b5: ["未来財団", "デジタル蔚山と南北経済統合ビジョン。"]
+            },
+            es: {
+                vision: "Visión de 18 años. Salvando a la humanidad con robótica.",
+                b1: ["HK WORLD BANK", "Finanzas globales y plataforma de pago Pi."],
+                b2: ["HK FIGURE", "Robótica humanoide con acero avanzado POSCO."],
+                b3: ["HK UMB", "Taxi dron y movilidad urbana de próxima generación."],
+                b4: ["HK ETERNAL", "Energía de fusión nuclear y computación cuántica."],
+                b5: ["FUNDACIÓN FUTURO", "Ulsan Digital y visión de integración económica."]
+            }
+        };
+
+        function changeLang(lang) {
+            document.getElementById('main-vision').innerText = content[lang].vision;
+            document.getElementById('b1-title').innerText = content[lang].b1[0];
+            document.getElementById('b1-desc').innerText = content[lang].b1[1];
+            document.getElementById('b2-title').innerText = content[lang].b2[0];
+            document.getElementById('b2-desc').innerText = content[lang].b2[1];
+            document.getElementById('b3-title').innerText = content[lang].b3[0];
+            document.getElementById('b3-desc').innerText = content[lang].b3[1];
+            document.getElementById('b4-title').innerText = content[lang].b4[0];
+            document.getElementById('b4-desc').innerText = content[lang].b4[1];
+            document.getElementById('b5-title').innerText = content[lang].b5[0];
+            document.getElementById('b5-desc').innerText = content[lang].b5[1];
+            
+            // 버튼 활성화 스타일
+            const buttons = document.querySelectorAll('.lang-bar button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
