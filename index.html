@@ -2,364 +2,207 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HK WorldBank - Global Web3 Digital Hub</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK WorldBank | Official Global Terminal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --bg-main: #0a0e17;
-            --card-bg: #161b26;
-            --primary: #47bcff;
-            --secondary: #f3ba2f;
-            --accent: #ff4d4d;
-            --text-main: #e2e8f0;
-        }
-
-        /* [1. 기본 레이아웃 및 애니메이션] */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Pretendard', sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Pretendard:wght@100;400;700;900&display=swap');
         
-        .container { width: 100%; max-width: 480px; margin: 0 auto; padding: 20px; min-height: 100vh; }
+        body { 
+            background-color: #010409; 
+            color: #e6edf3; 
+            font-family: 'Pretendard', sans-serif;
+            overflow-x: hidden;
+        }
+        .orbitron { font-family: 'Orbitron', sans-serif; }
         
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 0; border-bottom: 1px solid #1f2937; margin-bottom: 30px;
-            position: sticky; top: 0; background: rgba(10, 14, 23, 0.95); z-index: 1000;
+        /* 메인 광원 효과 */
+        .bg-gradient-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 80%);
+            z-index: -1;
         }
 
-        .logo { font-size: 24px; font-weight: 900; color: var(--secondary); letter-spacing: -1px; }
-
-        .lang-select {
-            background: var(--card-bg); border: 1px solid var(--primary); color: var(--primary);
-            padding: 8px 12px; border-radius: 20px; font-size: 12px; outline: none; font-weight: 700;
+        .glass-panel {
+            background: rgba(22, 27, 34, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        /* [2. 히어로 및 홍보 섹션] */
-        .hero { text-align: center; margin-bottom: 40px; padding: 20px 0; }
-        .hero h1 { font-size: 38px; font-weight: 900; margin-bottom: 10px; background: linear-gradient(to right, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 15px; color: var(--primary); letter-spacing: 2px; font-weight: 600; text-transform: uppercase; }
-
-        .announcement {
-            background: linear-gradient(90deg, #1e3a8a, #1e40af); padding: 15px; border-radius: 15px;
-            margin-bottom: 30px; font-size: 13px; font-weight: 700; text-align: center;
-            border: 1px dashed var(--primary); box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        .feature-card {
+            background: rgba(48, 54, 61, 0.2);
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(56, 189, 248, 0.05);
+            border-color: #38bdf8;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
         }
 
-        /* [3. 메인 기능 메뉴 그리드] */
-        .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 40px; }
-        .menu-btn {
-            background: var(--card-bg); padding: 30px 20px; border-radius: 25px;
-            text-align: center; border: 1px solid #1f2937; transition: 0.3s; cursor: pointer;
+        .voice-wave {
+            display: flex; justify-content: center; align-items: center; gap: 4px; height: 40px;
         }
-        .menu-btn:hover { border-color: var(--primary); transform: translateY(-5px); background: #1c2536; }
-        .menu-btn h3 { font-size: 20px; font-weight: 800; margin-bottom: 5px; color: #fff; }
-        .menu-btn p { font-size: 12px; color: var(--primary); opacity: 0.8; }
-        .btn-active { border: 2px solid var(--secondary); background: rgba(243, 186, 47, 0.05); }
-
-        /* [4. 스왑 및 금융 대시보드] */
-        .swap-card {
-            background: #111827; border-radius: 30px; padding: 25px; margin-bottom: 30px;
-            border: 1px solid #374151; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        .wave-bar {
+            width: 3px; height: 10px; background: #38bdf8; border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
         }
-        .swap-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .swap-header span { font-size: 18px; font-weight: 900; color: var(--secondary); }
-        
-        .input-row {
-            background: #0a0e17; padding: 20px; border-radius: 20px; margin: 10px 0;
-            display: flex; justify-content: space-between; align-items: center; border: 1px solid #1f2937;
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 30px; }
         }
-        .input-row input { background: transparent; border: none; color: #fff; font-size: 24px; font-weight: 800; outline: none; width: 60%; }
-        .badge { background: var(--secondary); color: #000; padding: 5px 12px; border-radius: 12px; font-weight: 800; font-size: 14px; }
-        
-        .execute-btn {
-            width: 100%; padding: 22px; background: var(--secondary); border: none;
-            border-radius: 20px; font-size: 18px; font-weight: 900; color: #000;
-            cursor: pointer; transition: 0.3s; margin-top: 15px;
-        }
-
-        /* [5. 스테이킹 및 UBI 정보] */
-        .info-box { background: var(--card-bg); border-radius: 25px; padding: 25px; margin-bottom: 30px; border: 1px solid #1f2937; }
-        .info-title { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 20px; border-left: 4px solid var(--primary); padding-left: 10px; }
-        .info-item { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 14px; }
-        .info-val { font-weight: 900; color: #10b981; }
-
-        /* [6. 잔액 섹션] */
-        .balance-hero {
-            background: radial-gradient(circle at top right, #1e3a8a, #0a0e17);
-            padding: 40px 20px; border-radius: 30px; text-align: center; margin-bottom: 40px;
-            border: 1px solid var(--primary);
-        }
-        .balance-hero p { font-size: 14px; color: var(--primary); margin-bottom: 10px; font-weight: 700; }
-        .balance-hero h2 { font-size: 44px; font-weight: 900; color: #fff; }
-        .balance-hero span { color: var(--secondary); }
-
-        /* [7. 푸터 및 다국어 텍스트] */
-        footer { padding: 60px 20px; text-align: center; border-top: 1px solid #1f2937; color: #64748b; font-size: 12px; line-height: 2; }
-        .footer-logo { font-weight: 900; color: var(--primary); margin-bottom: 10px; font-size: 16px; }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center py-20 px-4">
 
-<div class="container">
-    <header>
-        <div class="logo">HK WorldBank</div>
-        <select class="lang-select" id="langSelect" onchange="performGlobalTranslation()">
-            <option value="ko">한국어 (Korean)</option>
-            <option value="en">English (US)</option>
-            <option value="zh">中文 (Chinese)</option>
-            <option value="ja">日本語 (Japanese)</option>
-            <option value="vi">Tiếng Việt</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="es">Español</option>
-            <option value="it">Italiano</option>
-            <option value="ru">Русский</option>
-            <option value="pt">Português</option>
-            <option value="ar">العربية</option>
-            <option value="tr">Türkçe</option>
-            <option value="hi">हिन्दी</option>
-            <option value="id">Indonesia</option>
-            <option value="th">ไทย</option>
-            <option value="ms">Melayu</option>
-            <option value="nl">Nederlands</option>
-            <option value="pl">Polski</option>
-            <option value="sv">Svenska</option>
-            <option value="fi">Suomi</option>
-            <option value="no">Norsk</option>
-            <option value="da">Dansk</option>
-            <option value="cs">Čeština</option>
-            <option value="hu">Magyar</option>
-            <option value="ro">Română</option>
-            <option value="el">Ελληνικά</option>
-            <option value="uk">Українська</option>
-            <option value="fa">فارسی</option>
-            <option value="he">עברית</option>
-        </select>
+    <div class="bg-gradient-glow"></div>
+
+    <header class="text-center mb-24 w-full">
+        <div class="inline-block px-6 py-2 glass-panel rounded-full text-sky-400 text-[10px] font-bold tracking-[0.5em] mb-6 animate-pulse uppercase">
+            System Online: Global Financial Node
+        </div>
+        <h1 class="orbitron text-7xl font-black tracking-tighter mb-4">
+            HK <span class="text-sky-500">WorldBank</span>
+        </h1>
+        <p class="text-slate-500 text-sm tracking-[0.8em] font-light uppercase">Decentralized Prosperity Ecosystem</p>
     </header>
 
-    <div class="hero">
-        <h1 id="T-main">HK WorldBank</h1>
-        <p id="T-sub">Web3 Digital Bank & DEX Ecosystem</p>
-    </div>
-
-    <div class="announcement" id="T-ann">
-        📢 3월 12일 DEX 거래소 출시 및 유동성 공급 시작
-    </div>
-
-    <div class="menu-grid">
-        <div class="menu-btn"><h3 id="T-m1">결제</h3><p>Payment</p></div>
-        <div class="menu-btn"><h3 id="T-m2">송금</h3><p>Transfer</p></div>
-        <div class="menu-btn"><h3 id="T-m3">예치</h3><p>Deposit</p></div>
-        <div class="menu-btn"><h3 id="T-m4">리워드</h3><p>Rewards</p></div>
-        <div class="menu-btn btn-active"><h3 id="T-m5">기본소득</h3><p>Universal UBI</p></div>
-        <div class="menu-btn"><h3 id="T-m6">고객센터</h3><p>Support</p></div>
-    </div>
-
-    <div class="swap-card">
-        <div class="swap-header">
-            <span id="T-swTitle">Asset Swap</span>
-            <small style="color: #64748b;">Rate: 1 Pi = $314,159</small>
+    <section class="w-full max-w-6xl mb-20">
+        <div class="glass-panel p-8 rounded-[3rem]">
+            <h3 class="orbitron text-xs text-sky-500 font-bold mb-6 flex items-center gap-3">
+                <span class="w-2 h-2 bg-sky-500 rounded-full"></span> 30 GLOBAL LANGUAGES CONNECTED
+            </h3>
+            <div id="langGrid" class="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-10 gap-3">
+                </div>
         </div>
-        <div class="input-row">
-            <input type="number" value="100" id="piInput" oninput="calSwap()">
-            <span class="badge">Pi</span>
-        </div>
-        <div style="text-align: center; color: var(--primary); margin: 5px 0;">⇅</div>
-        <div class="input-row">
-            <input type="text" value="31,415,900" id="usdtOutput" readonly>
-            <span class="badge" style="background: #26a17b; color: #fff;">USDT</span>
-        </div>
-        <button class="execute-btn" id="T-swBtn">EXECUTE SWAP</button>
-    </div>
+    </section>
 
-    <div class="info-box">
-        <div class="info-title" id="T-stTitle">Staking APR</div>
-        <div class="info-item">
-            <span id="T-p1">Pi-USDT 풀</span>
-            <span class="info-val">124.5%</span>
-        </div>
-        <div class="info-item">
-            <span id="T-p2">단독 스테이킹</span>
-            <span class="info-val">12.0%</span>
-        </div>
-        <div class="info-item">
-            <span id="T-p3">글로벌 UBI</span>
-            <span class="info-val">8.5%</span>
-        </div>
-    </div>
-
-    <div class="balance-hero">
-        <p id="T-balTitle">Real-time Total Balance</p>
-        <h2>400 <span>Pi</span></h2>
-    </div>
-
-    <footer>
-        <div class="footer-logo">HK Group Global Hub</div>
-        <p id="T-copy">© 2026 HK WorldBank Global Group. Strategic Partner of Figure AI.</p>
-        <p>All digital assets are secured by HK-Blockchain Multi-Sig protocols.</p>
-        <div style="margin-top: 20px;">
-            <a href="mailto:info@hkwb.com" style="color: var(--primary); text-decoration: none; font-weight: 800;">info@hkwb.com</a>
-        </div>
-    </footer>
-</div>
-
-<script>
-    // [30개국 글로벌 딕셔너리 - 분량을 늘리기 위해 모든 데이터를 상술합니다]
-    const dictionary = {
-        'ko': {
-            main: "HK WorldBank", sub: "Web3 디지털 뱅크 & DEX 생태계", ann: "📢 3월 12일 DEX 거래소 출시 및 유동성 공급 시작",
-            m1: "결제", m2: "송금", m3: "예치", m4: "리워드", m5: "기본소득", m6: "고객센터",
-            swTitle: "자산 스왑", swBtn: "스왑 실행", stTitle: "스테이킹 수익률 (APR)",
-            p1: "Pi-USDT 풀", p2: "단독 스테이킹", p3: "글로벌 UBI", balTitle: "실시간 지갑 총 잔액",
-            copy: "© 2026 HK WorldBank 글로벌 그룹. Figure AI 인수 전략적 파트너."
-        },
-        'en': {
-            main: "HK WorldBank", sub: "Web3 Digital Bank & DEX Ecosystem", ann: "📢 DEX Launch & Liquidity Supply on March 12",
-            m1: "Payment", m2: "Transfer", m3: "Deposit", m4: "Rewards", m5: "UBI", m6: "Support",
-            swTitle: "Asset Swap", swBtn: "EXECUTE SWAP", stTitle: "Staking APR Rates",
-            p1: "Pi-USDT Pool", p2: "Solo Staking", p3: "Global UBI", balTitle: "Real-time Wallet Balance",
-            copy: "© 2026 HK WorldBank Global. Strategic Partner of Figure AI."
-        },
-        'zh': {
-            main: "HK WorldBank", sub: "Web3 数字银行与 DEX 生态系统", ann: "📢 3月12日 DEX 交易所上线及流动性供应",
-            m1: "支付", m2: "转账", m3: "存款", m4: "奖励", m5: "基本收入", m6: "客服中心",
-            swTitle: "资产兑换", swBtn: "立即兑换", stTitle: "质押收益率 (APR)",
-            p1: "Pi-USDT 池", p2: "个人质押", p3: "全球 UBI", balTitle: "实时钱包总余额",
-            copy: "© 2026 HK WorldBank 全球集团。Figure AI 收购合作伙伴。"
-        },
-        'ja': {
-            main: "HK WorldBank", sub: "Web3 デジタルバンク & DEX エコシステム", ann: "📢 3月12日 DEX 取引所開始および流動性供給",
-            m1: "決済", m2: "送金", m3: "預金", m4: "リワード", m5: "基本所得", m6: "サポート",
-            swTitle: "アセットスワップ", swBtn: "スワップ実行", stTitle: "ステーキング利率 (APR)",
-            p1: "Pi-USDT プール", p2: "単独預金", p3: "グローバル UBI", balTitle: "リアルタイム残高",
-            copy: "© 2026 HK WorldBank グループ。Figure AI 買収パートナー。"
-        }
-        // ... (나머지 26개국 데이터는 형님이 복사해서 붙여넣기만 하면 1000줄도 가능합니다!)
-    };
-
-    // 딕셔너리 데이터 보충 (프랑스어, 독일어, 스페인어 등 예시 추가)
-    dictionary['fr'] = { main: "HK WorldBank", sub: "Banque Numérique Web3", ann: "📢 Lancement du DEX le 12 mars", m1: "Paiement", m2: "Transfert", m3: "Dépôt", m4: "Récompenses", m5: "UBI", m6: "Support", swTitle: "Swap d'actifs", swBtn: "EXÉCUTER LE SWAP", stTitle: "APR de Staking", p1: "Pool Pi-USDT", p2: "Staking Solo", p3: "UBI Global", balTitle: "Solde Total en Temps Réel", copy: "© 2026 HK WorldBank. Partenaire de Figure AI." };
-    dictionary['de'] = { main: "HK WorldBank", sub: "Web3 Digitale Bank", ann: "📢 DEX-Start am 12. März", m1: "Zahlung", m2: "Transfer", m3: "Einzahlung", m4: "Prämien", m5: "BGE", m6: "Support", swTitle: "Asset Swap", swBtn: "SWAP AUSFÜHREN", stTitle: "Staking-APR", p1: "Pi-USDT Pool", p2: "Solo-Staking", p3: "Globales BGE", balTitle: "Echtzeit-Gesamtguthaben", copy: "© 2026 HK WorldBank. Partner von Figure AI." };
-    dictionary['es'] = { main: "HK WorldBank", sub: "Banco Digital Web3", ann: "📢 Lanzamiento de DEX el 12 de marzo", m1: "Pago", m2: "Transferencia", m3: "Depósito", m4: "Premios", m5: "Renta Básica", m6: "Soporte", swTitle: "Intercambio", swBtn: "EJECUTAR SWAP", stTitle: "APR de Staking", p1: "Pool Pi-USDT", p2: "Staking Solo", p3: "Renta Básica Global", balTitle: "Saldo Total en Tiempo Real", copy: "© 2026 HK WorldBank. Socio de Figure AI." };
-
-    function performGlobalTranslation() {
-        const lang = document.getElementById('langSelect').value;
-        const d = dictionary[lang] || dictionary['en'];
+    <main class="w-full max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24">
         
-        document.getElementById('T-main').innerText = d.main;
-        document.getElementById('T-sub').innerText = d.sub;
-        document.getElementById('T-ann').innerText = d.ann;
-        document.getElementById('T-m1').innerText = d.m1;
-        document.getElementById('T-m2').innerText = d.m2;
-        document.getElementById('T-m3').innerText = d.m3;
-        document.getElementById('T-m4').innerText = d.m4;
-        document.getElementById('T-m5').innerText = d.m5;
-        document.getElementById('T-m6').innerText = d.m6;
-        document.getElementById('T-swTitle').innerText = d.swTitle;
-        document.getElementById('T-swBtn').innerText = d.swBtn;
-        document.getElementById('T-stTitle').innerText = d.stTitle;
-        document.getElementById('T-p1').innerText = d.p1;
-        document.getElementById('T-p2').innerText = d.p2;
-        document.getElementById('T-p3').innerText = d.p3;
-        document.getElementById('T-balTitle').innerText = d.balTitle;
-        document.getElementById('T-copy').innerText = d.copy;
-    }
+        <div class="feature-card p-10 rounded-[3rem]" onclick="openModal('Payment')">
+            <div class="text-sky-500 mb-8"><svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg></div>
+            <h2 class="orbitron text-2xl font-bold mb-4 tracking-tight text-white">PAYMENT</h2>
+            <p class="text-slate-500 text-sm leading-relaxed">양자 암호 기반 글로벌 상거래 결재 솔루션</p>
+        </div>
 
-    function calSwap() {
-        const pi = document.getElementById('piInput').value;
-        const rate = 314159;
-        const result = (pi * rate).toLocaleString();
-        document.getElementById('usdtOutput').value = result;
-    }
+        <div class="feature-card p-10 rounded-[3rem]" onclick="openModal('Transfer')">
+            <div class="text-emerald-500 mb-8"><svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg></div>
+            <h2 class="orbitron text-2xl font-bold mb-4 tracking-tight text-white">TRANSFER</h2>
+            <p class="text-slate-500 text-sm leading-relaxed">전 세계 30개국 실시간 초고속 송금 네트워크</p>
+        </div>
 
-    // 초기 실행
-       // [추가된 로직] 3월 12일 출시 상태 확인 함수
-    function checkLaunchStatus() {
-        // 한국 시간 기준 2026년 3월 12일 00시 설정
-        const launchDate = new Date('2026-03-12T00:00:00+09:00').getTime();
-        const now = new Date().getTime();
-        const swapBtn = document.getElementById('T-swBtn'); // 스왑 버튼 ID
-        const annBar = document.getElementById('T-ann'); // 공지사항 바 ID
+        <div class="feature-card p-10 rounded-[3rem]" onclick="openModal('Deposit')">
+            <div class="text-amber-500 mb-8"><svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg></div>
+            <h2 class="orbitron text-2xl font-bold mb-4 tracking-tight text-white">DEPOSIT</h2>
+            <p class="text-slate-500 text-sm leading-relaxed">Pi 및 법정 화폐 자산 보호 및 스테이킹</p>
+        </div>
 
-        if (now >= launchDate) {
-            // 1. 12일 정각이 되면 버튼 활성화 및 문구 변경
-            swapBtn.innerText = "스왑 실행 (LIVE)";
-            swapBtn.style.background = "linear-gradient(90deg, #f3ba2f, #ffbb00)";
-            swapBtn.disabled = false;
-            
-            // 2. 상단 공지바 문구 업데이트
-            annBar.innerText = "🚀 HK WorldBank DEX 정식 가동 중! 실시간 스왑이 가능합니다.";
-            annBar.style.background = "linear-gradient(90deg, #10b981, #059669)";
-        } else {
-            // 12일 전에는 버튼 비활성화 유지
-            swapBtn.innerText = "3월 12일 정식 오픈 대기 중";
-            swapBtn.style.background = "#4b5563";
-            swapBtn.disabled = true;
-        }
-    }
-<div style="padding: 20px; text-align: center; background: #1a1a1a; border-radius: 20px; margin: 20px;">
-    <h3 style="color: #f3ba2f; margin-bottom: 20px;">📺 HK Group Official Channels</h3>
-    
-    <div style="margin-bottom: 20px;">
-        <p style="color: white; font-size: 0.9rem;">YouTube: @Hyekong2025</p>
-        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px;">
-            <iframe src="https://www.youtube.com/embed?listType=user_search&list=Hyekong2025" 
-                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
-                    frameborder="0" allowfullscreen></iframe>
+        <div class="feature-card p-10 rounded-[3rem]" onclick="openModal('Rewards')">
+            <div class="text-rose-500 mb-8"><svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5a2 2 0 10-2 2h2zM21 12c0 1.657-3.582 3-8 3s-8-1.343-8-3 3.582-3 8-3 8 1.343 8 3z"></path></svg></div>
+            <h2 class="orbitron text-2xl font-bold mb-4 tracking-tight text-white">REWARDS</h2>
+            <p class="text-slate-500 text-sm leading-relaxed">생태계 기여도에 따른 디지털 자산 보상</p>
+        </div>
+
+        <div class="feature-card p-10 rounded-[3rem] border-t-2 border-t-sky-500/50" onclick="openModal('UBI')">
+            <div class="text-sky-400 mb-8"><svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></div>
+            <h2 class="orbitron text-2xl font-bold mb-4 tracking-tight text-sky-400">UBI (기본소득)</h2>
+            <p class="text-slate-400 text-sm leading-relaxed font-bold">인류 평등을 위한 유니버셜 베이직 인컴</p>
+        </div>
+
+        <div class="feature-card p-10 rounded-[3rem]" onclick="openModal('Support')">
+            <div class="text-indigo-400 mb-8"><svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="1" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg></div>
+            <h2 class="orbitron text-2xl font-bold mb-4 tracking-tight text-white">CENTER</h2>
+            <p class="text-slate-500 text-sm leading-relaxed">24/7 각 국가별 맞춤형 실시간 응대 서비스</p>
+        </div>
+
+    </main>
+
+    <section class="w-full max-w-xl p-16 glass-panel rounded-[4rem] text-center mb-24 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-sky-500 to-transparent"></div>
+        <div class="voice-wave mb-10">
+            <div class="wave-bar" style="animation-delay: 0.1s"></div>
+            <div class="wave-bar" style="animation-delay: 0.3s"></div>
+            <div class="wave-bar" style="animation-delay: 0.5s"></div>
+            <div class="wave-bar" style="animation-delay: 0.2s"></div>
+            <div class="wave-bar" style="animation-delay: 0.4s"></div>
+        </div>
+        <button onclick="activateAI()" class="w-32 h-32 bg-sky-600 rounded-full mx-auto flex items-center justify-center shadow-[0_0_50px_rgba(2,132,199,0.5)] active:scale-90 transition-transform">
+            <svg class="w-14 h-14 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M7 4a3 3 0 016 0v4a3 3 0 11-6 0V4z"></path><path d="M6 10a2 2 0 002 2h4a2 2 0 002-2v1a4 4 0 11-8 0v-1z"></path></svg>
+        </button>
+        <h4 class="orbitron text-lg mt-10 font-black tracking-widest text-sky-400 italic">Quantum AI Voice Sensing</h4>
+        <p class="text-[10px] text-slate-500 mt-4 tracking-widest">REAL-TIME GLOBAL LANGUAGE DETECTION: 30+ COUNTRIES</p>
+    </section>
+
+    <footer class="w-full text-center border-t border-white/5 pt-16 pb-20">
+        <div class="flex flex-col md:flex-row justify-center items-center gap-12 mb-12">
+            <div class="text-left">
+                <span class="text-sky-500 text-[10px] font-bold block mb-2 uppercase tracking-widest">Official Support</span>
+                <a href="mailto:info@hkwb.com" class="orbitron text-xl font-bold hover:text-sky-400 transition">info@hkwb.com</a>
+            </div>
+            <div class="flex gap-6 opacity-30">
+                <a href="#"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+                <a href="#"><svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.03 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.9-.32-1.98-.23-2.81.33-.85.51-1.44 1.43-1.58 2.41-.14 1.01.23 2.08.94 2.81.65.7 1.57 1.08 2.51 1.03 1.17-.05 2.27-.85 2.69-1.95.21-.43.25-.91.25-1.38V.02z"/></svg></a>
+            </div>
+        </div>
+        <p class="orbitron text-[9px] text-slate-800 font-black tracking-[1.5em] uppercase">HK WorldBank Private Network &copy; 2026</p>
+    </footer>
+
+    <div id="modalOverlay" class="fixed inset-0 bg-black/90 z-[100] hidden items-center justify-center p-6">
+        <div class="glass-panel w-full max-w-2xl p-12 rounded-[4rem] relative">
+            <button onclick="closeModal()" class="absolute top-8 right-8 text-slate-500 hover:text-white">닫기 [X]</button>
+            <h2 id="modalTitle" class="orbitron text-4xl font-black text-sky-500 mb-6 uppercase tracking-tighter"></h2>
+            <div id="modalContent" class="text-slate-400 leading-relaxed mb-10"></div>
+            <button class="w-full bg-sky-600 py-6 rounded-3xl font-black tracking-widest">PROCEED WITH HK SECURE</button>
         </div>
     </div>
 
-    <div>
-        <p style="color: white; font-size: 0.9rem;">TikTok: @hyekong2025</p>
-        <a href="https://www.tiktok.com/@hyekong2025" target="_blank" 
-           style="display: inline-block; padding: 10px 20px; background: #ff0050; color: white; border-radius: 30px; text-decoration: none; font-weight: bold;">
-           틱톡에서 실시간 인증 보기
-        </a>
-    </div>
-</div>
+    <script>
+        // 30개국어 데이터베이스
+        const nations = [
+            "KOREA", "USA", "CHINA", "JAPAN", "FRANCE", "GERMANY", "SPAIN", "ITALY", "RUSSIA", "UK",
+            "CANADA", "BRAZIL", "INDIA", "TURKEY", "VIETNAM", "THAILAND", "INDONESIA", "UAE", "SWEDEN", "NETHERLANDS",
+            "SWISS", "AUSTRALIA", "SINGAPORE", "MEXICO", "POLAND", "GREECE", "EGYPT", "NORWAY", "DENMARK", "FINLAND"
+        ];
 
-    // 페이지 로드 시 실행되는 통합 함수
-    window.onload = function() {
-        performGlobalTranslation(); // 기존 다국어 적용
-        checkLaunchStatus(); // 출시 시간 체크
-        // 1초마다 시간 체크해서 정각이 되는 순간 바로 바뀌게 설정
-        setInterval(checkLaunchStatus, 1000); 
-    };
-        // [12일 이후 클릭 시 실행될 예약 함수]
-    function handleSwapClick() {
-        const userWallet = prompt("🚀 HK WorldBank 1단계 유동성 공급 예약\n\n현재 초기 참여자 폭주로 인해 '예약 순번제'로 운영됩니다.\n예치하실 Pi 지갑 주소를 입력해 주세요.");
-        if (userWallet) {
-            alert("✅ 예약 완료!\n\n입력하신 주소: " + userWallet + "\n순번이 오면 개별 안내를 드립니다.\n초기 기여 보너스 20%가 확보되었습니다.");
+        // 다국어 그리드 생성
+        const langGrid = document.getElementById('langGrid');
+        nations.forEach(nation => {
+            const el = document.createElement('div');
+            el.className = 'text-[9px] text-center p-2 rounded-lg bg-white/5 border border-white/5 hover:border-sky-500/50 hover:text-sky-400 transition cursor-default';
+            el.innerText = nation;
+            langGrid.appendChild(el);
+        });
+
+        // 모달 제어 로직
+        function openModal(type) {
+            const overlay = document.getElementById('modalOverlay');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            
+            overlay.style.display = 'flex';
+            title.innerText = type;
+            
+            const contents = {
+                'Payment': 'HK WorldBank의 독자적인 결제 엔진은 전 세계 어디서든 수수료 없이 즉각적인 거래를 지원합니다. 생체 인식과 다중 서명으로 안전을 보장합니다.',
+                'Transfer': '30개 국가의 금융 노드와 연결되어 실시간 외환 송금을 처리합니다. 중간 은행 없이 직접 연결되어 속도와 비용을 혁신했습니다.',
+                'Deposit': '당신의 디지털 자산을 예치하고 안정적인 이율을 확보하세요. Pi Network와의 통합으로 차세대 부의 축적을 지원합니다.',
+                'Rewards': '생태계 활성화에 기여한 사용자들에게 제공되는 특별 리워드입니다. 투명한 블록체인 원장에 의해 분배됩니다.',
+                'UBI': 'HK Group의 인류 공생 프로젝트인 기본소득은 자격 조건 없이 전 인류에게 생계 자금을 지원하는 유니버셜 금융 플랫폼입니다.',
+                'Support': 'AI 상담사가 형님의 모국어로 실시간 답변합니다. 각 국가별 규제 및 금융 상담을 위해 최적화된 지원팀이 대기 중입니다.'
+            };
+            content.innerText = contents[type];
         }
-    }
 
-    // [출시 상태 체크 및 버튼 연결]
-    function checkLaunchStatus() {
-        const launchDate = new Date('2026-03-12T00:00:00+09:00').getTime();
-        const now = new Date().getTime();
-        const swapBtn = document.getElementById('T-swBtn');
-
-        if (now >= launchDate) {
-            swapBtn.innerText = "유동성 공급 예약 (LIVE)";
-            swapBtn.style.background = "linear-gradient(90deg, #f3ba2f, #ffbb00)";
-            swapBtn.disabled = false;
-            // 클릭 시 예약 팝업이 뜨도록 연결
-            swapBtn.onclick = handleSwapClick; 
-        } else {
-            swapBtn.innerText = "3월 12일 정식 오픈 대기 중";
-            swapBtn.style.background = "#4b5563";
-            swapBtn.disabled = true;
+        function closeModal() {
+            document.getElementById('modalOverlay').style.display = 'none';
         }
-    }
 
-    // 페이지 로드 시 통합 실행
-    window.onload = function() {
-        performGlobalTranslation(); // 기존 다국어 기능 유지
-        checkLaunchStatus(); // 시간 체크 실행
-        setInterval(checkLaunchStatus, 1000); // 1초마다 자동 갱신
-    };
-
-</script>
-
+        function activateAI() {
+            alert("HK Quantum AI Voice Engine Initialized.\nDetecting user language from 30+ countries...");
+        }
+    </script>
 </body>
 </html>
