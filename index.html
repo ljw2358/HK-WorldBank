@@ -3,167 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HK WorldBank | The Future of Web3</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>HK WorldBank | Global Web3 Digital Bank</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@100;400;700;900&display=swap');
 
         :root {
             --gold: #FFD700;
-            --blue: #00F2FF;
-            --dark-bg: #050608;
-            --card-bg: rgba(255, 255, 255, 0.03);
+            --blue: #00E5FF;
+            --dark: #020408;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         body {
-            margin: 0;
-            background-color: var(--dark-bg);
+            margin: 0; padding: 0;
+            background-color: var(--dark);
             color: #fff;
-            font-family: 'Noto Sans KR', sans-serif;
-            line-height: 1.6;
+            font-family: 'Pretendard', sans-serif;
+            word-break: keep-all;
         }
 
-        /* 배경 장식 */
-        .bg-glow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 30%, #1a1e3a 0%, #050608 70%);
+        /* 배경 효과 */
+        .bg-gradient {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 80% 20%, #1a1e3a 0%, #020408 60%);
             z-index: -1;
         }
 
         /* 네비게이션 */
         nav {
-            padding: 30px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0; z-index: 100;
+            padding: 20px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(2, 4, 8, 0.8);
+            backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid var(--border);
         }
 
-        .logo { font-size: 28px; font-weight: 900; color: var(--gold); }
+        .logo { font-size: 24px; font-weight: 900; color: var(--gold); text-transform: uppercase; }
+        .nav-menu a { color: #ccc; text-decoration: none; margin-left: 25px; font-size: 0.95rem; transition: 0.3s; }
+        .nav-menu a:hover { color: var(--blue); }
 
-        /* 메인 히어로 섹션 */
+        /* 히어로 섹션 */
         .hero {
-            height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            padding: 120px 8% 80px;
             text-align: center;
-            padding: 0 20px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            padding: 5px 20px;
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--blue);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 25px;
         }
 
         .hero h1 {
-            font-size: clamp(2.5rem, 8vw, 4.5rem);
-            margin: 0;
-            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            line-height: 1.1;
+            margin-bottom: 30px;
+            background: linear-gradient(to right, #fff, #888);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--blue);
-            margin-top: 10px;
-            letter-spacing: 5px;
-            font-weight: 300;
-        }
+        .hero span { color: var(--gold); -webkit-text-fill-color: var(--gold); }
 
-        /* 출시 공지 카드 */
-        .launch-box {
-            background: linear-gradient(90deg, #ff8a00, #ffc107);
-            color: #000;
-            padding: 20px 40px;
-            border-radius: 50px;
-            font-weight: 900;
-            margin-top: 50px;
-            box-shadow: 0 0 30px rgba(255, 138, 0, 0.5);
-            font-size: 1.2rem;
-        }
-
-        /* 서비스 섹션 */
+        /* 핵심 서비스 그리드 */
         .services {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 100px 10%;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            padding: 60px 8%;
         }
 
-        .card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 24px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.3s;
+        .service-card {
+            background: var(--glass);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: 0.4s;
+            text-align: left;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
+        .service-card:hover {
             border-color: var(--blue);
+            transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.05);
         }
 
-        .card i { font-size: 40px; color: var(--gold); margin-bottom: 20px; }
-        .card h3 { font-size: 1.5rem; margin-bottom: 15px; }
-        .card p { color: #888; font-size: 0.95rem; }
+        .service-card i { font-size: 30px; color: var(--blue); margin-bottom: 20px; }
+        .service-card h3 { font-size: 1.4rem; margin-bottom: 12px; }
+        .service-card p { color: #888; line-height: 1.5; font-size: 0.9rem; }
 
-        /* 하단 정보 */
-        footer {
-            background: #000;
-            padding: 60px 10%;
+        /* 30개국 글로벌 섹션 */
+        .global-section {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 100px 8%;
             text-align: center;
-            border-top: 1px solid #222;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
         }
 
-        .footer-links { margin-bottom: 30px; }
-        .footer-links a { color: #555; margin: 0 15px; text-decoration: none; }
+        .global-count { font-size: 3rem; font-weight: 900; color: var(--gold); margin-bottom: 10px; }
+        .global-text { color: #ccc; font-size: 1.2rem; margin-bottom: 40px; }
+
+        /* 공지 배너 */
+        .notice-banner {
+            background: linear-gradient(90deg, #ff8a00, #ffc107);
+            color: #000;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 60px 8%;
+            text-align: center;
+            font-weight: 900;
+            font-size: 1.3rem;
+            box-shadow: 0 15px 40px rgba(255, 138, 0, 0.2);
+        }
+
+        /* 하단 푸터 */
+        footer {
+            padding: 80px 8% 40px;
+            background: #000;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo { font-size: 20px; font-weight: 900; color: var(--gold); margin-bottom: 20px; }
+        .footer-col h4 { margin-bottom: 20px; color: #fff; }
+        .footer-col p, .footer-col li { color: #666; font-size: 0.9rem; list-style: none; padding: 5px 0; }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .nav-menu { display: none; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
+<div class="bg-gradient"></div>
 
-    <nav>
-        <div class="logo">HK WorldBank</div>
-        <div style="color: var(--blue);">GLOBAL WEB3 HUB</div>
-    </nav>
+<nav>
+    <div class="logo">HK WorldBank</div>
+    <div class="nav-menu">
+        <a href="#services">서비스</a>
+        <a href="#global">글로벌 네트워크</a>
+        <a href="#support">고객센터</a>
+    </div>
+</nav>
 
-    <section class="hero">
-        <p>THE NEXT GENERATION</p>
-        <h1>Web3 DIGITAL BANK<br>& DEX ECOSYSTEM</h1>
-        <div class="launch-box">
-            🚀 3월 12일 DEX 거래소 Grand Open & 유동성 공급
-        </div>
-    </section>
+<section class="hero">
+    <div class="hero-tag">GLOBAL WEB3 FINANCIAL ECOSYSTEM</div>
+    <h1>전 세계 어디서나 자유로운<br><span>국경 없는 디지털 금융</span></h1>
+    <p style="color: #aaa; max-width: 700px; margin: 0 auto;">HK WorldBank는 블록체인 기술을 통해 기존 금융의 한계를 넘습니다.<br>더 빠르고, 더 안전하고, 더 투명한 차세대 뱅킹 서비스를 경험하세요.</p>
+</section>
 
-    <section class="services">
-        <div class="card">
-            <i class="fas fa-exchange-alt"></i>
-            <h3>DEX 거래소</h3>
-            <p>중앙화된 통제를 벗어난 완전한 자유도. 가장 빠르고 안전한 탈중앙화 거래 환경을 제공합니다.</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-hand-holding-usd"></i>
-            <h3>UBI 시스템</h3>
-            <p>보편적 기본소득을 Web3 기반으로 구현하여, 생태계 참여자 모두가 혜택을 누리는 선순환 구조를 만듭니다.</p>
-        </div>
-        <div class="card">
-            <i class="fas fa-chart-line"></i>
-            <h3>유동성 최적화</h3>
-            <p>HK GROUP만의 독자적인 알고리즘으로 자산 가치를 보존하고 최적의 유동성을 공급합니다.</p>
-        </div>
-    </section>
+<div class="notice-banner">
+    📢 3월 12일 DEX 거래소 정식 출시 및 유동성 공급 개시!
+</div>
 
-    <footer>
-        <div class="footer-links">
-            <a href="#">Terms</a>
-            <a href="#">Privacy</a>
-            <a href="#">Whitepaper</a>
+<section class="services" id="services">
+    <div class="service-card">
+        <i class="fas fa-paper-plane"></i>
+        <h3>글로벌 송금</h3>
+        <p>복잡한 중개 은행 없이 전 세계 어디든 1초 만에 저렴한 수수료로 자금을 전송합니다.</p>
+    </div>
+    <div class="service-card">
+        <i class="fas fa-credit-card"></i>
+        <h3>실시간 결제</h3>
+        <p>Web3 자산을 온·오프라인 매장에서 즉시 결제에 사용하는 스마트 결제 시스템을 지원합니다.</p>
+    </div>
+    <div class="service-card">
+        <i class="fas fa-vault"></i>
+        <h3>안전 예치</h3>
+        <p>최고 수준의 보안 프로토콜을 기반으로 소중한 자산을 안전하게 보관하고 관리합니다.</p>
+    </div>
+    <div class="service-card">
+        <i class="fas fa-coins"></i>
+        <h3>참여 리워드</h3>
+        <p>생태계 기여도에 따라 투명하게 분배되는 UBI(기본소득)와 강력한 보상 체계를 제공합니다.</p>
+    </div>
+</section>
+
+<section class="global-section" id="global">
+    <div class="global-count">30+ Countries</div>
+    <div class="global-text">전 세계 30여 개국 파트너와 함께하는 글로벌 금융 네트워크</div>
+    <div style="font-size: 0.9rem; color: #666;">Asia | Europe | North America | Middle East</div>
+</section>
+
+<footer id="support">
+    <div class="footer-grid">
+        <div class="footer-col">
+            <div class="footer-logo">HK WorldBank</div>
+            <p>HK GROUP은 혁신적인 Deep-Tech와 금융의 결합을 통해<br>인류의 경제적 자유를 실현합니다.</p>
         </div>
-        <p style="color: #444;">&copy; 2026 HK GROUP CHAIRMAN HYEKONG. All Rights Reserved.</p>
-    </footer>
+        <div class="footer-col">
+            <h4>고객지원 센터</h4>
+            <li><i class="fas fa-envelope"></i> info@hkwb.com</li>
+            <li><i class="fas fa-headset"></i> 24/7 글로벌 서포트</li>
+            <li><i class="fas fa-file-alt"></i> 백서(Whitepaper)</li>
+        </div>
+        <div class="footer-col">
+            <h4>바로가기</h4>
+            <li>DEX 거래소</li>
+            <li>UBI 생태계</li>
+            <li>공지사항</li>
+        </div>
+    </div>
+    <div style="text-align: center; border-top: 1px solid #111; padding-top: 30px;">
+        <p style="color: #333;">&copy; 2026 HK GROUP CHAIRMAN HYEKONG. All Rights Reserved.</p>
+    </div>
+</footer>
 
 </body>
 </html>
