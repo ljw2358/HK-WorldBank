@@ -273,7 +273,38 @@
     }
 
     // 초기 실행
-    window.onload = performGlobalTranslation;
+       // [추가된 로직] 3월 12일 출시 상태 확인 함수
+    function checkLaunchStatus() {
+        // 한국 시간 기준 2026년 3월 12일 00시 설정
+        const launchDate = new Date('2026-03-12T00:00:00+09:00').getTime();
+        const now = new Date().getTime();
+        const swapBtn = document.getElementById('T-swBtn'); // 스왑 버튼 ID
+        const annBar = document.getElementById('T-ann'); // 공지사항 바 ID
+
+        if (now >= launchDate) {
+            // 1. 12일 정각이 되면 버튼 활성화 및 문구 변경
+            swapBtn.innerText = "스왑 실행 (LIVE)";
+            swapBtn.style.background = "linear-gradient(90deg, #f3ba2f, #ffbb00)";
+            swapBtn.disabled = false;
+            
+            // 2. 상단 공지바 문구 업데이트
+            annBar.innerText = "🚀 HK WorldBank DEX 정식 가동 중! 실시간 스왑이 가능합니다.";
+            annBar.style.background = "linear-gradient(90deg, #10b981, #059669)";
+        } else {
+            // 12일 전에는 버튼 비활성화 유지
+            swapBtn.innerText = "3월 12일 정식 오픈 대기 중";
+            swapBtn.style.background = "#4b5563";
+            swapBtn.disabled = true;
+        }
+    }
+
+    // 페이지 로드 시 실행되는 통합 함수
+    window.onload = function() {
+        performGlobalTranslation(); // 기존 다국어 적용
+        checkLaunchStatus(); // 출시 시간 체크
+        // 1초마다 시간 체크해서 정각이 되는 순간 바로 바뀌게 설정
+        setInterval(checkLaunchStatus, 1000); 
+    };
 </script>
 
 </body>
