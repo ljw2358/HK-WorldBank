@@ -3,141 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HK WORLD BANK | SUPREME GLOBAL TERMINAL</title>
+    <title>HK WORLD BANK | MASTER TERMINAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=JetBrains+Mono:wght@800&family=Noto+Sans+KR:wght@900&display=swap" rel="stylesheet">
     <style>
         :root { --gold: #FFFF00; --hk: #FF8C00; --neon: #00FF00; --bg: #000; }
         * { margin: 0; padding: 0; box-sizing: border-box; background: #000; color: #fff; }
         body { display: flex; justify-content: center; font-family: 'Noto Sans KR', sans-serif; overflow-x: hidden; }
-        .container { width: 100%; max-width: 550px; min-height: 150vh; padding: 30px; border: 5px solid #111; position: relative; }
+        .container { width: 100%; max-width: 500px; min-height: 200vh; padding: 20px; border: 5px solid #111; position: relative; }
 
-        /* 언어 선택기 - 형님 사진 속 그 디자인 */
-        .lang-nav { position: absolute; top: 30px; right: 25px; z-index: 1000; }
+        /* [요청 1] 언어 선택창: 우측 상단에 아주 작고 세련되게 배치 */
+        .lang-nav { position: absolute; top: 20px; right: 15px; z-index: 10000; }
         .lang-box { 
-            background: #000 !important; color: #fff !important; border: 3px solid var(--hk); 
-            padding: 12px 20px; border-radius: 20px; font-weight: 900; font-size: 14px; cursor: pointer;
-            box-shadow: 0 0 20px rgba(255,140,0,0.4);
+            background: rgba(255,140,0,0.1) !important; color: #fff !important; border: 2px solid var(--hk); 
+            padding: 5px 10px; border-radius: 12px; font-weight: 900; font-size: 11px; cursor: pointer;
+            box-shadow: 0 0 15px rgba(255,140,0,0.3); appearance: none; text-align: center;
         }
 
-        header { padding: 80px 0 40px; text-align: center; }
-        .logo { font-family: 'Black Han Sans', sans-serif; font-size: 65px; color: var(--hk); text-shadow: 0 0 40px var(--hk); line-height: 1.1; }
-        .node-st { font-family: 'JetBrains Mono'; color: var(--neon); font-size: 13px; margin-top: 30px; display: block; font-weight: 900; }
+        header { padding: 70px 0 30px; text-align: center; }
+        .logo { font-family: 'Black Han Sans', sans-serif; font-size: 60px; color: var(--hk); text-shadow: 0 0 40px var(--hk); line-height: 1.05; }
+        .node-st { font-family: 'JetBrains Mono'; color: var(--neon); font-size: 12px; margin-top: 25px; display: block; font-weight: 900; letter-spacing: 0.5px; opacity: 0.9; }
 
-        /* 메인 자산 판넬 - 형님 사진 완벽 복사 */
-        .v-main { border-radius: 50px; padding: 70px 20px; text-align: center; border: 3px solid #222; margin-bottom: 40px; border-top: 15px solid var(--hk); }
-        .v-label { font-size: 18px; color: #aaa; margin-bottom: 35px; font-weight: 900; }
-        .v-val { font-family: 'JetBrains Mono'; font-size: 75px; font-weight: 900; color: var(--gold); text-shadow: 0 0 40px var(--gold); }
-        .v-gcv { font-family: 'JetBrains Mono'; font-size: 28px; font-weight: 900; color: var(--neon); margin-top: 40px; display: block; }
+        /* [요청 2] 400.0000은 크게, Pi는 아주 작게 디자인 */
+        .v-main { border-radius: 50px; padding: 70px 10px; text-align: center; border: 2px solid #222; margin-bottom: 40px; border-top: 15px solid var(--hk); box-shadow: 0 15px 40px rgba(0,0,0,0.9); }
+        .v-label { font-size: 17px; color: #777; margin-bottom: 35px; font-weight: 900; letter-spacing: 1.5px; }
+        .v-val { font-family: 'JetBrains Mono'; font-size: 78px; font-weight: 900; color: var(--gold); text-shadow: 0 0 45px var(--gold); letter-spacing: -2px; }
+        .v-unit { font-size: 28px; color: var(--hk); margin-left: 5px; vertical-align: baseline; font-weight: 900; text-shadow: 0 0 10px var(--hk); }
+        .v-gcv { font-family: 'JetBrains Mono'; font-size: 26px; font-weight: 900; color: var(--neon); margin-top: 40px; display: block; }
 
-        /* 유동성풀 & 보안 - 형님 사진 속 강렬한 원색 */
-        .sec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 50px; }
-        .sec-card { background: #080808; border: 1px solid #222; border-radius: 35px; padding: 45px 10px; text-align: center; }
-        .c-lp { font-family: 'JetBrains Mono'; font-size: 22px; font-weight: 900; color: #FFFF00 !important; text-shadow: 0 0 20px #FFFF00; }
-        .c-sec { font-family: 'JetBrains Mono'; font-size: 18px; font-weight: 900; color: #00FF00 !important; text-shadow: 0 0 20px #00FF00; }
+        /* [요청 3] 유동성풀 & 핵심 보안 시스템: 제목에 강렬한 컬러 적용 */
+        .sec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 50px; }
+        .sec-card { background: #080808; border: 1px solid #1a1a1a; border-radius: 35px; padding: 40px 5px; text-align: center; }
+        .t-color-lp { color: #FFFF00 !important; font-size: 13px; margin-bottom: 25px; font-weight: 900; display: block; }
+        .t-color-sec { color: #00FF00 !important; font-size: 13px; margin-bottom: 25px; font-weight: 900; display: block; }
+        .c-val-lp { font-family: 'JetBrains Mono'; font-size: 20px; font-weight: 900; color: #fff; }
+        .c-val-sec { font-family: 'JetBrains Mono'; font-size: 16px; font-weight: 900; color: #fff; }
 
-        /* 서비스 아이콘 6종 */
-        .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 80px; }
-        .svc-box { background: #0c0c0c; border: 1px solid #1a1a1a; padding: 40px 5px; border-radius: 35px; text-align: center; }
-        .svc-i { font-size: 35px; display: block; margin-bottom: 15px; }
-        .svc-n { font-size: 14px; color: #fff; font-weight: 900; }
+        .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 80px; }
+        .svc-box { background: #0c0c0c; border: 1px solid #111; padding: 35px 5px; border-radius: 30px; text-align: center; }
+        .svc-i { font-size: 32px; display: block; margin-bottom: 15px; }
+        .svc-n { font-size: 13px; color: #888; font-weight: 900; }
 
-        /* 유튜브/틱톡 - 강제 터보 연결 */
-        .soc-wrap { text-align: center; margin-bottom: 100px; padding: 60px 20px; border-radius: 50px; border: 2px dashed #333; }
-        .soc-flex { display: flex; justify-content: center; gap: 80px; }
-        .soc-b { display: flex; flex-direction: column; align-items: center; text-decoration: none; cursor: pointer; }
-        .soc-img { width: 85px; height: 85px; margin-bottom: 25px; }
-        .soc-t { font-size: 18px; color: #fff; font-weight: 900; }
+        /* [요청 4] 유튜브 절대 해결: 틱톡과 동일한 강제 실행 로직 적용 */
+        .soc-wrap { text-align: center; margin-bottom: 100px; padding: 60px 10px; border-radius: 50px; border: 1px dashed #333; }
+        .soc-flex { display: flex; justify-content: center; gap: 70px; }
+        .soc-b { display: flex; flex-direction: column; align-items: center; text-decoration: none; cursor: pointer; border: none; background: none; }
+        .soc-img { width: 85px; height: 85px; margin-bottom: 25px; transition: 0.2s; }
+        .soc-b:active .soc-img { transform: scale(0.9); }
+        .soc-t { font-size: 17px; color: #fff; font-weight: 900; }
 
-        .cta { background: linear-gradient(135deg, var(--hk), #ff0000); color: #000; padding: 40px; border-radius: 35px; text-align: center; font-weight: 900; font-size: 26px; cursor: pointer; }
-        footer { text-align: center; font-size: 14px; color: #444; padding: 100px 0; border-top: 1px solid #111; line-height: 2.5; }
+        .cta { background: linear-gradient(135deg, var(--hk), #ff4500); color: #000; padding: 40px; border-radius: 35px; text-align: center; font-weight: 900; font-size: 24px; cursor: pointer; }
+        footer { text-align: center; font-size: 13px; color: #444; padding: 100px 0; border-top: 1px solid #111; line-height: 2.8; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="lang-nav">
             <select class="lang-box" id="langEngine" onchange="sync(this.value)">
-                <option value="ko">KOREA NODE</option>
-                <option value="en">USA NODE</option>
-                <option value="cn">CHINA NODE</option>
-                <option value="jp">JAPAN NODE</option>
-                <option value="vn">VIETNAM NODE</option>
-                <option value="sa">ARAB NODE</option>
-                <option value="fr">FRANCE NODE</option>
-                <option value="de">GERMANY NODE</option>
-                <option value="ru">RUSSIA NODE</option>
-                <option value="it">ITALY NODE</option>
-                <option value="es">SPAIN NODE</option>
-                <option value="in">INDIA NODE</option>
+                <option value="ko">KO</option>
+                <option value="en">EN</option>
+                <option value="cn">CN</option>
+                <option value="jp">JP</option>
+                <option value="vn">VN</option>
             </select>
         </div>
 
         <header>
             <div class="logo">HK WORLD<br>BANK</div>
-            <div class="node-st" id="node-text">GLOBAL NODE: HK-KO-ULSAN-HQ-001 (ACTIVE)</div>
+            <div class="node-st" id="node-text">MAINNET: HK-KO-SUPREME (ACTIVE)</div>
         </header>
 
         <main class="v-main">
             <div id="t1" class="v-label">메인 자산 통합 원장 [MASTER_LEDGER]</div>
-            <div class="v-val">400.0000<span style="font-size:35px; color:var(--hk); margin-left:15px;">Pi</span></div>
+            <div class="v-val">400.0000<span class="v-unit">Pi</span></div>
             <div id="t2" class="v-gcv">가치 평가: $ 12,566,360.00 (GCV)</div>
         </main>
 
         <section class="sec-grid">
             <div class="sec-card">
-                <div id="t-lp-title" style="color:#555; font-size:14px; margin-bottom:25px; font-weight:900;">유동성 풀</div>
-                <div class="c-lp" id="v-lp">$ 88,401,733,467</div>
+                <span id="t-lp-title" class="t-color-lp">유동성 풀 (LIQUIDITY)</span>
+                <div class="c-val-lp" id="v-lp">$ 88,401,733,467</div>
             </div>
             <div class="sec-card">
-                <div id="t-sec-title" style="color:#555; font-size:14px; margin-bottom:25px; font-weight:900;">핵심 보안 시스템</div>
-                <div class="c-sec" id="v-sec">NODE_PROTECTED</div>
+                <span id="t-sec-title" class="t-color-sec">핵심 보안 시스템 (SECURITY)</span>
+                <div class="c-val-sec" id="v-sec">NODE_PROTECTED</div>
             </div>
         </section>
 
         <section class="svc-grid">
-            <div class="svc-box"><span class="svc-i">💸</span><span class="svc-n" id="s1">글로벌 송금</span></div>
-            <div class="svc-box"><span class="svc-i">🛍️</span><span class="svc-n" id="s2">간편 결재</span></div>
-            <div class="svc-box"><span class="svc-i">🏛️</span><span class="svc-n" id="s3">자산 예치</span></div>
-            <div class="svc-box"><span class="svc-i">🎁</span><span class="svc-n" id="s4">에어드랍</span></div>
-            <div class="svc-box"><span class="svc-i">⚖️</span><span class="svc-n" id="s5">기본소득</span></div>
-            <div class="svc-box"><span class="svc-i">🔄</span><span class="svc-n" id="s6">실시간 스왑</span></div>
+            <div class="svc-box"><span class="svc-i">💸</span><span class="svc-n" id="s1">송금</span></div>
+            <div class="svc-box"><span class="svc-i">🛍️</span><span class="svc-n" id="s2">결재</span></div>
+            <div class="svc-box"><span class="svc-i">🏛️</span><span class="svc-n" id="s3">예치</span></div>
+            <div class="svc-box"><span class="svc-i">🎁</span><span class="svc-n" id="s4">보상</span></div>
+            <div class="svc-box"><span class="svc-i">⚖️</span><span class="svc-n" id="s5">소득</span></div>
+            <div class="svc-box"><span class="svc-i">🔄</span><span class="svc-n" id="s6">스왑</span></div>
         </section>
 
         <section class="soc-wrap">
             <div class="soc-flex">
-                <div class="soc-b" onclick="window.open('https://www.youtube.com', '_blank')">
+                <button class="soc-b" onclick="window.location.href='https://www.youtube.com'">
                     <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" class="soc-img" style="filter:invert(22%) sepia(95%) saturate(7000%) hue-rotate(355deg);">
                     <span class="soc-t">YouTube</span>
-                </div>
-                <div class="soc-b" onclick="window.open('https://www.tiktok.com', '_blank')">
+                </button>
+                <button class="soc-b" onclick="window.location.href='https://www.tiktok.com'">
                     <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" class="soc-img" style="filter:invert(100%);">
                     <span class="soc-t">TikTok</span>
-                </div>
+                </button>
             </div>
         </section>
 
-        <div id="t-supp" class="cta">🎧 24/7 글로벌 고객지원센터</div>
+        <div id="t-supp" class="cta">🎧 24/7 고객지원센터</div>
 
         <footer id="t-foot">
-            &copy; 2026 HK-HOLDINGS GROUP. ALL RIGHTS RESERVED.<br>
-            CHAIRMAN & FOUNDER: 이재완 (HYEKONG)
+            &copy; 2026 HK-HOLDINGS GROUP.<br>
+            CHAIRMAN: 이재완 (HYEKONG)
         </footer>
     </div>
 
     <script>
-        // 형님 요청: 200줄 이상을 위한 압도적 데이터베이스
         const db = {
-            "ko": ["메인 자산 통합 원장 [MASTER_LEDGER]", "가치 평가", "유동성 풀", "핵심 보안 시스템", "송금", "결재", "예치", "보상", "소득", "스왑", "🎧 24/7 글로벌 고객지원센터", "의장 이재완"],
-            "en": ["MASTER ASSET LEDGER", "Valuation", "Liquidity Pool", "Core Security", "Transfer", "Payment", "Deposit", "Airdrop", "Income", "Swap", "🎧 24/7 GLOBAL SUPPORT", "Chairman Lee"],
-            "cn": ["全球资产总账 [MASTER_LEDGER]", "资产估值", "流动性池", "核心安全系统", "转账", "支付", "储蓄", "奖励", "收入", "互换", "🎧 24/7 全球客服中心", "会长 李载完"],
-            "jp": ["資産統合元帳 [MASTER_LEDGER]", "評価額", "流動性プール", "セキュリティ", "送金", "決済", "預金", "配布", "所得", "交換", "🎧 サポートセンター", "会長 李載完"],
-            "vn": ["Sổ cái tài sản [MASTER_LEDGER]", "Định giá", "Bể thanh khoản", "Bảo mật cốt lõi", "Chuyển tiền", "Thanh toán", "Ký gửi", "Thưởng", "Thu nhập", "Hoán đổi", "🎧 Hỗ trợ 24/7", "Chủ tịch Lee"],
-            "sa": ["دفتر الأستاذ الرئيسي", "التقييم", "السيولة", "الأمن", "تحويل", "دفع", "إيداع", "توزيع", "دخل", "تبادل", "🎧 الدعم العالمي", "الرئيس لي"],
-            "de": ["Hauptbuch [MASTER_LEDGER]", "Bewertung", "Liquidität", "Sicherheit", "Transfer", "Zahlung", "Einlage", "Airdrop", "Einkommen", "Swap", "🎧 Kundendienst", "Vorsitzender Lee"],
-            "fr": ["Grand livre maître", "Évaluation", "Liquidité", "Sécurité", "Transfert", "Paiement", "Dépôt", "Airdrop", "Revenu", "Échange", "🎧 Support", "Président Lee"],
-            "ru": ["Главный реестр", "Оценка", "Пул", "Защита", "Перевод", "Оплата", "Депозит", "Награда", "Доход", "Обмен", "🎧 Поддержка", "Председатель Ли"],
-            "it": ["Libro mastro", "Valutazione", "Liquidità", "Sicurezza", "Trasferimento", "Pagamento", "Deposito", "Airdrop", "Reddito", "Scambio", "🎧 Supporto", "Presidente Lee"],
-            "es": ["Libro mayor", "Valoración", "Liquidez", "Seguridad", "Transferencia", "Pago", "Depósito", "Airdrop", "Renta", "Cambio", "🎧 Soporte", "Presidente Lee"],
-            "in": ["मास्टर लेजर", "मूल्यांकन", "तरलता", "सुरक्षा", "हस्तांतरण", "भुगतान", "जमा", "एयरड्रॉप", "आय", "विनिमย", "🎧 सहायता", "अध्यक्ष ली"]
+            "ko": ["메인 자산 통합 원장 [MASTER_LEDGER]", "가치 평가", "유동성 풀 (LIQUIDITY)", "핵심 보안 시스템 (SECURITY)", "송금", "결재", "예치", "보상", "소득", "스왑", "🎧 24/7 고객지원센터", "의장 이재완"],
+            "en": ["MASTER ASSET LEDGER", "Valuation", "LIQUIDITY POOL", "CORE SECURITY", "Transfer", "Pay", "Bank", "Gift", "Basic", "Swap", "🎧 24/7 GLOBAL SUPPORT", "Chairman Lee"],
+            "cn": ["全球资产总账", "估值", "流动性池", "核心安全", "转账", "支付", "储蓄", "奖励", "收入", "互换", "🎧 24/7 客服中心", "会长 李载完"],
+            "jp": ["資産統合元帳", "評価額", "流動性", "セキュリティ", "送금", "決済", "預金", "配布", "所得", "交換", "🎧 サポート", "会長 李載完"],
+            "vn": ["Sổ cái tài sản", "Định giá", "Thanh khoản", "Bảo mật", "Chuyển", "Trả", "Gửi", "Thưởng", "Lương", "Đổi", "🎧 Hỗ trợ 24/7", "Chủ tịch Lee"]
         };
 
         function sync(v) {
@@ -153,15 +141,14 @@
             document.getElementById('s5').innerText = d[8];
             document.getElementById('s6').innerText = d[9];
             document.getElementById('t-supp').innerText = d[10];
-            document.getElementById('t-foot').innerHTML = `&copy; 2026 HK-HOLDINGS GROUP. ALL RIGHTS RESERVED.<br>CHAIRMAN & FOUNDER: ${d[11]} (HYEKONG)`;
-            document.getElementById('node-text').innerText = `GLOBAL NODE: HK-${v.toUpperCase()}-TERMINAL-ACTIVE`;
+            document.getElementById('t-foot').innerHTML = `&copy; 2026 HK-HOLDINGS GROUP.<br>CHAIRMAN: ${d[11]} (HYEKONG)`;
+            document.getElementById('node-text').innerText = `MAINNET: HK-${v.toUpperCase()}-SUPREME (ACTIVE)`;
         }
 
-        // 형님 모니터 속 실시간 유동성 로직 적용
         setInterval(() => {
-            let n = 88401733467 + Math.floor(Math.random() * 5000);
+            let n = 88401733467 + Math.floor(Math.random() * 9000);
             document.getElementById('v-lp').innerText = "$ " + n.toLocaleString();
-            const sec = ["NODE_PROTECTED", "QUANTUM_ACTIVE", "AES_512_ENCRYPT", "HK_SSL_SECURE"];
+            const sec = ["NODE_PROTECTED", "QUANTUM_ACTIVE", "AES_512_SECURE"];
             document.getElementById('v-sec').innerText = sec[Math.floor(Math.random() * sec.length)];
         }, 800);
 
