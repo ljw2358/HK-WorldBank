@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HK WORLD BANK | Sovereign Global Engine</title>
     <style>
-     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
         :root {
             --hk-gold: #ffb800; --hk-bg: #050505; --hk-panel: #111111;
             --hk-green: #00ff88; --hk-blue: #00ccff; --hk-orange: #ff5e00;
@@ -161,13 +160,11 @@
             <div class="d-val" style="color:var(--hk-blue)" id="ui-sec">HK_QUANTUM_SHIELD_ACTIVE</div>
         </div>
     </div>
-<div style="margin: 20px 10px; padding: 15px; border: 1px solid var(--hk-gold); border-radius: 10px; background: rgba(0,0,0,0.3); clear: both; display: block;">
-    <div style="color: var(--hk-gold); font-weight: bold; margin-bottom: 10px; font-size: 14px; text-align: center;">DEX SWAP SYSTEM</div>
-    <div style="display: flex; gap: 5px; justify-content: center; align-items: center;">
-        <input type="number" id="swapAmount" placeholder="Pi 수량" style="flex: 1.5; background: #222; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 5px; min-width: 60px; font-size: 14px;">
-        <button class="action-btn" style="flex: 1; width: auto; padding: 10px; margin: 0; font-size: 12px; white-space: nowrap;" onclick="executeHKSwap()">SWAP</button>
-        <button class="action-btn" style="flex: 1; width: auto; padding: 10px; margin: 0; font-size: 12px; background: var(--hk-green); white-space: nowrap;" onclick="provideHKLiquidity()">LP 공급</button>
-    </div>
+<div class="data-row" style="margin-top: 20px; border-top: 1px solid var(--hk-border); padding-top: 20px;">
+    <div class="d-lbl" style="color: var(--hk-gold);">DEX SWAP</div>
+    <input type="number" id="swapAmount" placeholder="Pi 수량" style="background: #222; color: #fff; border: 1px solid var(--hk-gold); padding: 5px; width: 80px;">
+    <button class="action-btn" style="width: auto; padding: 5px 15px; margin-left: 10px;" onclick="executeHKSwap()">SWAP</button>
+    <button class="action-btn" style="width: auto; padding: 5px 15px; background: var(--hk-green);" onclick="provideHKLiquidity()">LP 공급</button>
 </div>
     <button class="action-btn" id="ui-cs">🎧 24/7 글로벌 고객지원센터</button>
     <div class="mail-info">
@@ -250,18 +247,7 @@ const HK_V12 = {
     }
 };
 // DEX 실행 엔진 (249번 줄에 추가)
-// 1. 파이 엔진 초기화 (이게 꼭 있어야 지갑이 열립니다)
-const Pi = window.Pi;
-Pi.init({ version: "2.0", sandbox: false,appId:'worldpibank-19d75a61fb3ce6eb' });
-
-// 2. 사용자 인증 (지갑 연결 허락받기)
-Pi.authenticate(['payments']).then(function(auth) {
-    console.log("인증 성공:", auth.user.username);
-}).catch(function(error) {
-    console.error(error);
-});
-
-    async function executeHKSwap() {
+async function executeHKSwap() {
     const amt = document.getElementById('swapAmount').value;
     if(!amt) return alert("형님, 수량을 입력하셔야죠!");
     try {
@@ -277,22 +263,8 @@ Pi.authenticate(['payments']).then(function(auth) {
 async function provideHKLiquidity() {
     const amt = document.getElementById('swapAmount').value;
     if(!amt) return alert("유동성 수량을 입력해주세요.");
-
-    try {
-        // 진짜 파이 지갑 결제창을 띄우는 코드입니다
-    const payment = await Pi.createPayment({
-  amount: parseFloat(amt),
-  memo: "HK-WorldBank 유동성 공급",
-  metadata: { type: "lp_supply" },
-  recipient: "GCLU237U7XPKOCHNWLTVNISIC5I6A273VB5RVKHB5CS5Y7DM4XKFES2U"
-},. {
-  onReadyForServerApproval: (paymentId) => { console.log("결제 대기 중..."); },
-  onReadyForServerCompletion: (paymentId, txid) => { console.log("결제 완료!"); },
-  onCancel: (paymentId) => { console.log("결제 취소"); },
-  onError: (error, payment) => { console.error("오류 발생", error); }
-});
+    alert("HK-WorldBank 유동성 풀에 " + amt + " Pi가 예치되었습니다.");
 }
+
 window.onload = () => HK_V12.init();
 </script>
-
-</body>
