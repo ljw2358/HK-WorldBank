@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HK WORLD BANK | Sovereign Global Engine</title>
     <style>
+     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
         :root {
             --hk-gold: #ffb800; --hk-bg: #050505; --hk-panel: #111111;
             --hk-green: #00ff88; --hk-blue: #00ccff; --hk-orange: #ff5e00;
@@ -265,9 +266,19 @@ async function executeHKSwap() {
 async function provideHKLiquidity() {
     const amt = document.getElementById('swapAmount').value;
     if(!amt) return alert("유동성 수량을 입력해주세요.");
-    alert("HK-WorldBank 유동성 풀에 " + amt + " Pi가 예치되었습니다.");
-}
 
+    try {
+        // 진짜 파이 지갑 결제창을 띄우는 코드입니다
+        const payment = await Pi.createPayment({
+            amount: parseFloat(amt),
+            memo: "HK-WorldBank 유동성 공급",
+            metadata: { type: "lp_supply" }
+        });
+        alert("성공! 파이 지갑에서 승인되었습니다.");
+    } catch (e) {
+        alert("결제 취소 또는 오류가 발생했습니다. 파이 브라우저인지 확인하세요.");
+    }
+}
 window.onload = () => HK_V12.init();
 </script>
 
