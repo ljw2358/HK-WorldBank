@@ -280,16 +280,17 @@ async function provideHKLiquidity() {
 
     try {
         // 진짜 파이 지갑 결제창을 띄우는 코드입니다
-        const payment = await Pi.createPayment({
-            amount: parseFloat(amt),
-            memo: "HK-WorldBank 유동성 공급",
-            metadata: { type: "lp_supply" }
-            recipient:"GCLU237U7XPKOCHNWLTVNISIC5I6A273VB5RVKHB5CS5Y7DM4XKFES2U",
-       (})
-        {alert("성공! 파이 지갑에서 승인되었습니다.");
-    }); catch (e) {
-        alert("결제 취소 또는 오류가 발생했습니다. 파이 브라우저인지 확인하세요.");
-    }
+    const payment = await Pi.createPayment({
+  amount: parseFloat(amt),
+  memo: "HK-WorldBank 유동성 공급",
+  metadata: { type: "lp_supply" },
+  recipient: "GCLU237U7XPKOCHNWLTVNISIC5I6A273VB5RVKHB5CS5Y7DM4XKFES2U"
+}, {
+  onReadyForServerApproval: (paymentId) => { console.log("결제 대기 중..."); },
+  onReadyForServerCompletion: (paymentId, txid) => { console.log("결제 완료!"); },
+  onCancel: (paymentId) => { console.log("결제 취소"); },
+  onError: (error, payment) => { console.error("오류 발생", error); }
+});
 }
 window.onload = () => HK_V12.init();
 </script>
