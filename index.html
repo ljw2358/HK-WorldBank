@@ -24,9 +24,9 @@
             width: 100%; overflow-x: hidden;
         }
 
-        .container { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; padding-bottom: 40px; }
+        .container { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; padding-bottom: 30px; }
 
-        /* ✅ 언어 선택: 우측 상단 귀퉁이에 아주 작게 ✅ */
+        /* ✅ 초소형 언어 선택 박스 (우측 상단) ✅ */
         .header-top { 
             width: 100%; 
             padding: 8px 12px 0 0; 
@@ -36,76 +36,89 @@
         }
         
         .lang-select {
-            background: transparent;
+            background: rgba(255, 215, 0, 0.1);
             color: var(--main-gold);
-            border: none;
-            font-size: 10px; /* 초소형 사이즈 */
+            border: 0.5px solid var(--main-gold);
+            font-size: 9px;
             font-weight: bold;
             outline: none;
             cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
-            text-decoration: underline;
+            border-radius: 4px;
+            padding: 2px 4px;
         }
 
-        .brand-title { font-family: 'Oswald', sans-serif; font-size: 36px; color: var(--main-gold); text-align: center; margin: 0 0 5px; line-height: 1.1; }
-        .secure-node { color: var(--neon-green); font-size: 11px; text-align: center; margin-bottom: 12px; font-weight: bold; letter-spacing: 0.5px; }
+        .brand-title { font-family: 'Oswald', sans-serif; font-size: 34px; color: var(--main-gold); text-align: center; margin: 0 0 4px; line-height: 1.1; }
+        .secure-node { color: var(--neon-green); font-size: 10.5px; text-align: center; margin-bottom: 10px; font-weight: bold; letter-spacing: 0.5px; }
 
-        .asset-box { width: 92%; background: #111; border-radius: 20px; padding: 20px 15px; text-align: center; position: relative; border: 1px solid #222; }
-        .apr-tag { position: absolute; right: 15px; top: 12px; color: var(--neon-green); font-weight: bold; font-size: 11px; }
-        .ledger-label { color: var(--main-gold); font-size: 15px; margin-bottom: 15px; }
-        .balance-main { font-size: 42px; font-weight: 800; margin-bottom: 15px; }
-        .balance-main span { color: var(--sub-orange); font-size: 20px; }
-        .gcv-value { border: 2px solid var(--neon-green); border-radius: 50px; padding: 10px; color: var(--neon-green); font-weight: bold; font-size: 14px; display: block; }
+        .asset-box { width: 92%; background: #111; border-radius: 18px; padding: 18px 15px; text-align: center; position: relative; border: 1px solid #222; }
+        .apr-tag { position: absolute; right: 15px; top: 10px; color: var(--neon-green); font-weight: bold; font-size: 10px; }
+        .ledger-label { color: var(--main-gold); font-size: 14px; margin-bottom: 12px; }
+        .balance-main { font-size: 40px; font-weight: 800; margin-bottom: 12px; }
+        .balance-main span { color: var(--sub-orange); font-size: 18px; }
+        .gcv-value { border: 1.5px solid var(--neon-green); border-radius: 50px; padding: 8px; color: var(--neon-green); font-weight: bold; font-size: 13px; display: block; }
 
-        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 92%; margin-top: 20px; }
+        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 92%; margin-top: 15px; }
         .menu-item { text-align: center; }
-        .menu-item .icon-box { background: #1a1a1a; width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px; border: 1px solid #333; }
-        .menu-item i { font-size: 22px; color: var(--main-gold); }
-        .menu-item span { font-size: 11.5px; color: #ccc; }
+        .menu-item .icon-box { background: #1a1a1a; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px; border: 1px solid #333; }
+        .menu-item i { font-size: 20px; color: var(--main-gold); }
+        .menu-item span { font-size: 11px; color: #ccc; }
 
-        .staking-info { width: 88%; margin-top: 25px; padding-left: 10px; border-left: 3px solid var(--main-gold); align-self: flex-start; margin-left: 4%; }
-        .staking-info .label { color: var(--sub-orange); font-size: 14px; margin-bottom: 2px; font-weight: bold; }
-        .staking-info .amount { font-size: 24px; font-weight: bold; letter-spacing: 0.5px; }
-        .staking-info .status { color: #00e5ff; font-size: 11px; font-weight: bold; }
+        .staking-info { width: 88%; margin-top: 20px; padding-left: 10px; border-left: 3px solid var(--main-gold); align-self: flex-start; margin-left: 4%; }
+        .staking-info .label { color: var(--sub-orange); font-size: 13px; margin-bottom: 2px; font-weight: bold; }
+        .staking-info .amount { font-size: 22px; font-weight: bold; letter-spacing: 0.5px; }
+        .staking-info .status { color: #00e5ff; font-size: 10px; font-weight: bold; }
 
-        .action-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 92%; margin-top: 20px; }
-        .btn { padding: 12px 0; border-radius: 8px; font-weight: bold; font-size: 11.5px; border: none; color: white; cursor: pointer; }
-        .btn-gray { background: #2a2a2a; border: 1.5px solid var(--main-gold); }
+        .action-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 92%; margin-top: 15px; }
+        .btn { padding: 10px 0; border-radius: 6px; font-weight: bold; font-size: 11px; border: none; color: white; cursor: pointer; }
+        .btn-gray { background: #2a2a2a; border: 1px solid var(--main-gold); }
         .btn-orange { background: var(--sub-orange); }
         .btn-green { background: #22c55e; }
 
-        .cs-wide-btn { width: 92%; background: linear-gradient(to right, #ff8c00, #ff4500); color: white; padding: 14px; border-radius: 10px; margin-top: 18px; text-align: center; font-weight: bold; text-decoration: none; font-size: 14.5px; display: block; }
+        /* ✅ 고객지원 배너 크기 축소 ✅ */
+        .cs-wide-btn { 
+            width: 92%; 
+            background: linear-gradient(to right, #ff8c00, #ff4500); 
+            color: white; 
+            padding: 10px; /* 높이 줄임 */
+            border-radius: 8px; 
+            margin-top: 15px; 
+            text-align: center; 
+            font-weight: bold; 
+            text-decoration: none; 
+            font-size: 13px; /* 폰트 살짝 축소 */
+            display: block; 
+        }
 
-        .sns-section { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 92%; margin-top: 18px; }
-        .sns-card { background: #111; border-radius: 12px; padding: 12px; text-align: center; border: 1px solid #222; text-decoration: none; color: white; }
-        .sns-card i { font-size: 26px; margin-bottom: 5px; }
+        .sns-section { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 92%; margin-top: 15px; }
+        .sns-card { background: #111; border-radius: 10px; padding: 10px; text-align: center; border: 1px solid #222; text-decoration: none; color: white; }
+        .sns-card i { font-size: 22px; margin-bottom: 4px; }
         .sns-card .yt { color: #ff0000; }
         .sns-card .tk { color: #ffffff; }
-        .sns-card div { font-size: 11px; font-weight: bold; }
+        .sns-card div { font-size: 10px; font-weight: bold; }
 
-        footer { margin: 25px 0; text-align: center; font-size: 9px; color: #333; width: 100%; line-height: 1.5; }
+        footer { margin: 20px 0; text-align: center; font-size: 8px; color: #333; width: 100%; line-height: 1.4; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header class="header-top">
-        <select class="lang-select">
-            <option>Lang: KO</option>
-            <option>中文 (CN)</option> <option>English (US)</option>
-            <option>العربية (Arabic)</option>
-            <option>हिन्दी (Hindi)</option>
-            <option>Bahasa Indonesia</option>
-            <option>日本語 (JP)</option>
-            <option>Español (ES)</option>
-            <option>Português (PT)</option>
-            <option>Українська (UA)</option>
-            <option>Hausa (Nigeria)</option>
-            <option>Русский (RU)</option>
-            <option>Français (FR)</option>
-            <option>Deutsch (DE)</option>
-            <option>+ 50 More</option>
+        <select class="lang-select" onchange="changeLang(this.value)">
+            <option value="ko">KO</option>
+            <option value="cn">中文 (CN)</option>
+            <option value="en">EN (US)</option>
+            <option value="ar">العربية</option>
+            <option value="hi">हिन्दी</option>
+            <option value="id">Bahasa</option>
+            <option value="jp">日本語</option>
+            <option value="es">Español</option>
+            <option value="pt">Português</option>
+            <option value="ua">Українська</option>
+            <option value="ng">Hausa</option>
+            <option value="ru">Русский</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="more">+ 50 More</option>
         </select>
     </header>
 
@@ -123,13 +136,9 @@
         <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-paper-plane"></i></div><span>송금</span></div>
         <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-cart-shopping"></i></div><span>결제</span></div>
         <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-vault"></i></div><span>예치</span></div>
-        <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-gift"></i></div><span>보상</span></div>
-        <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div><span>소득</span></div>
-        <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-rotate"></i></div><span>스왑</span></div>
     </div>
 
     <div class="staking-info">
-        <div class="label" style="color: #ffaa00;">STAKING APR 31.4%</div>
         <div class="label">유동성 풀 $</div>
         <div class="amount">88,401,773,756</div>
         <div class="status">HK_퀀텀_쉴드_활성</div>
@@ -141,7 +150,7 @@
         <button class="btn btn-green">LP 공급</button>
     </div>
 
-    <a href="#" class="cs-wide-btn"><i class="fa-solid fa-headset"></i> 24/7 글로벌 고객지원센터</a>
+    <a href="#" class="cs-wide-btn">24/7 글로벌 고객지원센터</a>
 
     <div class="sns-section">
         <a href="https://youtube.com/@hyekong2025" class="sns-card">
@@ -156,9 +165,17 @@
 
     <footer>
         © 2026 HK GROUP GLOBAL HEGEMONY.<br>
-        CHAIRMAN LEE JAEWAN. ALL RIGHTS RESERVED.
+        CHAIRMAN LEE JAEWAN.
     </footer>
 </div>
+
+<script>
+    // 언어 선택 시 작동하는 엔진
+    function changeLang(val) {
+        if(val === 'ko') return;
+        alert("Preparing " + val.toUpperCase() + " service for HK World Bank Global Launch.");
+    }
+</script>
 
 </body>
 </html>
