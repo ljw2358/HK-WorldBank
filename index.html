@@ -60,6 +60,10 @@
         .platform { font-size: 11px; color: #888; }
 
         footer { text-align: center; font-size: 10px; color: #555; border-top: 1px solid #222; padding-top: 20px; line-height: 1.6; }
+   @media (max-width: 480px) {
+    .title { font-size: 24px !important; }
+    .lang-corner { top: 10px; right: 5px; }
+}
     </style>
 </head>
 <body>
@@ -162,6 +166,7 @@
         document.getElementById('b1').innerText = s.b1; document.getElementById('b2').innerText = s.b2;
         document.getElementById('b3').innerText = s.b3; document.getElementById('b-cs').innerText = s.cs;
     }
+/* 폰에서 볼 때만 적용되는 마법의 코드 */
 </script>
 
 </body>
