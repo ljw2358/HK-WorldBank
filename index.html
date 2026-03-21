@@ -24,156 +24,133 @@
             width: 100%; overflow-x: hidden;
         }
 
-        .container { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; padding-bottom: 30px; }
+        .container { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; padding-bottom: 25px; }
 
-        /* ✅ 초소형 언어 선택 박스 (우측 상단) ✅ */
+        /* ✅ 언어 선택: 우측 상단 아주 작은 네모 박스 ✅ */
         .header-top { 
             width: 100%; 
-            padding: 8px 12px 0 0; 
+            padding: 10px 15px 0 0; 
             display: flex; 
             justify-content: flex-end; 
             box-sizing: border-box; 
         }
         
+        .lang-box {
+            border: 1px solid var(--main-gold); /* 네모 박스 강조 */
+            padding: 1px 3px;
+            border-radius: 2px;
+            background: rgba(255, 215, 0, 0.05);
+        }
+
         .lang-select {
-            background: rgba(255, 215, 0, 0.1);
+            background: transparent;
             color: var(--main-gold);
-            border: 0.5px solid var(--main-gold);
+            border: none;
             font-size: 9px;
             font-weight: bold;
             outline: none;
             cursor: pointer;
-            border-radius: 4px;
-            padding: 2px 4px;
+            appearance: none;
+            -webkit-appearance: none;
         }
 
-        .brand-title { font-family: 'Oswald', sans-serif; font-size: 34px; color: var(--main-gold); text-align: center; margin: 0 0 4px; line-height: 1.1; }
-        .secure-node { color: var(--neon-green); font-size: 10.5px; text-align: center; margin-bottom: 10px; font-weight: bold; letter-spacing: 0.5px; }
+        .brand-title { font-family: 'Oswald', sans-serif; font-size: 34px; color: var(--main-gold); text-align: center; margin: 0 0 5px; line-height: 1.1; }
+        .secure-node { color: var(--neon-green); font-size: 10px; text-align: center; margin-bottom: 12px; font-weight: bold; letter-spacing: 0.5px; }
 
-        .asset-box { width: 92%; background: #111; border-radius: 18px; padding: 18px 15px; text-align: center; position: relative; border: 1px solid #222; }
-        .apr-tag { position: absolute; right: 15px; top: 10px; color: var(--neon-green); font-weight: bold; font-size: 10px; }
-        .ledger-label { color: var(--main-gold); font-size: 14px; margin-bottom: 12px; }
-        .balance-main { font-size: 40px; font-weight: 800; margin-bottom: 12px; }
+        .asset-box { width: 92%; background: #111; border-radius: 18px; padding: 15px; text-align: center; border: 1px solid #222; }
+        .balance-main { font-size: 38px; font-weight: 800; margin-bottom: 10px; }
         .balance-main span { color: var(--sub-orange); font-size: 18px; }
-        .gcv-value { border: 1.5px solid var(--neon-green); border-radius: 50px; padding: 8px; color: var(--neon-green); font-weight: bold; font-size: 13px; display: block; }
+        .gcv-value { border: 1.5px solid var(--neon-green); border-radius: 50px; padding: 7px; color: var(--neon-green); font-weight: bold; font-size: 12.5px; display: block; }
 
         .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 92%; margin-top: 15px; }
-        .menu-item { text-align: center; }
-        .menu-item .icon-box { background: #1a1a1a; width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px; border: 1px solid #333; }
-        .menu-item i { font-size: 20px; color: var(--main-gold); }
-        .menu-item span { font-size: 11px; color: #ccc; }
+        .menu-item .icon-box { background: #1a1a1a; width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 5px; border: 1px solid #333; }
+        .menu-item i { font-size: 18px; color: var(--main-gold); }
+        .menu-item span { font-size: 10.5px; color: #ccc; text-align: center; display: block;}
 
-        .staking-info { width: 88%; margin-top: 20px; padding-left: 10px; border-left: 3px solid var(--main-gold); align-self: flex-start; margin-left: 4%; }
-        .staking-info .label { color: var(--sub-orange); font-size: 13px; margin-bottom: 2px; font-weight: bold; }
-        .staking-info .amount { font-size: 22px; font-weight: bold; letter-spacing: 0.5px; }
-        .staking-info .status { color: #00e5ff; font-size: 10px; font-weight: bold; }
-
-        .action-btns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 92%; margin-top: 15px; }
-        .btn { padding: 10px 0; border-radius: 6px; font-weight: bold; font-size: 11px; border: none; color: white; cursor: pointer; }
-        .btn-gray { background: #2a2a2a; border: 1px solid var(--main-gold); }
-        .btn-orange { background: var(--sub-orange); }
-        .btn-green { background: #22c55e; }
-
-        /* ✅ 고객지원 배너 크기 축소 ✅ */
-        .cs-wide-btn { 
+        /* 고객지원 배너 더욱 축소 */
+        .cs-mini-btn { 
             width: 92%; 
-            background: linear-gradient(to right, #ff8c00, #ff4500); 
+            background: linear-gradient(to right, #e67e22, #d35400); 
             color: white; 
-            padding: 10px; /* 높이 줄임 */
-            border-radius: 8px; 
+            padding: 8px; 
+            border-radius: 6px; 
             margin-top: 15px; 
             text-align: center; 
             font-weight: bold; 
             text-decoration: none; 
-            font-size: 13px; /* 폰트 살짝 축소 */
+            font-size: 12px; 
             display: block; 
         }
 
         .sns-section { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 92%; margin-top: 15px; }
-        .sns-card { background: #111; border-radius: 10px; padding: 10px; text-align: center; border: 1px solid #222; text-decoration: none; color: white; }
-        .sns-card i { font-size: 22px; margin-bottom: 4px; }
-        .sns-card .yt { color: #ff0000; }
-        .sns-card .tk { color: #ffffff; }
-        .sns-card div { font-size: 10px; font-weight: bold; }
-
-        footer { margin: 20px 0; text-align: center; font-size: 8px; color: #333; width: 100%; line-height: 1.4; }
+        .sns-card { background: #111; border-radius: 10px; padding: 8px; text-align: center; border: 1px solid #222; text-decoration: none; color: white; }
+        .sns-card i { font-size: 20px; margin-bottom: 3px; }
+        
+        footer { margin-top: 20px; text-align: center; font-size: 8px; color: #444; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header class="header-top">
-        <select class="lang-select" onchange="changeLang(this.value)">
-            <option value="ko">KO</option>
-            <option value="cn">中文 (CN)</option>
-            <option value="en">EN (US)</option>
-            <option value="ar">العربية</option>
-            <option value="hi">हिन्दी</option>
-            <option value="id">Bahasa</option>
-            <option value="jp">日本語</option>
-            <option value="es">Español</option>
-            <option value="pt">Português</option>
-            <option value="ua">Українська</option>
-            <option value="ng">Hausa</option>
-            <option value="ru">Русский</option>
-            <option value="fr">Français</option>
-            <option value="de">Deutsch</option>
-            <option value="more">+ 50 More</option>
-        </select>
+        <div class="lang-box">
+            <select class="lang-select" onchange="applyLang(this.value)">
+                <option value="KO">KO</option>
+                <option value="CN">中文</option>
+                <option value="EN">EN</option>
+                <option value="JP">JP</option>
+                <option value="VN">VN</option>
+            </select>
+        </div>
     </header>
 
     <h1 class="brand-title">HK WORLD<br>BANK</h1>
-    <div class="secure-node">🚀 SECURE NODE: HK-V190-SUPREME</div>
+    <div class="secure-node">🛡️ NODE: HK-V190-SUPREME</div>
 
     <div class="asset-box">
-        <div class="apr-tag">APR 31.4%</div>
-        <div class="ledger-label">메인 자산 통합 원장</div>
-        <div class="balance-main">400.0000 <span>Pi</span></div>
-        <div class="gcv-value">가치 평가: $ 125,663,600 (GCV)</div>
+        <div class="balance-main" id="balanceText">400.0000 <span>Pi</span></div>
+        <div class="gcv-value" id="gcvText">GCV: $ 125,663,600</div>
     </div>
 
     <div class="menu-grid">
-        <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-paper-plane"></i></div><span>송금</span></div>
-        <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-cart-shopping"></i></div><span>결제</span></div>
-        <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-vault"></i></div><span>예치</span></div>
+        <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-paper-plane"></i></div><span class="m1">송금</span></div>
+        <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-cart-shopping"></i></div><span class="m2">결제</span></div>
+        <div class="menu-item"><div class="icon-box"><i class="fa-solid fa-vault"></i></div><span class="m3">예치</span></div>
     </div>
 
-    <div class="staking-info">
-        <div class="label">유동성 풀 $</div>
-        <div class="amount">88,401,773,756</div>
-        <div class="status">HK_퀀텀_쉴드_활성</div>
-    </div>
-
-    <div class="action-btns">
-        <button class="btn btn-gray">Pi 수량</button>
-        <button class="btn btn-orange">SWAP</button>
-        <button class="btn btn-green">LP 공급</button>
-    </div>
-
-    <a href="#" class="cs-wide-btn">24/7 글로벌 고객지원센터</a>
+    <a href="#" class="cs-mini-btn" id="csText">24/7 글로벌 고객지원센터</a>
 
     <div class="sns-section">
         <a href="https://youtube.com/@hyekong2025" class="sns-card">
-            <i class="fa-brands fa-youtube yt"></i>
-            <div>YouTube</div>
+            <i class="fa-brands fa-youtube" style="color:#ff0000;"></i>
+            <div style="font-size:9px;">YouTube</div>
         </a>
         <a href="https://tiktok.com/@hyekong2025" class="sns-card">
-            <i class="fa-brands fa-tiktok tk"></i>
-            <div>TikTok</div>
+            <i class="fa-brands fa-tiktok"></i>
+            <div style="font-size:9px;">TikTok</div>
         </a>
     </div>
 
-    <footer>
-        © 2026 HK GROUP GLOBAL HEGEMONY.<br>
-        CHAIRMAN LEE JAEWAN.
-    </footer>
+    <footer>© 2026 HK GROUP GLOBAL</footer>
 </div>
 
 <script>
-    // 언어 선택 시 작동하는 엔진
-    function changeLang(val) {
-        if(val === 'ko') return;
-        alert("Preparing " + val.toUpperCase() + " service for HK World Bank Global Launch.");
+    // ✅ 언어 변동 실제 작동 로직 ✅
+    function applyLang(lang) {
+        const data = {
+            'KO': {m1:'송금', m2:'결제', m3:'예치', cs:'24/7 글로벌 고객지원센터'},
+            'CN': {m1:'转账', m2:'支付', m3:'存款', cs:'24/7 全球客户 서비스'},
+            'EN': {m1:'Send', m2:'Pay', m3:'Vault', cs:'24/7 Global CS Center'},
+            'JP': {m1:'送金', m2:'決済', m3:'預金', cs:'24/7 グローバルサポート'}
+        };
+        
+        if(data[lang]) {
+            document.querySelector('.m1').innerText = data[lang].m1;
+            document.querySelector('.m2').innerText = data[lang].m2;
+            document.querySelector('.m3').innerText = data[lang].m3;
+            document.getElementById('csText').innerText = data[lang].cs;
+            console.log(lang + " 언어 적용 완료");
+        }
     }
 </script>
 
