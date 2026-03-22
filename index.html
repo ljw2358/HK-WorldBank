@@ -2,115 +2,162 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK WORLD BANK - GLOBAL</title>
     <style>
-        :root { --y: #f39c12; --gold: #ffd700; --dark: #000; }
-        body { background: var(--dark); color: #fff; font-family: 'Malgun Gothic', sans-serif; margin: 0; padding: 0; display: flex; justify-content: center; }
-        
-        /* PC에서도 퍼지지 않고 모바일처럼 큼직하게 유지 */
-        .main-container { width: 100%; max-width: 600px; min-height: 100vh; background: #000; position: relative; border: 2px solid #222; }
+        :root {
+            --bg-black: #000000;
+            --card-grey: #121212;
+            --hk-gold: #FFB400;
+            --hk-green: #00E676;
+            --hk-red: #FF5252;
+            --text-white: #FFFFFF;
+        }
 
-        /* 헤더 & 우측 상단 언어 네모 버튼 */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 25px; background: #1a1a1a; border-bottom: 3px solid var(--y); }
-        .lang-btn { background: transparent; border: 2px solid var(--y); color: var(--y); width: 60px; height: 50px; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; }
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: 'Pretendard', sans-serif;
+            margin: 0; padding: 15px;
+            display: flex; flex-direction: column; align-items: center;
+        }
 
-        /* 언어 사이드바 세로 배치 (진짜 작동용) */
-        .lang-sidebar { position: fixed; top: 0; right: -300px; width: 250px; height: 100%; background: rgba(10, 10, 10, 0.98); border-left: 3px solid var(--y); z-index: 9999; transition: 0.4s; overflow-y: auto; }
-        .lang-sidebar.open { right: 0; }
-        .lang-item { padding: 20px; border-bottom: 1px solid #333; font-size: 20px; font-weight: bold; color: #fff; cursor: pointer; }
-        .lang-item:hover { background: var(--y); color: #000; }
+        /* 언어 선택 드롭다운 (상단 배치) */
+        .lang-selector {
+            align-self: flex-end;
+            background: #222; color: white;
+            padding: 10px 20px; border-radius: 10px;
+            font-size: 1.2rem; margin-bottom: 10px;
+        }
 
-        /* 메인 자산: 400.0000 대왕 글자 */
-        .asset-card { padding: 50px 20px; text-align: center; }
-        .pi-val { font-size: 75px; font-weight: 900; color: var(--y); margin-bottom: 30px; border-bottom: 4px solid var(--y); display: inline-block; }
-        .gcv-btn { width: 95%; background: linear-gradient(90deg, #f39c12, #ffd700); color: #000; border: none; padding: 35px; font-size: 32px; font-weight: 900; border-radius: 60px; cursor: pointer; box-shadow: 0 10px 40px rgba(243, 156, 18, 0.6); }
+        /* 헤더 브랜딩 */
+        .brand-header {
+            width: 100%; text-align: left;
+            padding: 20px 0; margin-bottom: 10px;
+        }
+        .brand-title { color: var(--hk-gold); font-size: 2.8rem; font-weight: 900; }
+        .node-status { color: var(--hk-green); font-size: 1.2rem; font-weight: bold; }
 
-        /* 6대 메뉴: 어르신들을 위한 특대 사이즈 */
-        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; padding: 25px; }
-        .menu-item { background: #111; border: 2px solid #333; padding: 40px 10px; border-radius: 25px; text-align: center; text-decoration: none; color: #fff; }
-        .menu-item .icon { font-size: 60px; display: block; margin-bottom: 15px; }
-        .menu-item .label { font-size: 28px; font-weight: 900; }
+        /* 메인 자산 카드 */
+        .asset-card {
+            background: var(--card-grey); border-radius: 35px;
+            width: 100%; max-width: 550px; padding: 40px 20px;
+            text-align: center; border: 1px solid #333; margin-bottom: 25px;
+        }
+        .asset-label { color: var(--hk-gold); font-size: 1.8rem; margin-bottom: 15px; }
+        .pi-value { font-size: 4.5rem; font-weight: 900; margin-bottom: 20px; border-bottom: 4px solid var(--hk-gold); display: inline-block; width: 90%; }
+        .gcv-box { border: 3px solid var(--hk-green); border-radius: 60px; padding: 20px; color: var(--hk-green); font-size: 1.8rem; font-weight: 900; }
 
-        /* 하단 884억 불 원장 */
-        .ledger-box { background: #050505; padding: 50px 20px; border-top: 4px solid var(--y); text-align: center; }
-        .apr-tag { color: var(--y); font-size: 24px; font-weight: bold; border: 2px solid var(--y); padding: 8px 30px; border-radius: 50px; }
-        .ledger-val { font-size: 45px; color: var(--gold); font-weight: 900; margin: 25px 0; }
+        /* 6구 대형 메뉴 */
+        .menu-container {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 15px; width: 100%; max-width: 550px;
+        }
+        .menu-box {
+            background: var(--card-grey); border-radius: 25px;
+            padding: 35px 5px; text-align: center; cursor: pointer;
+            transition: 0.3s; border: 1px solid #222;
+        }
+        .menu-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
+        .menu-text { font-size: 1.5rem; font-weight: bold; display: block; }
+
+        /* 실시간 스테이킹 보드 */
+        .staking-board {
+            width: 100%; max-width: 550px; margin-top: 35px;
+            border-left: 6px solid var(--hk-gold); padding-left: 20px;
+        }
+        .apr-text { color: var(--hk-gold); font-size: 2rem; font-weight: 900; }
+        .pool-label { color: var(--hk-gold); font-size: 1.4rem; margin: 10px 0; }
+        .live-money { font-size: 3.5rem; font-weight: 900; color: white; letter-spacing: -1px; }
+
+        /* 고객지원센터 (빨간 버튼) */
+        .support-btn {
+            background: var(--hk-red); width: 100%; max-width: 550px;
+            border-radius: 25px; padding: 30px; text-align: center;
+            font-size: 1.8rem; font-weight: 900; margin-top: 30px; cursor: pointer;
+        }
+
+        .footer {
+            margin: 50px 0; text-align: center; font-size: 0.9rem; color: #777; line-height: 1.6;
+        }
     </style>
 </head>
 <body>
 
-<div class="main-container">
-    <div class="header">
-        <div style="color:var(--y); font-size: 30px; font-weight: 900;">HK WORLD BANK</div>
-        <button class="lang-btn" onclick="toggleLang()">🌐</button>
-    </div>
+    <select class="lang-selector" onchange="changeLanguage(this.value)">
+        <option value="ko">🇰🇷 한국어</option>
+        <option value="en">🇺🇸 English</option>
+        <option value="zh">🇨🇳 中文</option>
+        <option value="ar">🇸🇦 العربية</option>
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="jp">🇯🇵 日本語</option>
+        <option value="vi">🇻🇳 Tiếng Việt</option>
+        </select>
 
-    <div id="sidebar" class="lang-sidebar">
-        <div style="padding: 25px; color: var(--y); font-size: 24px; cursor: pointer; text-align: right;" onclick="toggleLang()">✕ 닫기</div>
-        <div class="lang-item" onclick="changeLang('KR')">🇰🇷 한국어</div>
-        <div class="lang-item" onclick="changeLang('US')">🇺🇸 English</div>
-        <div class="lang-item" onclick="changeLang('CN')">🇨🇳 中國語</div>
-        <div class="lang-item" onclick="changeLang('SA')">🇸🇦 العربية</div>
-        <div class="lang-item" onclick="changeLang('IN')">🇮🇳 हिन्दी</div>
-        <div class="lang-item" onclick="changeLang('JP')">🇯🇵 日本語</div>
-        <div class="lang-item" onclick="changeLang('RU')">🇷🇺 Русский</div>
-        <div class="lang-item" onclick="changeLang('VN')">🇻🇳 Tiếng Việt</div>
-        </div>
+    <div class="brand-header">
+        <div class="brand-title">HK WORLD BANK</div>
+        <div class="node-status">🚀 SECURE NODE: HK-V190-SUPREME</div>
+    </div>
 
     <div class="asset-card">
-        <div style="color:#666; font-size: 18px; margin-bottom: 10px;">SECURE NODE: HK-V190-SUPREME</div>
-        <div class="pi-val">400.0000</div>
-        <button class="gcv-btn" onclick="realDeposit()">가치 평가 및 실전 예치</button>
+        <div id="asset-label" class="asset-label">메인 자산 통합 원장</div>
+        <div class="pi-value">400.0000 <span style="color:var(--hk-gold)">Pi</span></div>
+        <div class="gcv-box">VALUE: $ 125,663,600 (GCV)</div>
     </div>
 
-    <div class="menu-grid">
-        <a href="https://youtube.com/@HK-Group" class="menu-item"><span class="icon">📺</span><span class="label">유튜브</span></a>
-        <a href="https://tiktok.com/@HK-Group" class="menu-item"><span class="icon">🎵</span><span class="label">틱톡</span></a>
-        <div class="menu-item" onclick="realDeposit()" style="border-color: var(--y);">📥<span class="label" style="color:var(--y)">예치</span></div>
-        <div class="menu-item">💸<span class="label">송금</span></div>
-        <div class="menu-item">💳<span class="label">결제</span></div>
-        <div class="menu-item">🎁<span class="label">보상</span></div>
+    <div class="menu-container">
+        <div class="menu-box"><span class="menu-icon">🚀</span><span id="m1" class="menu-text">송금</span></div>
+        <div class="menu-box"><span class="menu-icon">🛒</span><span id="m2" class="menu-text">결제</span></div>
+        <div class="menu-box"><span class="menu-icon">💿</span><span id="m3" class="menu-text">예치</span></div>
+        <div class="menu-box"><span class="menu-icon">🎁</span><span id="m4" class="menu-text">보상</span></div>
+        <div class="menu-box"><span class="menu-icon">⚖️</span><span id="m5" class="menu-text">소득</span></div>
+        <div class="menu-box"><span class="menu-icon">🔄</span><span id="m6" class="menu-text">스왑</span></div>
     </div>
 
-    <div class="ledger-box">
-        <span class="apr-tag">STAKING APR 31.4%</span>
-        <div class="ledger-val">$ 88,401,773,756</div>
-        <div style="color:#555; font-size: 18px; font-weight: bold;">HK GROUP SUPREME SYSTEM</div>
+    <div class="staking-board">
+        <div class="apr-text">STAKING APR 31.4%</div>
+        <div id="pool-label" class="pool-label">유동성 풀 $</div>
+        <div id="live-counter" class="live-money">88,401,773,756</div>
+        <div style="color:cyan; font-size:1.2rem; font-weight:bold; margin-top:10px;">HK_QUANTUM_SHIELD_ACTIVE</div>
     </div>
-</div>
 
-<script>
-    // 파이 실전 엔진 가동
-    Pi.init({ version: "2.0", sandbox: false });
+    <div id="support-text" class="support-btn">🎧 24/7 글로벌 고객지원센터</div>
 
-    // 언어 사이드바 토글
-    function toggleLang() {
-        document.getElementById('sidebar').classList.toggle('open');
-    }
+    <div class="footer">
+        © 2026 HK GROUP GLOBAL MANAGEMENT. GCV<br>
+        <strong>CHAIRMAN LEE JAE-WAN</strong>. ALL RIGHTS RESERVED.
+    </div>
 
-    // 언어 변경 함수 (실제 텍스트 변경 로직)
-    function changeLang(lang) {
-        alert(lang + " 언어로 변경되었습니다.");
-        toggleLang();
-        // 여기에 각 언어별 텍스트 변환 로직을 추가하면 진짜 바뀝니다.
-    }
+    <script>
+        const langData = {
+            ko: { asset: "메인 자산 통합 원장", m1: "송금", m2: "결제", m3: "예치", m4: "보상", m5: "소득", m6: "스왑", pool: "유동성 풀 $", support: "🎧 24/7 글로벌 고객지원센터" },
+            en: { asset: "Main Asset Ledger", m1: "Send", m2: "Pay", m3: "Stake", m4: "Reward", m5: "Income", m6: "Swap", pool: "Liquidity Pool $", support: "🎧 24/7 Global Support" },
+            zh: { asset: "主资产总账", m1: "转账", m2: "支付", m3: "质押", m4: "奖励", m5: "收入", m6: "交易", pool: "流动性池 $", support: "🎧 24/7 全球客服中心" },
+            jp: { asset: "メイン資産元帳", m1: "送金", m2: "決済", m3: "預金", m4: "報酬", m5: "所得", m6: "スワップ", pool: "流動性プール $", support: "🎧 24/7 グローバルサポート" },
+            ar: { asset: "دفتر الأصول الرئيسي", m1: "إرسال", m2: "دفع", m3: "رهن", m4: "مكافأة", m5: "دخل", m6: "تبادل", pool: "مجمع السيولة $", support: "🎧 24/7 الدعم العالمي" }
+            // 여기에 나머지 50개국어 데이터를 추가하면 됩니다.
+        };
 
-    async function realDeposit() {
-        try {
-            const payment = await Pi.createPayment({
-                amount: 400.0000,
-                memo: "HK WORLD BANK GLOBAL DEPOSIT",
-                metadata: { type: "real", user: "HK_CHAIRMAN" }
-            }, {
-                onReadyForServerApproval: (id) => console.log(id),
-                onReadyForServerCompletion: (id, txid) => alert("✅ 실전 예치 완료!\nTXID: " + txid),
-                onCancel: (id) => alert("예치가 취소되었습니다."),
-                onError: (error) => alert("파이 브라우저에서 실행해 주세요.")
-            });
-        } catch (err) { alert("파이 브라우저 접속 필요"); }
-    }
-</script>
+        function changeLanguage(lang) {
+            const d = langData[lang] || langData['en'];
+            document.getElementById('asset-label').innerText = d.asset;
+            document.getElementById('m1').innerText = d.m1;
+            document.getElementById('m2').innerText = d.m2;
+            document.getElementById('m3').innerText = d.m3;
+            document.getElementById('m4').innerText = d.m4;
+            document.getElementById('m5').innerText = d.m5;
+            document.getElementById('m6').innerText = d.m6;
+            document.getElementById('pool-label').innerText = d.pool;
+            document.getElementById('support-text').innerText = d.support;
+        }
 
+        // 실시간 숫자 카운터 (실제 작동 시각화)
+        let val = 88401773756;
+        setInterval(() => {
+            val += Math.floor(Math.random() * 1500) + 500;
+            document.getElementById('live-counter').innerText = val.toLocaleString();
+        }, 1000);
+    </script>
 </body>
-</html>
+</html> 
