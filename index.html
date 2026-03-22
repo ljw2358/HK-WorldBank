@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -63,9 +63,18 @@
         <div class="apr">APR 31.4%</div>
         <div id="ct" class="t">메인 자산 통합 원장</div>
 <div class="in-box" style="position: relative; z-index: 9998; pointer-events: auto !important;">
-    <input type="number" id="pi" class="pi-in" value="400.0000" 
-           style="position: relative; z-index: 9999; pointer-events: auto !important; -webkit-user-select: text; touch-action: manipulation; background: transparent; border: 1px solid var(--y); color: var(--y); width: 100%; font-size: 28px; text-align: center;">
+<div class="in-box" style="position: relative; z-index: 9998; pointer-events: auto !important;">
+    <input type="number" id="pi" class="pi-in" value="1.0000" oninput="gcv()"
+           style="position: relative; z-index: 9999; pointer-events: auto !important; background: transparent; border: 1px solid var(--y); color: var(--y); width: 100%; font-size: 28px; text-align: center;">
 </div>
+<button id="gb" class="gcv" onclick="fakeDeposit()" style="width:100%; margin-top:10px; cursor:pointer;">1코인 예치하기</button>
+
+<script>
+function fakeDeposit() {
+    let amt = document.getElementById('pi').value;
+    alert("🏦 HK WORLD BANK\n\n" + amt + " 파이가 성공적으로 예치되었습니다!");
+}
+</script>
     <div class="grid">
         <div class="item">🚀<br><span id="m1">송금</span></div>
         <div class="item">🛒<br><span id="m2">결제</span></div>
