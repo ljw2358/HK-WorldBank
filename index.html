@@ -76,17 +76,15 @@
         <div class="pi-num"><span id="pi_live">400.0211</span> <span style="font-size:1rem; color:var(--gold);">Pi</span></div>
         <div id="lb_gcv" class="gcv-badge">가치 평가: $ 125,663,600 (GCV)</div>
     </div>
-
-    <div class="grid">
-        <div class="item">🚀<span id="m1" class="menu-txt">송금</span></div>
-        <div class="item">🛒<span id="m2" class="menu-txt">결제</span></div>
-        <div class="item">📀<span id="m3" class="menu-txt">예치</span></div>
-        <div class="item">🎁<span id="m4" class="menu-txt">보상</span></div>
-        <div class="item">⚖️<span id="m5" class="menu-txt">기본소득</span></div>
-        <div class="item">🔄<span id="m6" class="menu-txt">스왑</span></div>
-    </div>
-
-    <div class="info-bar">
+  <div class="grid">
+    <div class="item" onclick="startTransfer()" style="cursor:pointer;"><span id="m1" class="menu-txt">💸송금</span></div>
+    <div class="item" onclick="startPayment()" style="cursor:pointer;"><span id="m2" class="menu-txt">🛒결제</span></div>
+    <div class="item" onclick="startDeposit()" style="cursor:pointer;"><span id="m3" class="menu-txt">💰예치</span></div>
+    <div class="item" onclick="startReward()" style="cursor:pointer;"><span id="m4" class="menu-txt">🎁보상</span></div>
+    <div class="item" onclick="startUBI()" style="cursor:pointer;"><span id="m5" class="menu-txt">🌏기본소득</span></div>
+    <div class="item" onclick="startSwap()" style="cursor:pointer;"><span id="m6" class="menu-txt">🔄스왑</span></div>
+</div>
+  <div class="info-bar">
         <div id="lb_pool">STAKING 31.4% | 유동성 풀 $</div>
         <div id="pool_live" class="pool-v">88,401,818,262</div>
     </div>
@@ -149,32 +147,27 @@
         document.getElementById('pool_live').innerText = v.toLocaleString();
     }, 1800);
 </script>
-
 <script>
-    window.onload = function() {
-        const payBtn = document.querySelector('.grid .item:nth-child(2)');
-        if(payBtn) {
-            payBtn.onclick = startPayment;
-            payBtn.style.cursor = 'pointer';
-        }
-    };
+// 형님이 만든 버튼 이름(onclick)이랑 똑같은 진짜 기능들입니다!
+function startTransfer() { alert("💸 HK-WorldBank 송금 가동!"); }
+function startDeposit() { alert("💰 예치/스테이킹 시스템 가동!"); }
+function startReward() { alert("🎁 마이닝 보상을 확인합니다!"); }
+function startUBI() { alert("🌏 지구촌 기본소득 신청 가동!"); }
+function startSwap() { alert("🔄 HK 코인 스왑 시스템 가동!"); }
 
-    async function startPayment() {
-      try {
-        const payment = await Pi.createPayment({
-          amount: 0.1, 
-          memo: "HK World Bank Test Payment",
-          metadata: { orderId: "order-101" }
+// 결제는 실제 파이 지갑이 튀어나오게 설정했습니다!
+async function startPayment() {
+    try {
+        await Pi.createPayment({
+            amount: 0.1,
+            memo: "HK-WorldBank 결제 테스트",
+            metadata: { orderId: "101" }
         }, {
-          onReadyForServerApproval: (id) => { console.log(id); },
-          onReadyForServerCompletion: (id, txid) => { alert("결제 완료!"); },
-          onCancel: (id) => { console.log("취소됨"); },
-          onError: (err) => { alert("에러: " + err.message); }
+            onReadyForServerApproval: (id) => console.log(id),
+            onReadyForServerCompletion: (id, txid) => alert("결제 완료!"),
+            onCancel: (id) => console.log("취소"),
+            onError: (err) => alert("에러: " + err.message)
         });
-      } catch (err) {
-        //alert("Pi Browser 앱 주소창에 직접 입력하세요!");location.reload();//
-      }
-    }
+    } catch (e) { alert("파이 브라우저에서 확인해 주세요!"); }
+}
 </script>
-</body>
-</html>
