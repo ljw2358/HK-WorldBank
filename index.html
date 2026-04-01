@@ -149,11 +149,11 @@
         document.getElementById('pool_live').innerText = v.toLocaleString();
     }, 1800);
 </script>
-출발 언어영어도착 언어한국어번역하기
-    <script>
-    // 페이지가 로드되면 기존 '결제' 버튼에 클릭 기능을 넣습니다.
+
+<script>
+    // 페이지가 로드되면 자동으로 '결제' 버튼에 기능을 연결합니다.
     window.onload = function() {
-        const payBtn = document.querySelector('.grid .item:nth-child(2)'); // 2번째 버튼(결제) 선택
+        const payBtn = document.querySelector('.grid .item:nth-child(2)');
         if(payBtn) {
             payBtn.setAttribute('onclick', 'startPayment()');
             payBtn.style.cursor = 'pointer';
@@ -167,16 +167,15 @@
           memo: "HK World Bank 테스트 결제",
           metadata: { orderId: "test-12345" }
         }, {
-          onReadyForServerApproval: (id) => console.log("승인대기:", id),
-          onReadyForServerCompletion: (id, txid) => alert("결제 완료!"),
-          onCancel: (id) => console.log("취소됨"),
-          onError: (err) => alert("에러: " + err.message)
+          onReadyForServerApproval: (paymentId) => { console.log("승인 대기:", paymentId); },
+          onReadyForServerCompletion: (paymentId, txid) => { alert("축하합니다! 결제가 완료되었습니다."); },
+          onCancel: (paymentId) => { console.log("취소됨"); },
+          onError: (error, payment) => { alert("에러: " + error.message); },
         });
       } catch (err) {
-        alert("파이 브라우저 메인 화면의 주소창에 직접 입력해서 들어오셔야 합니다!");
+        alert("반드시 '파이 브라우저' 앱의 주소창에 직접 입력해서 접속하세요!");
       }
     }
-    </script>
-  </body>
+</script>
+</body>
 </html>
-  
