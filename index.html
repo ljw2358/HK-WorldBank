@@ -3,9 +3,25 @@
 <head>
 <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 <script>
-  Pi.init({ version: "1.5", sandbox: true }); // 파이 네트워크와 연결 시작!
-</script>   
-    <meta charset="UTF-8">
+  Pi.init({ version: "1.5", sandbox: false }); // 파이 네트워크와 연결 시작! 
+    async function purchase() {
+        try {
+            await Pi.createPayment({
+                amount: 1, 
+                memo: "HK-WorldBank 테스트 결제", 
+                metadata: { orderId: 12345 }
+            }, {
+                onReadyForServerApproval: function(id) { console.log(id); },
+                onReadyForServerCompletion: function(id, txid) { alert("결제 완료!"); },
+                onCancel: function(id) { },
+                onError: function(err, cap) { alert("오류 발생"); }
+            });
+        } catch (err) { 
+            alert("파이 브라우저에서 실행하세요"); 
+        }
+    }
+</script>  
+  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HK WORLD BANK GLOBAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
