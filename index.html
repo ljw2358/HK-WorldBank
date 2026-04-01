@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script src="https://sdk.minepi.com/pi-sdk.js"></script>
+<script>
+  Pi.init({ version: "1.5", sandbox: false }); // 파이 네트워크와 연결 시작!
+</script>   
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HK WORLD BANK GLOBAL</title>
@@ -145,5 +149,25 @@
         document.getElementById('pool_live').innerText = v.toLocaleString();
     }, 1800);
 </script>
-</body>
+    <button onclick="startPayment()" style="margin-top: 20px; padding: 10px; background: #FFB400; border: none; border-radius: 5px; font-weight: bold;">🛒 테스트 결제하기</button>
+
+    <script>
+    async function startPayment() {
+      try {
+        const payment = await Pi.createPayment({
+          amount: 0.1, 
+          memo: "HK World Bank 테스트 결제",
+          metadata: { orderId: "12345" }
+        }, {
+          onReadyForServerApproval: (paymentId) => { console.log("승인 대기:", paymentId); },
+          onReadyForServerCompletion: (paymentId, txid) => { alert("결제 완료!"); },
+          onCancel: (paymentId) => { console.log("취소됨"); },
+          onError: (error, payment) => { console.error(error); },
+        });
+      } catch (err) {
+        alert("파이 브라우저에서 실행해 주세요!");
+      }
+    }
+    </script>
+  </body>
 </html>
