@@ -5,17 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>HK WORLD BANK</title>
     <style>
-        /* 1. 기본 레이아웃 - 화면 중앙 정렬 및 배경 */
+        /* 기본 배경 및 폰트 */
         body {
             margin: 0; padding: 0;
             background-color: #121212; color: white;
             font-family: 'Arial', sans-serif;
             display: flex; flex-direction: column; align-items: center;
             width: 100%; overflow-x: hidden;
+            top: 0px !important; /* 구글 번역 바 여백 제거 */
         }
 
-        /* 2. 상단 헤더 및 카드 */
-        .header { width: 90%; margin-top: 20px; color: #ffc107; font-weight: bold; font-size: 1.2rem; text-align: left; }
+        /* 우측 상단 언어 선택기 (20개국어 대응) */
+        #google_translate_element {
+            position: absolute;
+            top: 15px;
+            right: 10px;
+            z-index: 1000;
+        }
+        .goog-te-banner-frame.skiptranslate { display: none !important; } /* 구글 상단바 숨김 */
+
+        /* 헤더 및 카드 디자인 */
+        .header { width: 90%; margin-top: 25px; color: #ffc107; font-weight: bold; font-size: 1.2rem; text-align: left; }
         .balance-card { 
             width: 90%; background: #1e1e1e; padding: 20px; border-radius: 15px; 
             margin: 15px 0; text-align: center; border: 1px solid #333; box-sizing: border-box;
@@ -25,40 +35,38 @@
             padding: 5px 12px; border-radius: 20px; display: inline-block; margin-top: 10px; 
         }
 
-        /* 3. 버튼 그리드 - 2열 정렬 핵심 (화면 어긋남 방지) */
+        /* 버튼 그리드 (2개씩 딱 맞게) */
         .btn-grid {
             display: grid; grid-template-columns: 1fr 1fr;
             gap: 12px; width: 90%; margin: 10px auto;
         }
         .btn {
-            padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 0.9rem;
+            padding: 15px; border-radius: 10px; text-align: center; font-weight: bold; font-size: 0.85rem;
             cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px;
             background: #2a2a2a; color: white; border: none; width: 100%; box-sizing: border-box;
         }
         
-        /* 4. 버튼 색상들 */
+        /* 버튼 컬러 */
         .btn-yellow { background: #ffc107; color: black; }
         .btn-green { background: #00e676; color: white; }
         .btn-pink { background: #ff4081; color: white; grid-column: span 2; width: 100%; } 
         .btn-red { background: #e91e63 !important; color: white; }
         .btn-black { background: #000 !important; color: white; border: 1px solid #444; }
 
-        /* 5. 약관 섹션 디자인 */
-        .policy-section { width: 90%; margin: 30px 0; font-size: 0.8rem; color: #888; border-top: 1px solid #333; padding-top: 20px; text-align: left; }
+        /* 약관 섹션 */
+        .policy-section { width: 90%; margin: 30px 0; font-size: 0.75rem; color: #888; border-top: 1px solid #333; padding-top: 20px; text-align: left; }
         .policy-content { margin-bottom: 20px; line-height: 1.6; }
-        .policy-title { color: #ffc107; font-weight: bold; margin-bottom: 8px; font-size: 0.9rem; }
-
-        #google_translate_element { margin: 10px 0; }
+        .policy-title { color: #ffc107; font-weight: bold; margin-bottom: 8px; font-size: 0.85rem; }
     </style>
 </head>
 <body>
 
-    <div class="header">HK WORLD BANK</div>
-
     <div id="google_translate_element"></div>
 
+    <div class="header">HK WORLD BANK</div>
+
     <div class="balance-card">
-        <div style="color:#aaa; font-size:0.8rem;">Main Asset Integrated Ledger</div>
+        <div style="color:#aaa; font-size:0.75rem;">Main Asset Integrated Ledger</div>
         <div style="font-size: 2.2rem; font-weight: bold; margin: 10px 0;">00.0247 <span style="font-size:1.2rem;">Pi</span></div>
         <div class="gcv-value">Value: $ 125,663,600 (GCV Estimate)</div>
     </div>
@@ -86,14 +94,13 @@
             <div class="policy-title">Terms of Service (이용약관)</div>
             1. Acceptance: By accessing HK WorldBank, you agree to comply with these terms.<br>
             2. Services: We provide digital banking assets and Pi Network ecosystem integration.<br>
-            3. Responsibility: Users maintain full responsibility for their private keys and wallet security.<br>
-            4. Governance: All operations are governed by HK Group Global Management standards.
+            3. Responsibility: Users maintain full responsibility for their private keys and wallet security.
         </div>
         <div class="policy-content">
             <div class="policy-title">Privacy Policy (개인정보 처리방침)</div>
-            1. Data Collection: We minimize data collection to essential blockchain transaction logs.<br>
-            2. Security: HK Quantum Shield technology is active to ensure the highest level of encryption.<br>
-            3. Disclosure: Personal data is never sold or shared with unauthorized third parties.
+            1. Data: We minimize data collection to essential blockchain transaction logs.<br>
+            2. Security: HK Quantum Shield technology is active to protect assets.<br>
+            3. Disclosure: Personal data is never sold to third parties.
         </div>
     </div>
 
@@ -101,8 +108,10 @@
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'ko', 
-                includedLanguages: 'en,ja,zh-CN,ko',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                /* 형님이 말씀하신 20개국어 타겟팅 */
+                includedLanguages: 'en,zh-CN,ar,hi,es,pt,uk,ja,ru,vi,th,de,fr,it,tr,id,pl,nl,bn,ko',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
             }, 'google_translate_element');
         }
     </script>
