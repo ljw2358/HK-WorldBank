@@ -7,25 +7,38 @@
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; padding: 0; background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; }
+        body { margin: 0; padding: 0; background: #000; color: #fff; font-family: sans-serif; display: flex; justify-content: center; overflow-x: hidden; }
         .goog-te-banner-frame.skiptranslate, .goog-te-gadget-icon { display: none !important; }
         .goog-te-gadget-simple { background-color: #1a1a1a !important; border: 1px solid #ffc107 !important; padding: 8px 15px !important; border-radius: 20px !important; color: #fff !important; }
         .goog-te-gadget-simple span { color: #fff !important; }
-        .goog-te-menu-value span:first-child::before { content: "Language"; font-size: 0.85rem; font-weight: bold; }
         .wrapper { width: 100%; max-width: 450px; min-height: 100vh; padding: 25px 20px; display: flex; flex-direction: column; align-items: center; }
         #google_translate_element { align-self: flex-end; margin-bottom: 20px; }
-        .brand { width: 100%; color: #ffc107; font-size: 1.6rem; font-weight: 900; margin-bottom: 25px; text-align: left; }
-        .card { width: 100%; background: linear-gradient(145deg, #1a1a1a, #000); border-radius: 20px; padding: 30px 20px; text-align: center; border: 1px solid #333; margin-bottom: 25px; }
+        .brand { width: 100%; color: #ffc107; font-size: 1.6rem; font-weight: 900; margin-bottom: 25px; text-align: left; letter-spacing: 1px; }
+        
+        /* 메인 자산 카드 */
+        .card { width: 100%; background: linear-gradient(145deg, #1a1a1a, #000); border-radius: 20px; padding: 30px 20px; text-align: center; border: 1px solid #333; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .main-ledger-label { color: #ffc107; font-size: 0.9rem; font-weight: bold; margin-bottom: 10px; }
         .balance { font-size: 2.8rem; font-weight: 800; margin: 5px 0; letter-spacing: -1px; }
+        
+        /* 그리드 버튼 */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 25px; }
-        .btn { background: #222; padding: 20px 5px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 0.95rem; cursor: pointer; border: 1px solid #333; color: #fff; text-decoration: none; display: flex; align-items: center; justify-content: center; }
+        .btn { background: #222; padding: 20px 5px; border-radius: 12px; text-align: center; font-weight: bold; font-size: 0.95rem; cursor: pointer; border: 1px solid #333; color: #fff; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn:active { transform: scale(0.95); background: #333; }
+
+        /* 입력창 */
         .input-box { width: 100%; margin-bottom: 20px; }
         .num-field { width: 100%; padding: 18px; background: #111; border: 1px solid #444; border-radius: 15px; color: #fff; font-size: 1.4rem; text-align: center; outline: none; }
+        
         .btn-yellow { background: #ffc107 !important; color: #000 !important; border: none; }
         .btn-green { background: #00e676 !important; color: #000 !important; border: none; }
         .btn-pink { background: #ff4081 !important; grid-column: span 2; margin-top: 5px; border: none; }
-        .policy-box { background: #111; padding: 12px; border-radius: 10px; border: 1px solid #222; height: 100px; overflow-y: auto; font-size: 0.75rem; color: #888; text-align: left; width: 100%; }
+
+        /* 비디오 플레이어 섹션 (유튜브/틱톡 구동) */
+        .video-container { width: 100%; display: none; margin-bottom: 25px; background: #111; border-radius: 15px; overflow: hidden; border: 1px solid #ff4081; position: relative; padding-top: 56.25%; /* 16:9 Ratio */ }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .tiktok-container { padding-top: 177%; /* TikTok Vertical Ratio */ }
+
+        .policy-box { background: #111; padding: 15px; border-radius: 10px; border: 1px solid #222; font-size: 0.75rem; color: #888; text-align: left; width: 100%; margin-top: auto; }
     </style>
 </head>
 <body>
@@ -38,6 +51,13 @@
         <div class="main-ledger-label">메인자산통합원장</div>
         <div class="balance">00.0247 <span style="font-size:1.3rem; color:#888;">Pi</span></div>
         <div style="color:#00e676; font-size:0.8rem; border:1px solid #00e676; border-radius:50px; padding:5px 10px; display:inline-block; margin-top:10px;">Value: $ 125,663,600 (GCV)</div>
+    </div>
+
+    <div id="player_yt" class="video-container">
+        <iframe id="yt_frame" src="" allowfullscreen></iframe>
+    </div>
+    <div id="player_tt" class="video-container tiktok-container">
+        <iframe id="tt_frame" src="" allowfullscreen></iframe>
     </div>
 
     <div class="grid">
@@ -56,8 +76,8 @@
         <div class="btn btn-yellow">SWAP</div>
         <div class="btn btn-green" onclick="confirmLP()">유동성풀 공급</div>
         
-        <a href="https://www.youtube.com/@HKWorldBank" target="_blank" class="btn" style="background:#cc0000 !important; color:#fff !important;">▶ YOUTUBE</a>
-        <a href="https://www.tiktok.com/@hkworldbank" target="_blank" class="btn" style="background:#111 !important; color:#fff !important; border:1px solid #444;">♪ TIKTOK</a>
+        <div class="btn" style="background:#cc0000 !important; color:#fff !important;" onclick="showYoutube()">▶ YOUTUBE</div>
+        <div class="btn" style="background:#111 !important; color:#fff !important; border:1px solid #444;" onclick="showTiktok()">♪ TIKTOK</div>
         
         <div class="btn btn-pink">🎧 Global Support Center</div>
     </div>
@@ -69,6 +89,28 @@
 </div>
 
 <script>
+    // 유튜브 구동 함수
+    function showYoutube() {
+        document.getElementById('player_tt').style.display = 'none';
+        const container = document.getElementById('player_yt');
+        const frame = document.getElementById('yt_frame');
+        // 형님의 유튜브 채널 ID 기반 최신 영상 재생 목록 또는 특정 영상 ID 입력
+        frame.src = "https://www.youtube.com/embed?listType=user_uploads&list=HKWorldBank"; 
+        container.style.display = 'block';
+        window.scrollTo({ top: 150, behavior: 'smooth' });
+    }
+
+    // 틱톡 구동 함수 (임베드 방식)
+    function showTiktok() {
+        document.getElementById('player_yt').style.display = 'none';
+        const container = document.getElementById('player_tt');
+        const frame = document.getElementById('tt_frame');
+        // 틱톡은 특정 영상 ID가 필요하거나 프로필 링크를 사용
+        frame.src = "https://www.tiktok.com/embed/@hkworldbank";
+        container.style.display = 'block';
+        window.scrollTo({ top: 150, behavior: 'smooth' });
+    }
+
     const Pi = window.Pi;
     Pi.init({ version: "2.0", sandbox: false });
 
