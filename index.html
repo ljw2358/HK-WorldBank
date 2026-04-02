@@ -6,6 +6,7 @@
     <title>HK WORLD BANK</title>
     <script src="https://sdk.minepi.com/pi-sdk.js"></script>
     <style>
+        /* 1. 파이 브라우저 글 정렬 및 잘림 방지 */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
             margin: 0; padding: 0; background: #000; color: #fff; 
@@ -13,7 +14,7 @@
             top: 0px !important;
         }
 
-        /* 구글 로고 숨기기 및 "Language" 버튼 디자인 */
+        /* 2. 구글 로고 제거 및 "Language" 버튼 디자인 */
         .goog-te-banner-frame.skiptranslate, .goog-te-gadget-icon { display: none !important; }
         .goog-te-gadget-simple {
             background-color: #2a2a2a !important; border: 1px solid #444 !important;
@@ -35,6 +36,7 @@
         #google_translate_element { align-self: flex-end; margin-bottom: 10px; z-index: 9999; }
 
         .brand { width: 100%; color: #ffc107; font-size: 1.4rem; font-weight: bold; margin-bottom: 20px; }
+        
         .card {
             width: 100%; background: #1a1a1a; border-radius: 15px;
             padding: 25px 15px; text-align: center; border: 1px solid #333; margin-bottom: 20px;
@@ -77,7 +79,7 @@
     </div>
 
     <div class="grid">
-        <div class="btn" onclick="payStep10()">🛒 결제 (10회 테스트)</div>
+        <div class="btn" onclick="payStep10()">🛒 결제 (10 Tests)</div>
         <div class="btn">💰 Staking</div>
         <div class="btn">🌍 UBI</div>
         <div class="btn">🔄 Swap</div>
@@ -129,6 +131,7 @@
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
             pageLanguage: 'ko',
+            /* 7. 언어 20개 순서 고정 */
             includedLanguages: 'ko,en,zh-CN,ar,hi,es,pt,uk,ja,ru,vi,th,de,fr,it,tr,id,pl,nl,bn',
             layout: google.translate.TranslateElement.InlineLayout.SIMPLE
         }, 'google_translate_element');
