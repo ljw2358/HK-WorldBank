@@ -3,37 +3,35 @@
 <head>
 <script src="https://sdk.mine.pi/pi-sdk.js"></script>
 <script>
-    // 1. 파이 SDK 초기화 (오류가 나도 팝업을 띄우지 않도록 수정)
-    try {
-        Pi.init({ version: "1.5", sandbox: false });
-        console.log("파이 SDK 연결 성공");
-    } catch (e) {
-        console.error("SDK 로딩 대기 중...");
-    }
+    // 1. 파이 SDK 초기화 (sandbox: true 설정이 핵심입니다!)
+    Pi.init({ version: "1.5", sandbox: true });
 
-    async function purchase() {
+    // 2. 10회 테스트 송금 함수
+    async function test10Transfers() {
         try {
-            // 결제 전 인증 확인
-            const auth = await Pi.authenticate(['payments', 'username'], (payment) => {
-                console.log("결제 진행 중...", payment);
-            });
-            
-            await Pi.createPayment({
-                amount: 1,
-                memo: "HK-WorldBank 테스트 결제",
-                metadata: { orderId: 12345 },
-            }, {
-                onReadyForServerApproval: function(id) { console.log("승인 대기:", id); },
-                onReadyForServerCompletion: function(id, txid) { alert("결제 완료!"); },
-                onCancel: function(id) { console.log("결제 취소"); },
-                onError: function(err, cap) { alert("결제 중 오류가 발생했습니다."); }
-            });
+            const auth = await Pi.authenticate(['payments', 'username']);
+            alert(auth.user.username + " 형님, 10회 송금 테스트를 시작합니다!");
+
+            for (let i = 1; i <= 10; i++) {
+                await Pi.createPayment({
+                    amount: 0.1,
+                    memo: "HK-WorldBank Step 10 Test - " + i,
+                    metadata: { orderId: "test-" + Date.now() + "-" + i },
+                }, {
+                    onReadyForServerApproval: (id) => console.log("승인 대기:", id),
+                    onReadyForServerCompletion: (id, txid) => console.log("완료 TXID:", txid),
+                    onCancel: (id) => console.log("취소"),
+                    onError: (err) => console.error("에러:", err),
+                });
+                // 각 결제창 사이 1초 간격
+                await new Promise(r => setTimeout(r, 1000));
+            }
+            alert("10회 송금 완료! 이제 Develop Pi 화면에서 Submit을 누르세요!");
         } catch (err) {
-            // 이 부분을 수정해서 접속을 막지 않도록 합니다.
-            console.log("인증 처리 중:", err);
-            // alert("파이 브라우저에서 실행하세요"); <- 이 줄을 삭제하거나 주석처리했습니다!
+            alert("오류: " + err.message);
         }
     }
+</script>
 </script>
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
