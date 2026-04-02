@@ -1,202 +1,118 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HK WORLD BANK - Total Ecosystem</title>
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK WORLD BANK GLOBAL</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --gold: #ffc107;
-            --green: #00e676;
-            --pink: #ff4081;
-            --bg: #000000;
-            --card: #121212;
-            --border: #222;
-        }
-
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; padding: 0; background: var(--bg); color: #fff; font-family: 'Pretendard', sans-serif; display: flex; justify-content: center; overflow-x: hidden; scroll-behavior: smooth; }
-        
-        .wrapper { width: 100%; max-width: 480px; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; }
-
-        /* [1] 헤더 및 다국어 구역 */
-        .header { width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .brand { font-size: 1.8rem; font-weight: 900; color: var(--gold); letter-spacing: -1px; }
-        #google_translate_element { transform: scale(0.85); transform-origin: right; }
-
-        /* [2] 메인 자산 통합 원장 카드 */
-        .main-card { 
-            width: 100%; background: linear-gradient(145deg, #1a1a1a, #000); 
-            border-radius: 25px; padding: 30px 20px; text-align: center; 
-            border: 1px solid var(--border); margin-bottom: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-            position: relative;
-        }
-        .ledger-label { color: var(--gold); font-size: 0.85rem; font-weight: bold; margin-bottom: 10px; opacity: 0.9; }
-        .balance { font-size: 3.2rem; font-weight: 800; margin: 5px 0; letter-spacing: -2px; }
-        .gcv-info { font-size: 0.8rem; color: var(--green); border: 1px solid var(--green); border-radius: 50px; padding: 5px 15px; display: inline-block; margin-top: 10px; font-weight: bold; }
-
-        /* [3] 미디어 구동 엔진 (유튜브/틱톡 전용 뷰포트) */
-        #media_engine { width: 100%; display: none; margin-bottom: 25px; background: #000; border-radius: 20px; overflow: hidden; border: 2px solid var(--gold); position: relative; }
-        .video-box { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; }
-        .video-box iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .tiktok-mode { padding-bottom: 177% !important; } /* 틱톡 세로 비율 강제 */
-        .close-btn { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: #fff; padding: 5px 12px; border-radius: 50px; font-size: 0.7rem; z-index: 10; cursor: pointer; border: 1px solid #444; }
-
-        /* [4] 메인 서비스 그리드 */
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; margin-bottom: 25px; }
-        .btn { background: #1a1a1a; padding: 22px 10px; border-radius: 15px; text-align: center; font-weight: bold; font-size: 0.95rem; cursor: pointer; border: 1px solid var(--border); color: #fff; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-        .btn:active { transform: scale(0.96); background: #222; }
-        .btn i { font-size: 1.4rem; }
-        
-        .btn-yt { border-color: #cc0000 !important; color: #ff4444; }
-        .btn-tt { border-color: var(--pink) !important; color: var(--pink); }
-        .btn-yellow { background: var(--gold) !important; color: #000 !important; border: none; }
-        .btn-green { background: var(--green) !important; color: #000 !important; border: none; }
-
-        /* [5] 7대 산업 인덱스 섹션 (길게 구성) */
-        .industry-section { width: 100%; margin-top: 20px; border-top: 1px solid #222; padding-top: 30px; }
-        .section-title { font-size: 1.2rem; font-weight: 900; color: var(--gold); margin-bottom: 20px; text-align: center; letter-spacing: 2px; }
-        .ind-card { width: 100%; background: #111; border-radius: 15px; padding: 20px; margin-bottom: 15px; border: 1px solid #222; display: flex; align-items: center; gap: 15px; }
-        .ind-card i { font-size: 1.8rem; color: var(--gold); width: 40px; text-align: center; }
-        .ind-info h4 { margin: 0; font-size: 1rem; color: #fff; }
-        .ind-info p { margin: 5px 0 0; font-size: 0.75rem; color: #777; line-height: 1.4; }
-
-        .num-field { width: 100%; padding: 20px; background: #080808; border: 1px solid #333; border-radius: 15px; color: #fff; font-size: 1.5rem; text-align: center; margin-bottom: 25px; outline: none; font-weight: bold; }
-        .num-field::placeholder { color: #444; }
+        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; }
+        .gradient-border { border: 2px solid; border-image: linear-gradient(to right, #00ff00, #008000) 1; }
+        .btn-card { background-color: #1a1a1a; border-radius: 12px; transition: 0.3s; }
+        .btn-card:hover { background-color: #333; transform: translateY(-2px); }
+        .gcv-tag { color: #00ff00; border: 1px solid #00ff00; border-radius: 20px; padding: 2px 12px; font-size: 0.8rem; }
+        .staking-info { border-left: 4px solid #f1c40f; padding-left: 10px; }
+        #language-select { background: #1a1a1a; color: white; border: 1px solid #333; font-size: 0.75rem; }
     </style>
 </head>
-<body>
+<body class="max-w-md mx-auto pb-10">
 
-<div class="wrapper">
-    <div class="header">
-        <div class="brand">HK WORLD BANK</div>
-        <div id="google_translate_element"></div>
-    </div>
-
-    <div class="main-card">
-        <div class="ledger-label"><i class="fa-solid fa-link"></i> HK QUANTUM LEDGER</div>
-        <div class="balance">00.0247 <span style="font-size:1.4rem; color:#666;">Pi</span></div>
-        <div class="gcv-info">GCV RATE: $ 314,159 (FIXED)</div>
-    </div>
-
-    <div id="media_engine">
-        <div class="close-btn" onclick="closeMedia()">CLOSE X</div>
-        <div id="v_box" class="video-box">
-            <iframe id="v_frame" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    <header class="p-4 flex justify-between items-center">
+        <h1 class="text-xl font-black text-yellow-500 tracking-tighter">HK WORLD BANK</h1>
+        <div class="flex items-center gap-2">
+            <i class="fa-solid fa-globe text-sm"></i>
+            <select id="language-select" class="rounded px-1 py-0.5">
+                <option value="en">EN</option>
+                <option value="ko">KR</option>
+                <option value="zh">CN</option>
+                <option value="ar">AR</option>
+                <option value="hi">IN</option>
+                <option value="es">ES</option>
+                <option value="pt">BR</option>
+                <option value="uk">UA</option>
+                <option value="ja">JP</option>
+                <option value="ru">RU</option>
+                <option value="vi">VN</option>
+                <option value="th">TH</option>
+                <option value="de">DE</option>
+                <option value="fr">FR</option>
+                <option value="it">IT</option>
+                </select>
         </div>
-    </div>
+    </header>
 
-    <div class="grid">
-        <div class="btn" onclick="alert('Payment System Initializing...')">
-            <i class="fa-solid fa-cart-shopping"></i><span>결제 (TEST)</span>
-        </div>
-        <div class="btn">
-            <i class="fa-solid fa-vault"></i><span>예치 (31.4%)</span>
-        </div>
-        <div class="btn btn-yt" onclick="runEngine('yt')">
-            <i class="fa-brands fa-youtube"></i><span>YOUTUBE 구동</span>
-        </div>
-        <div class="btn btn-tt" onclick="runEngine('tt')">
-            <i class="fa-brands fa-tiktok"></i><span>TIKTOK 구동</span>
-        </div>
-    </div>
+    <section class="px-6 py-4 text-center">
+        <p class="text-gray-400 text-sm mb-1">메인 자산 통합 원장</p>
+        <h2 class="text-5xl font-bold mb-2">400.0212 <span class="text-2xl text-yellow-500">Pi</span></h2>
+        <div class="inline-block gcv-tag font-bold">가치 평가: $ 125,663,600 (GCV)</div>
+    </section>
 
-    <label style="color:var(--green); font-size:0.85rem; font-weight:bold; margin-bottom:10px; display:block; padding-left:5px;">유동성풀 공급 수량</label>
-    <input type="number" id="pi_input" class="num-field" placeholder="0.00">
+    <section class="grid grid-cols-3 gap-3 px-4 mt-6">
+        <button class="btn-card p-4 flex flex-col items-center">
+            <i class="fa-solid fa-rocket text-red-500 mb-2"></i>
+            <span class="text-xs">송금</span>
+        </button>
+        <button class="btn-card p-4 flex flex-col items-center">
+            <i class="fa-solid fa-cart-shopping text-gray-400 mb-2"></i>
+            <span class="text-xs">결제</span>
+        </button>
+        <button class="btn-card p-4 flex flex-col items-center">
+            <i class="fa-solid fa-piggy-bank text-yellow-500 mb-2"></i>
+            <span class="text-xs font-bold text-yellow-500">예치</span>
+        </button>
+        <button class="btn-card p-4 flex flex-col items-center">
+            <i class="fa-solid fa-gift text-red-400 mb-2"></i>
+            <span class="text-xs">보상</span>
+        </button>
+        <button class="btn-card p-4 flex flex-col items-center">
+            <i class="fa-solid fa-scale-balanced text-blue-400 mb-2"></i>
+            <span class="text-xs text-nowrap">기본소득</span>
+        </button>
+        <button class="btn-card p-4 flex flex-col items-center">
+            <i class="fa-solid fa-rotate text-cyan-400 mb-2"></i>
+            <span class="text-xs">스왑</span>
+        </button>
+    </section>
 
-    <div class="grid">
-        <div class="btn btn-yellow" style="grid-column: span 1;">SWAP</div>
-        <div class="btn btn-green" style="grid-column: span 1;" onclick="confirmAction()">LP SUPPLY</div>
-    </div>
-
-    <div class="industry-section">
-        <div class="section-title">7 CORE INDUSTRIES</div>
+    <section class="mt-8 px-6">
+        <div class="staking-info mb-4">
+            <p class="text-yellow-500 text-xs font-bold uppercase tracking-widest">Staking 31.4% | 유동성 풀 $</p>
+            <h3 class="text-3xl font-bold tracking-tight">88,401,819,601</h3>
+        </div>
         
-        <div class="ind-card">
-            <i class="fa-solid fa-robot"></i>
-            <div class="ind-info">
-                <h4>Robotics (Figure AI)</h4>
-                <p>지능형 휴머노이드 로봇 및 자동화 생산 인프라 구축</p>
-            </div>
+        <div class="flex gap-2 mb-4">
+            <button class="flex-1 bg-white text-black font-bold py-3 rounded-lg text-sm">Pi 수량</button>
+            <button class="flex-1 bg-yellow-500 text-black font-bold py-3 rounded-lg text-sm">SWAP</button>
+            <button class="flex-1 bg-green-500 text-white font-bold py-3 rounded-lg text-sm text-nowrap px-1">LP 공급</button>
         </div>
+    </section>
 
-        <div class="ind-card">
-            <i class="fa-solid fa-sun"></i>
-            <div class="ind-info">
-                <h4>Nuclear Fusion</h4>
-                <p>KSTAR 기반 인공태양 에너지 자립화 및 무한 동력 연구</p>
-            </div>
+    <section class="px-4 mb-4">
+        <button class="w-full bg-red-500 py-4 rounded-xl flex justify-center items-center gap-2 font-bold shadow-lg shadow-red-900/20">
+            <i class="fa-solid fa-headset"></i>
+            글로벌 고객지원센터
+        </button>
+    </section>
+
+    <section class="px-4 flex gap-2">
+        <a href="#" class="flex-1 bg-red-600 py-3 rounded-lg flex justify-center items-center gap-2 font-bold uppercase italic tracking-tighter">
+            <i class="fa-brands fa-youtube"></i> YOUTUBE
+        </a>
+        <a href="#" class="flex-1 bg-black border border-gray-700 py-3 rounded-lg flex justify-center items-center gap-2 font-bold uppercase tracking-tighter">
+            <i class="fa-brands fa-tiktok"></i> TIKTOK
+        </a>
+    </section>
+
+    <footer class="mt-10 px-6 text-center text-[10px] text-gray-500">
+        <p class="mb-2">© 2026 HK GROUP GLOBAL MANAGEMENT GROUP</p>
+        <p class="mb-4">CHAIRMAN LEE JAE-WAN [HK-FIGURE]</p>
+        <div class="flex justify-center items-center gap-2 text-cyan-400 font-bold border border-cyan-900/50 py-2 rounded-full bg-cyan-950/10">
+            <i class="fa-solid fa-shield-halved"></i>
+            HK_QUANTUM_SHIELD_ACTIVE
         </div>
+        <p class="mt-4 opacity-50">본 플랫폼은 개인정보보호법 및 퀀텀 암호화 보안 체계를 준수합니다.</p>
+    </footer>
 
-        <div class="ind-card">
-            <i class="fa-solid fa-rocket"></i>
-            <div class="ind-info">
-                <h4>Space Infrastructure</h4>
-                <p>저궤도 위성 통신 및 우주 자원 확보 프로젝트</p>
-            </div>
-        </div>
-
-        <div class="ind-card">
-            <i class="fa-solid fa-gears"></i>
-            <div class="ind-info">
-                <h4>Parts Bank</h4>
-                <p>글로벌 핵심 산업 부품 공급망 디지털 통합 시스템</p>
-            </div>
-        </div>
-    </div>
-
-    <div style="height: 50px;"></div> </div>
-
-<script>
-    // 미디어 엔진 구동 로직
-    function runEngine(type) {
-        const engine = document.getElementById('media_engine');
-        const box = document.getElementById('v_box');
-        const frame = document.getElementById('v_frame');
-
-        engine.style.display = 'block';
-        
-        if(type === 'yt') {
-            box.className = "video-box";
-            frame.src = "https://www.youtube.com/embed?listType=user_uploads&list=HKWorldBank";
-        } else {
-            box.className = "video-box tiktok-mode";
-            frame.src = "https://www.tiktok.com/embed/@hkworldbank";
-        }
-        
-        // 버튼 클릭 시 영상 위치로 자동 스크롤
-        window.scrollTo({ top: engine.offsetTop - 20, behavior: 'smooth' });
-    }
-
-    function closeMedia() {
-        document.getElementById('media_engine').style.display = 'none';
-        document.getElementById('v_frame').src = "";
-    }
-
-    function confirmAction() {
-        const val = document.getElementById('pi_input').value;
-        if(!val) return alert("수량을 입력하십시오.");
-        alert(val + " Pi 유동성 공급이 예약되었습니다.");
-    }
-
-    // Pi Network SDK & 괄호 검수 완료 (98~102줄 이상 무)
-    const Pi = window.Pi;
-    if (Pi) {
-        try {
-            Pi.init({ version: "2.0", sandbox: false });
-        } catch (err) {
-            console.error("Pi SDK Init Failed");
-        }
-    }
-
-    // 다국어 엔진
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'ko', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-    }
-</script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
