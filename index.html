@@ -98,7 +98,7 @@
     </div>
 
     <button class="cs-wide" id="t-cs">글로벌 고객지원센터</button>
-        <div class="sns-container" style="padding: 20px; text-align: center; background: #000;">
+   <div class="sns-container" style="padding: 20px; text-align: center; background: #000;">
             
             <div class="video-item" style="margin-bottom: 30px;">
                 <h3 style="color: #fff; margin-bottom: 15px; font-size: 18px;">HK Group YouTube</h3>
@@ -126,28 +126,6 @@
 
         </div>
 
-    31.4%)", msg:'"HK WorldBank защищает активы квантовым шифрованием."', policy:"Политика", stk:"Стейкинг 31.4% | LP $" },
-        vi: { ledger:"Sổ cái tài sản", gcv:"Giá trị: $ 125,663,600 (GCV)", send:"Gửi", pay:"Thanh toán", save:"Gửi tiết kiệm", reward:"Thưởng", ubi:"Thu nhập", swap2:"Hoán đổi", pi:"Số lượng PI", swap:"SWAP", lp:"Cung cấp LP", cs:"Trung tâm CS", apy:"Tiền gửi (APY 31.4%)", msg:'"HK WorldBank bảo vệ tài sản bằng mã hóa lượng tử."', policy:"Bảo mật", stk:"Staking 31.4% | Pool $" },
-        hi: { ledger:"संपत्ति लेजर", gcv:"मूल्य: $ 125,663,600 (GCV)", send:"भेजें", pay:"भुगतान", save:"जमा", reward:"पुरस्कार", ubi:"आय", swap2:"स्वैप", pi:"PI मात्रा", swap:"SWAP", lp:"LP आपूर्ति", cs:"ग्लोबल सीएस सेंटर", apy:"ज마 (APY 31.4%)", msg:'"HK WorldBank आपकी संपत्ति की रक्षा करता है।"', policy:"गोपनीयता नीति", stk:"स्टेकिंग 31.4% | पूल $" },
-        es: { ledger:"Libro de Activos", gcv:"Valor: $ 125,663,600 (GCV)", send:"Enviar", pay:"Pago", save:"Ahorro", reward:"Premio", ubi:"Renta", swap2:"Canje", pi:"PI Saldo", swap:"SWAP", lp:"Suministro LP", cs:"Centro Soporte", apy:"Ahorro (APY 31.4%)", msg:'"HK WorldBank protege activos con tecnología cuántica."', policy:"Privacidad", stk:"Staking 31.4% | LP $" },
-        pt: { ledger:"Livro de Ativos", gcv:"Avaliação: $ 125,663,600 (GCV)", send:"Enviar", pay:"Pagamento", save:"Depósito", reward:"Prêmio", ubi:"Renda", swap2:"Troca", pi:"PI Saldo", swap:"SWAP", lp:"Provisão LP", cs:"Centro CS Global", apy:"Depósito (APY 31.4%)", msg:'"HK WorldBank protege ativos com criptografia quântica."', policy:"Privacidade", stk:"Staking 31.4% | Pool $" },
-        th: { ledger:"บัญชีสินทรัพย์", gcv:"มูลค่า: $ 125,663,600 (GCV)", send:"ส่ง", pay:"จ่าย", save:"ฝาก", reward:"รางวัล", ubi:"รายได้", swap2:"สวอป", pi:"จำนวน PI", swap:"SWAP", lp:"LP พูล", cs:"ศูนย์ช่วยเหลือ", apy:"เงินฝาก (APY 31.4%)", msg:'"HK WorldBank ปกป้องสินทรัพย์ด้วยควอนตัม"', policy:"นโยบาย", stk:"Staking 31.4% | พูล $" },
-        de: { ledger:"Hauptbuch", gcv:"Wert: $ 125,663,600 (GCV)", send:"Senden", pay:"Zahlen", save:"Sparen", reward:"Bonus", ubi:"BGE", swap2:"Swap", pi:"PI Menge", swap:"SWAP", lp:"LP Zufuhr", cs:"Kundenzentrum", apy:"Anlage (APY 31.4%)", msg:'"HK WorldBank schützt Ihr Vermögen."', policy:"Datenschutz", stk:"Staking 31.4% | Pool $" },
-        fr: { ledger:"Grand Livre", gcv:"Valeur: $ 125,663,600 (GCV)", send:"Envoyer", pay:"Paiement", save:"Dépôt", reward:"Prix", ubi:"Revenu", swap2:"Swap", pi:"PI Solde", swap:"SWAP", lp:"Offre LP", cs:"Centre Support", apy:"Dépôt (APY 31.4%)", msg:'"HK WorldBank protège vos actifs."', policy:"Confidentialité", stk:"Staking 31.4% | Pool $" },
-        it: { ledger:"Registro Asset", gcv:"Valore: $ 125,663,600 (GCV)", send:"Invia", pay:"Pagamento", save:"Deposito", reward:"Premio", ubi:"Reddito", swap2:"Swap", pi:"PI Saldo", swap:"SWAP", lp:"Offerta LP", cs:"Centro Supporto", apy:"Deposito (APY 31.4%)", msg:'"HK WorldBank protegge i tuoi asset."', policy:"Privacy", stk:"Staking 31.4% | Pool $" },
-        uk: { ledger:"Реєстр активів", gcv:"Оцінка: $ 125,663,600 (GCV)", send:"Надіслати", pay:"Оплата", save:"Депозит", reward:"Нагорода", ubi:"Дохід", swap2:"Обмін", pi:"К-сть PI", swap:"SWAP", lp:"LP Постачання", cs:"Центр підтримки", apy:"Депозит (APY 31.4%)", msg:'"HK WorldBank захищає активи квантовим шифруванням."', policy:"Політика", stk:"Стейкінг 31.4% | LP $" }
-    };
-
-    function applyLang() {
-        const lang = document.getElementById('langSel').value;
-        const d = i18n[lang] || i18n['en'];
-        document.getElementById('t-ledger').innerText = d.ledger;
-        document.getElementById('t-gcv').innerText = d.gcv;
-        document.getElementById('b-pi').innerText = d.pi;
-        document.getElementById('b-swap').innerText = d.swap;
-        document.getElementById('b-lp').innerText = d.lp;
-        document.getElementById('t-cs').innerText = d.cs;
-        document.getElementById('t-stk').innerText = d.stk;
         document.getElementById('t-apy').innerText = d.apy;
         document.getElementById('t-msg').innerText = d.msg;
         document.getElementById('t-policy').innerText = d.policy;
