@@ -3,140 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700;900&family=Roboto:ital,wght@1,900&display=swap" rel="stylesheet">
-    <title>HK WORLDBANK OFFICIAL</title>
+    <title>HK WorldBank</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --gold: #FFD700; --cyan: #00f2ea; --red: #FF3B30; --green: #00FF00; --dark-bg: #000; }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-        body { background-color: var(--dark-bg); color: white; text-align: center; font-family: 'Noto Sans KR', sans-serif; }
-        .container { width: 100%; max-width: 500px; margin: 0 auto; padding: 15px; position: relative; }
+        :root {
+            --hk-gold: #FFD700;
+            --hk-dark: #000000;
+            --hk-gray: #1a1a1a;
+            --hk-red: #FF0000;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--hk-dark);
+            color: white;
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+            -webkit-user-select: none;
+        }
 
-        /* [요청] 언어 위치: 우측 상단 정밀 배치 */
-        .top-nav { display: flex; justify-content: flex-end; padding: 5px 0; }
-        .lang-select { background: #1a1a1a; color: #fff; border: 1.5px solid var(--gold); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+        /* 언어 선택 상단 바 */
+        .top-nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 15px;
+            background: #111;
+        }
+        .lang-select {
+            background: #222;
+            color: white;
+            border: 1px solid #444;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
 
-        /* 브랜드 헤더 */
-        .brand-section { margin-top: 10px; margin-bottom: 25px; }
-        .brand-main { color: var(--gold); font-size: 3rem; font-weight: 900; letter-spacing: -2px; }
-        .brand-sub { color: #888; font-size: 0.8rem; font-weight: bold; letter-spacing: 1px; }
+        /* 헤더 섹션 */
+        header {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        .brand-name {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--hk-gold);
+            letter-spacing: -1px;
+            margin-bottom: 5px;
+        }
+        .sub-text {
+            font-size: 13px;
+            color: #888;
+            letter-spacing: 1px;
+        }
 
-        /* 자산 및 GCV 섹션 */
-        .ledger-title { color: var(--gold); font-size: 1.2rem; margin-bottom: 8px; font-weight: bold; }
-        .asset-val { font-family: 'Roboto', sans-serif; font-size: 5rem; color: var(--gold); font-weight: 900; font-style: italic; line-height: 0.9; }
-        .asset-unit { font-size: 2.2rem; color: var(--gold); font-weight: 900; margin-bottom: 15px; }
-        .gcv-badge { border: 2.5px solid var(--green); color: var(--green); padding: 10px 25px; border-radius: 35px; font-size: 1.1rem; font-weight: 900; display: inline-block; margin-bottom: 30px; }
+        /* 메인 자산 카드 (스크린샷 반영) */
+        .asset-card {
+            margin: 0 20px;
+            padding: 25px;
+            background: linear-gradient(145deg, #111, #222);
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid #333;
+        }
+        .asset-title { font-size: 14px; color: #aaa; margin-bottom: 10px; }
+        .asset-value { font-size: 36px; font-weight: bold; color: white; }
+        .asset-unit { color: var(--hk-gold); margin-left: 5px; }
+        .gcv-box {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 5px 15px;
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid #00ff00;
+            border-radius: 20px;
+            color: #00ff00;
+            font-size: 14px;
+        }
 
-        /* 6대 핵심 메뉴 */
-        .menu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; }
-        .menu-item { background: #111; border: 1.2px solid #333; padding: 20px 5px; border-radius: 15px; font-size: 0.9rem; font-weight: bold; }
-        .menu-item.active { border: 3px solid var(--gold); color: var(--gold); }
+        /* 버튼 그리드 */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 20px;
+        }
+        .menu-item {
+            background: #1a1a1a;
+            padding: 15px 5px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 12px;
+            border: 1px solid #222;
+        }
+        .menu-item i { display: block; font-size: 20px; margin-bottom: 8px; color: var(--hk-gold); }
 
-        /* 스테이킹 전광판 (88조) */
-        .staking-box { background: #000; border: 2px solid #444; border-radius: 15px; padding: 20px; margin-bottom: 25px; }
-        .staking-label { color: var(--gold); font-size: 0.8rem; font-weight: bold; margin-bottom: 8px; display: block; }
-        .staking-val { font-size: 2.3rem; color: #fff; font-weight: 900; letter-spacing: 1px; }
+        /* 스테이킹 정보 */
+        .staking-info {
+            margin: 0 20px;
+            padding: 15px;
+            border-left: 4px solid var(--hk-gold);
+            background: #111;
+        }
+        .staking-info div { font-size: 12px; color: var(--hk-gold); font-weight: bold; }
+        .staking-info h2 { margin: 5px 0; font-size: 24px; }
 
-        /* 하단 실행 버튼 */
-        .action-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
-        .act-btn { padding: 18px 0; border-radius: 12px; font-weight: 900; font-size: 1rem; border: none; }
-        .btn-qty { background: #fff; color: #000; }
-        .btn-swap { background: #f39c12; color: #fff; }
-        .btn-lp { background: #27ae60; color: #fff; }
+        /* 하단 액션 버튼 */
+        .action-btns {
+            display: flex;
+            gap: 10px;
+            padding: 10px 20px;
+        }
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .btn-white { background: white; color: black; }
+        .btn-gold { background: var(--hk-gold); color: black; }
+        .btn-green { background: #00c853; color: white; }
 
-        /* 고객지원 및 소셜 */
-        .full-btn { width: 100%; padding: 22px; border-radius: 18px; font-weight: 900; margin-bottom: 12px; border: none; font-size: 1.3rem; text-decoration: none; display: flex; align-items: center; justify-content: center; background: var(--red); color: white; gap: 10px; }
-        .social-row { display: flex; gap: 12px; margin-bottom: 40px; }
-        .soc-btn { flex: 1; padding: 18px; border-radius: 12px; font-weight: bold; text-decoration: none; color: white; border: 2px solid #333; font-size: 1.1rem; }
+        /* 유튜브 & 틱톡 섹션 */
+        .social-section {
+            padding: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        .social-btn {
+            flex: 1;
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+        }
+        .yt-btn { background: var(--hk-red); }
+        .tt-btn { background: #000; border: 1px solid #444; }
+        .social-btn i { margin-right: 8px; font-size: 18px; }
 
-        /* 보안 정보 섹션 */
-        .sec-box { background: rgba(0,242,234,0.03); border: 1.5px dashed #005555; padding: 25px; border-radius: 20px; text-align: left; font-size: 0.95rem; color: var(--cyan); line-height: 2; }
-        .sec-title { display: block; font-weight: 900; font-size: 1.1rem; margin-bottom: 12px; }
-
-        /* 모바일 최적화 */
-        @media screen and (max-width: 360px) {
-            .asset-val { font-size: 4rem; }
-            .brand-main { font-size: 2rem; }
-            .menu-item { font-size: 0.8rem; }
-            .staking-val { font-size: 1.5rem; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            font-size: 11px;
+            color: #555;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
     <div class="top-nav">
-        <select class="lang-select" id="langSelector" onchange="changeLang(this.value)">
-            <option value="ko">KR 🇰🇷</option>
-            <option value="en">EN 🇺🇸</option>
-            <option value="zh">CN 🇨🇳</option>
-            <option value="vi">VN 🇻🇳</option>
+        <select class="lang-select">
+            <option>KR 🇰🇷</option>
+            <option>EN 🇺🇸</option>
+            <option>JP 🇯🇵</option>
         </select>
     </div>
 
-    <div class="brand-section">
-        <div class="brand-main">HK WORLDBANK</div>
-        <div class="brand-sub">GLOBAL INDUSTRIAL LEADER</div>
-    </div>
+    <header>
+        <div class="brand-name">HK WORLD BANK</div>
+        <div class="sub-text">GLOBAL INDUSTRIAL LEADER</div>
+    </header>
 
-    <div id="txt-ledger" class="ledger-title">메인 자산 통합 원장</div>
-    <div class="asset-val">400.0212</div>
-    <div class="asset-unit">Pi</div>
-    <div id="txt-gcv" class="gcv-badge">가치 평가: $ 125,663,600 (GCV)</div>
+    <div class="asset-card">
+        <div class="asset-title">메인 자산 통합 원장</div>
+        <div class="asset-value">400.0212<span class="asset-unit">Pi</span></div>
+        <div class="gcv-box">가치 평가: $ 125,663,600 (GCV)</div>
+    </div>
 
     <div class="menu-grid">
-        <div class="menu-item" id="m1">🚀 송금</div>
-        <div class="menu-item" id="m2">🛒 결제</div>
-        <div class="menu-item active" id="m3">💰 예치</div>
-        <div class="menu-item" id="m4">🎁 보상</div>
-        <div class="menu-item" id="m5">⚖️ 기본소득</div>
-        <div class="menu-item" id="m6">🔄 스왑</div>
+        <div class="menu-item"><i class="fas fa-paper-plane"></i>송금</div>
+        <div class="menu-item"><i class="fas fa-shopping-cart"></i>결제</div>
+        <div class="menu-item"><i class="fas fa-coins"></i>예치</div>
+        <div class="menu-item"><i class="fas fa-gift"></i>보상</div>
+        <div class="menu-item"><i class="fas fa-balance-scale"></i>기본소득</div>
+        <div class="menu-item"><i class="fas fa-sync"></i>스왑</div>
     </div>
 
-    <div class="staking-box">
-        <span class="staking-label" id="s-label">STAKING 31.4% | 유동성 풀 $</span>
-        <div class="staking-val">88,401,819,601</div>
+    <div class="staking-info">
+        <div>STAKING 31.4% | 유동성 풀 $</div>
+        <h2>88,401,819,601</h2>
     </div>
 
-    <div class="action-row">
-        <button class="act-btn btn-qty" id="b1">PI 수량</button>
-        <button class="act-btn btn-swap" id="b2">SWAP</button>
-        <button class="act-btn btn-lp" id="b3">LP 공급</button>
+    <div class="action-btns">
+        <button class="btn btn-white">PI 수량</button>
+        <button class="btn btn-gold">SWAP</button>
+        <button class="btn btn-green">LP 공급</button>
     </div>
 
-    <a href="#" class="full-btn" id="t-support">🎧 글로벌 고객지원센터</a>
-
-    <div class="social-row">
-        <a href="https://www.youtube.com/@HK_WorldBank" class="soc-btn" style="background:#f00;">YOUTUBE</a>
-        <a href="https://www.tiktok.com/@hk_worldbank" class="soc-btn" style="border-color:var(--cyan);">Tik Tok</a>
+    <div class="social-section">
+        <a href="https://www.youtube.com/@유튜브아이디" class="social-btn yt-btn">
+            <i class="fab fa-youtube"></i> YOUTUBE
+        </a>
+        <a href="https://www.tiktok.com/@틱톡아이디" class="social-btn tt-btn">
+            <i class="fab fa-tiktok"></i> TIKTOK
+        </a>
     </div>
 
-    <div class="sec-box">
-        <strong id="t-sec" class="sec-title">HK QUANTUM SHIELD ACTIVE</strong>
-        ● <span id="s1">개인정보보호법 준수: 양자 암호화 보안 적용</span><br>
-        ● <span id="s2">Form of Private: 자산 보호 프로토콜 가동</span><br>
-        ● <span id="s3">HK-ROBOT: AI 실시간 위협 탐지 중</span>
-    </div>
-</div>
+    <footer>
+        &copy; 2026 HK GROUP. All Rights Reserved.<br>
+        Powered by HK-WorldBank Ecosystem
+    </footer>
 
-<script>
-    const i18n = {
-        ko: { l: "메인 자산 통합 원장", g: "가치 평가: $ 125,663,600 (GCV)", m1:"🚀 송금", m2:"🛒 결제", m3:"💰 예치", m4:"🎁 보상", m5:"⚖️ 기본소득", m6:"🔄 스왑", sl: "STAKING 31.4% | 유동성 풀 $", b1:"PI 수량", b2:"SWAP", b3:"LP 공급", support: "🎧 글로벌 고객지원센터", s1:"개인정보보호법 준수: 양자 암호화 보안 적용", s2:"Form of Private: 자산 보호 프로토콜 가동", s3:"HK-ROBOT: AI 실시간 위협 탐지 중" },
-        en: { l: "Main Asset Integrated Ledger", g: "Value: $ 125,663,600 (GCV)", m1:"🚀 Transfer", m2:"🛒 Payment", m3:"💰 Stake", m4:"🎁 Reward", m5:"⚖️ Income", m6:"🔄 Swap", sl: "STAKING 31.4% | Liquidity Pool $", b1:"PI QTY", b2:"SWAP", b3:"LP Supply", support: "🎧 Support Center", s1:"Quantum Encryption Applied", s2:"Asset Protocol Active", s3:"AI Threat Detection Active" }
-    };
-
-    function changeLang(lang) {
-        const d = i18n[lang] || i18n['en'];
-        document.getElementById('txt-ledger').innerText = d.l;
-        document.getElementById('txt-gcv').innerText = d.g;
-        document.getElementById('m1').innerText = d.m1; document.getElementById('m2').innerText = d.m2;
-        document.getElementById('m3').innerText = d.m3; document.getElementById('m4').innerText = d.m4;
-        document.getElementById('m5').innerText = d.m5; document.getElementById('m6').innerText = d.m6;
-        document.getElementById('s-label').innerText = d.sl;
-        document.getElementById('b1').innerText = d.b1; document.getElementById('b2').innerText = d.b2;
-        document.getElementById('b3').innerText = d.b3;
-        document.getElementById('t-support').innerText = d.support;
-        document.getElementById('s1').innerText = d.s1; document.getElementById('s2').innerText = d.s2; document.getElementById('s3').innerText = d.s3;
-    }
-</script>
 </body>
 </html>
