@@ -2,127 +2,141 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>HK WORLD BANK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HK WORLD BANK GLOBAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #000; color: #fff; font-family: sans-serif; margin: 0; padding: 0; }
-        .main-card { max-width: 430px; margin: 0 auto; background: #000; min-height: 100vh; overflow: hidden; }
-        .asset-gradient {
-            background: linear-gradient(to bottom, #FFFFFF 30%, #FFD700 100%);
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        .container-global { max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; padding-bottom: 50px; }
+        
+        /* 자산 숫자 그라데이션 및 자동 크기 조절 */
+        .asset-text {
+            background: linear-gradient(180deg, #FFFFFF 0%, #FFD700 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-weight: 900;
+            font-size: clamp(3rem, 15vw, 5rem); font-weight: 900; line-height: 1;
         }
-        .gcv-border { border: 2px solid #00FF00; border-radius: 50px; background: rgba(0, 255, 0, 0.05); }
-        #lang-dropdown { display: none; position: absolute; right: 20px; top: 60px; background: #111; border: 1px solid #333; border-radius: 10px; z-index: 999; }
-        .lang-opt { padding: 12px 20px; border-bottom: 1px solid #222; cursor: pointer; font-size: 14px; }
+
+        /* 20개국어 드롭다운 스크롤박스 */
+        #lang-box {
+            display: none; position: absolute; right: 15px; top: 60px;
+            width: 180px; max-height: 300px; overflow-y: auto;
+            background: #111; border: 1px solid #333; border-radius: 12px; z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .lang-item { padding: 12px 15px; border-bottom: 1px solid #222; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+        .lang-item:hover { background: #222; }
     </style>
 </head>
 <body>
 
-<div class="main-card">
-    <div class="p-5 flex justify-between items-center">
-        <h1 class="text-xl font-black text-yellow-500 italic">HK WORLD BANK</h1>
+<div class="container-global">
+    <header class="p-5 flex justify-between items-center border-b border-zinc-900">
+        <h1 class="text-xl font-black text-yellow-500 tracking-tighter italic">HK WORLD BANK</h1>
         <div class="relative">
-            <button onclick="document.getElementById('lang-dropdown').style.display='block'" class="bg-zinc-900 border border-zinc-700 px-3 py-1 rounded-lg text-xs flex items-center gap-2">
-                <img id="cur-flag" src="https://flagcdn.com/w20/kr.png" width="18"> <span id="cur-lang">KR</span>
+            <button onclick="toggleLang()" class="bg-zinc-900 border border-zinc-700 px-3 py-1.5 rounded-full flex items-center gap-2 text-[11px] font-bold">
+                <img id="flag-main" src="https://flagcdn.com/w20/kr.png" class="w-4 h-3 object-cover">
+                <span id="lang-name">KOREA</span>
+                <i class="fa-solid fa-chevron-down text-zinc-500"></i>
             </button>
-            <div id="lang-dropdown">
-                <div class="lang-opt" onclick="setLanguage('KR')">한국어</div>
-                <div class="lang-opt" onclick="setLanguage('US')">English</div>
-                <div class="lang-opt" onclick="setLanguage('CN')">中文</div>
-            </div>
+            <div id="lang-box">
+                <div class="lang-item" onclick="setLang('KR', 'kr', 'KOREA')"><img src="https://flagcdn.com/w20/kr.png" class="w-4"> 한국어</div>
+                <div class="lang-item" onclick="setLang('US', 'us', 'USA')"><img src="https://flagcdn.com/w20/us.png" class="w-4"> English</div>
+                <div class="lang-item" onclick="setLang('CN', 'cn', 'CHINA')"><img src="https://flagcdn.com/w20/cn.png" class="w-4"> 中文</div>
+                <div class="lang-item" onclick="setLang('JP', 'jp', 'JAPAN')"><img src="https://flagcdn.com/w20/jp.png" class="w-4"> 日本語</div>
+                <div class="lang-item" onclick="setLang('SA', 'sa', 'ARABIC')"><img src="https://flagcdn.com/w20/sa.png" class="w-4"> العربية</div>
+                <div class="lang-item" onclick="setLang('RU', 'ru', 'RUSSIA')"><img src="https://flagcdn.com/w20/ru.png" class="w-4"> Русский</div>
+                <div class="lang-item" onclick="setLang('DE', 'de', 'GERMANY')"><img src="https://flagcdn.com/w20/de.png" class="w-4"> Deutsch</div>
+                <div class="lang-item" onclick="setLang('FR', 'fr', 'FRANCE')"><img src="https://flagcdn.com/w20/fr.png" class="w-4"> Français</div>
+                <div class="lang-item" onclick="setLang('ES', 'es', 'SPAIN')"><img src="https://flagcdn.com/w20/es.png" class="w-4"> Español</div>
+                <div class="lang-item" onclick="setLang('BR', 'br', 'BRAZIL')"><img src="https://flagcdn.com/w20/br.png" class="w-4"> Português</div>
+                </div>
         </div>
-    </div>
+    </header>
 
-    <div class="text-center mt-4 px-5">
-        <p id="t-ledger" class="text-xs font-bold text-zinc-400 mb-2">메인 자산 통합 원장</p>
-        <h2 class="text-[70px] asset-gradient leading-none italic">400.0212</h2>
-        <p class="text-4xl font-black text-yellow-500 italic mt-1">Pi</p>
-        <div class="mt-6 py-3 gcv-border">
-            <span id="t-gcv" class="text-[#00FF00] font-bold text-lg italic">가치 평가: $ 125,663,600 (GCV)</span>
+    <main class="mt-8 px-6 text-center">
+        <p id="lbl-ledger" class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">MAIN ASSET INTEGRATED LEDGER</p>
+        <div class="asset-text italic">400.0212</div>
+        <p class="text-4xl font-black text-yellow-600 mt-2 italic">Pi</p>
+        
+        <div class="mt-8 py-4 px-2 border-2 border-green-500/50 bg-green-500/5 rounded-full inline-block min-w-[280px]">
+            <span id="lbl-gcv" class="text-green-400 font-black text-lg italic italic">가치 평가: $ 125,663,600 (GCV)</span>
         </div>
-    </div>
+    </main>
 
-    <div class="grid grid-cols-3 gap-3 px-5 mt-10 text-center">
-        <div class="bg-zinc-900 p-5 rounded-2xl border border-zinc-800">
+    <div class="grid grid-cols-3 gap-3 px-6 mt-10">
+        <div class="bg-zinc-900/50 border border-zinc-800 p-5 rounded-2xl flex flex-col items-center">
             <i class="fa-solid fa-paper-plane text-red-500 text-xl mb-2"></i>
-            <p id="m1" class="text-[11px] font-bold">송금</p>
+            <span id="m-1" class="text-[10px] font-bold">송금</span>
         </div>
-        <div class="bg-zinc-900 p-5 rounded-2xl border border-zinc-800">
-            <i class="fa-solid fa-cart-shopping text-zinc-500 text-xl mb-2"></i>
-            <p id="m2" class="text-[11px] font-bold">결제</p>
+        <div class="bg-zinc-900/50 border border-zinc-800 p-5 rounded-2xl flex flex-col items-center">
+            <i class="fa-solid fa-cart-shopping text-zinc-400 text-xl mb-2"></i>
+            <span id="m-2" class="text-[10px] font-bold">결제</span>
         </div>
-        <div class="bg-zinc-900 p-5 rounded-2xl border border-yellow-600 ring-1 ring-yellow-500/30">
+        <div class="bg-zinc-900/80 border border-yellow-600 ring-1 ring-yellow-500/20 p-5 rounded-2xl flex flex-col items-center">
             <i class="fa-solid fa-vault text-yellow-500 text-xl mb-2"></i>
-            <p id="m3" class="text-[11px] font-bold text-yellow-500">예치(31.4%)</p>
+            <span id="m-3" class="text-[10px] font-black text-yellow-500">예치(31.4%)</span>
         </div>
     </div>
 
-    <div class="mt-10 px-8 border-l-4 border-yellow-500">
-        <p id="t-stk" class="text-yellow-500 text-[10px] font-black uppercase">STAKING 31.4% | 유동성 풀 $</p>
-        <h3 class="text-2xl font-black mt-1">88,401,819,601</h3>
-    </div>
-
-    <div class="px-5 mt-10 space-y-3">
-        <button id="btn-cs" class="w-full bg-red-600 py-4 rounded-xl font-black text-lg">
-            <i class="fa-solid fa-headset mr-2"></i> 고객센터
+    <div class="px-6 mt-12 space-y-4">
+        <button id="btn-cs" class="w-full bg-red-600 py-5 rounded-2xl font-black text-xl shadow-lg">
+            <i class="fa-solid fa-headset mr-2"></i> 고객지원센터
         </button>
-        <div class="flex gap-3">
-            <a href="https://www.youtube.com/@Hyekong2025" target="_blank" class="flex-1 bg-red-700 py-4 rounded-xl flex justify-center items-center gap-2 font-black text-sm">
-                <i class="fa-brands fa-youtube text-xl"></i> YOUTUBE
+        <div class="flex gap-4">
+            <a href="https://www.youtube.com/@Hyekong2025" target="_blank" class="flex-1 bg-[#FF0000] py-4 rounded-2xl flex justify-center items-center gap-2 font-black text-xs">
+                <i class="fa-brands fa-youtube text-lg"></i> YOUTUBE
             </a>
-            <a href="https://www.tiktok.com/@hyekong2025" target="_blank" class="flex-1 bg-zinc-800 border border-zinc-600 py-4 rounded-xl flex justify-center items-center gap-2 font-black text-sm">
-                <i class="fa-brands fa-tiktok text-xl"></i> TIKTOK
+            <a href="https://www.tiktok.com/@hyekong2025" target="_blank" class="flex-1 bg-[#000] border border-zinc-700 py-4 rounded-2xl flex justify-center items-center gap-2 font-black text-xs text-white">
+                <i class="fa-brands fa-tiktok text-lg"></i> TIKTOK
             </a>
         </div>
     </div>
 
-    <div class="mt-12 px-5 pb-10">
-        <div class="bg-zinc-950 p-5 rounded-2xl border border-zinc-900 text-[9px] text-zinc-500 space-y-1">
-            <p class="text-cyan-500 font-bold mb-2 text-center">HK_QUANTUM_SHIELD_ACTIVE</p>
-            <p id="s1">● 개인정보보호법 준수: 양자 암호화 보안</p>
-            <p id="s2">● Form of Private: 탈중앙화 자산 보호</p>
-            <p id="s3">● HK-ROBOT: AI 실시간 탐지 시스템</p>
+    <footer class="mt-16 px-8 text-center pb-10">
+        <div class="bg-zinc-950 p-6 rounded-3xl border border-zinc-900 text-[9px] text-zinc-600 text-left space-y-2">
+            <p class="text-cyan-500 font-black text-center mb-2 tracking-widest uppercase">HK_QUANTUM_SECURITY_ACTIVE</p>
+            <p id="s-1">● Quantum Encryption: All personal data secured</p>
+            <p id="s-2">● Decentralized Protocol: HK-WorldBank System</p>
+            <p id="s-3">● Real-time AI Shield: Powered by HK-ROBOT</p>
         </div>
-    </div>
+        <p class="text-[8px] text-zinc-800 mt-10 uppercase">CHAIRMAN JAE-WAN LEE | HK HOLDINGS GLOBAL</p>
+    </footer>
 </div>
 
 <script>
-    function setLanguage(lang) {
-        document.getElementById('lang-dropdown').style.display='none';
-        const flag = document.getElementById('cur-flag');
-        const code = document.getElementById('cur-lang');
-        
-        const data = {
-            'KR': { f:'kr', l:'메인 자산 통합 원장', g:'가치 평가: $ 125,663,600 (GCV)', m1:'송금', m2:'결제', m3:'예치(31.4%)', cs:'고객센터', stk:'STAKING 31.4% | 유동성 풀 $', s1:'● 개인정보보호법 준수: 양자 암호화 보안', s2:'● Form of Private: 탈중앙화 자산 보호', s3:'● HK-ROBOT: AI 실시간 탐지 시스템' },
-            'US': { f:'us', l:'MAIN ASSET LEDGER', g:'VALUE: $ 125,663,600 (GCV)', m1:'SEND', m2:'PAY', m3:'STAKE(31.4%)', cs:'CUSTOMER CENTER', stk:'STAKING 31.4% | LIQUIDITY POOL $', s1:'● Privacy Act: Quantum Encryption', s2:'● Form of Private: Asset Protection', s3:'● HK-ROBOT: AI Detection System' },
-            'CN': { f:'cn', l:'主资产综合账本', g:'估值: $ 125,663,600 (GCV)', m1:'转账', m2:'支付', m3:'质押(31.4%)', cs:'客服中心', stk:'质押 31.4% | 流动性池 $', s1:'● 隐私法：应用量子加密安全', s2:'● 隐私形式：去中心化资产保护', s3:'● HK-ROBOT：AI 实时威胁检测' }
+    function toggleLang() {
+        const b = document.getElementById('lang-box');
+        b.style.display = (b.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // 20개국어 대응 로직 (샘플)
+    function setLang(code, flag, name) {
+        document.getElementById('flag-main').src = `https://flagcdn.com/w20/${flag}.png`;
+        document.getElementById('lang-name').innerText = name;
+        document.getElementById('lang-box').style.display = 'none';
+
+        const dict = {
+            'KR': { l:'메인 자산 통합 원장', g:'가치 평가: $ 125,663,600 (GCV)', m1:'송금', m2:'결제', m3:'예치(31.4%)', cs:'고객지원센터' },
+            'US': { l:'MAIN ASSET INTEGRATED LEDGER', g:'VALUATION: $ 125,663,600 (GCV)', m1:'SEND', m2:'PAY', m3:'STAKE(31.4%)', cs:'SUPPORT CENTER' },
+            'CN': { l:'主资产综合账本', g:'估值: $ 125,663,600 (GCV)', m1:'转账', m2:'支付', m3:'质押(31.4%)', cs:'客服中心' },
+            'SA': { l:'دفتر الأصول الرئيسي', g:'التقييم: $ 125,663,600 (GCV)', m1:'إرسال', m2:'دفع', m3:'رهان', cs:'مركز الدعم' },
+            'RU': { l:'ГЛАВНЫЙ КНИГА АКТИВОВ', g:'ОЦЕНКА: $ 125,663,600 (GCV)', m1:'ОТПРАВИТЬ', m2:'ОПЛАТИТЬ', m3:'СТЕЙКИНГ', cs:'ПОДДЕРЖКА' }
         };
 
-        const s = data[lang];
-        flag.src = `https://flagcdn.com/w20/${s.f}.png`;
-        code.innerText = lang;
-        document.getElementById('t-ledger').innerText = s.l;
-        document.getElementById('t-gcv').innerText = s.g;
-        document.getElementById('m1').innerText = s.m1;
-        document.getElementById('m2').innerText = s.m2;
-        document.getElementById('m3').innerText = s.m3;
+        const s = dict[code] || dict['US'];
+        document.getElementById('lbl-ledger').innerText = s.l;
+        document.getElementById('lbl-gcv').innerText = s.g;
+        document.getElementById('m-1').innerText = s.m1;
+        document.getElementById('m-2').innerText = s.m2;
+        document.getElementById('m-3').innerText = s.m3;
         document.getElementById('btn-cs').innerHTML = `<i class="fa-solid fa-headset mr-2"></i> ${s.cs}`;
-        document.getElementById('t-stk').innerText = s.stk;
-        document.getElementById('s1').innerText = s.s1;
-        document.getElementById('s2').innerText = s.s2;
-        document.getElementById('s3').innerText = s.s3;
     }
 
-    // 드롭다운 외 클릭 시 닫기
-    window.onclick = function(event) {
-        if (!event.target.closest('.relative')) {
-            document.getElementById('lang-dropdown').style.display = 'none';
-        }
+    window.onclick = function(e) {
+        if (!e.target.closest('.relative')) document.getElementById('lang-box').style.display='none';
     }
 </script>
-
 </body>
 </html>
