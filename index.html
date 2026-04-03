@@ -8,239 +8,149 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700;900&display=swap');
-        body { 
-            background-color: #000; 
-            color: #fff; 
-            font-family: 'Noto Sans KR', sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .app-container {
-            width: 100%;
-            max-width: 480px; /* 모바일 화면 크기 최적화 */
-            min-height: 100vh;
-            background: #000;
-            position: relative;
-        }
-        /* 메인 자산 통합 원장 컬러 교정 */
-        .asset-ledger-title {
-            color: #ffffff; /* 순백색으로 강조 */
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-        .pi-main-val {
-            background: linear-gradient(to bottom, #ffffff 50%, #f1c40f 100%);
+        body { background-color: #000; color: #fff; font-family: 'Noto Sans KR', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; }
+        .app-shell { width: 100%; max-width: 430px; min-height: 100vh; background: #000; position: relative; padding-bottom: 60px; }
+        
+        /* 메인 자산 그라데이션: 화이트-골드 완벽 재현 */
+        .pi-main-balance {
+            background: linear-gradient(to bottom, #FFFFFF 40%, #FFD700 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 900;
-            filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.8));
+            filter: drop-shadow(0px 4px 10px rgba(0,0,0,1));
         }
-        .gcv-box {
-            border: 2px solid #00ff00;
-            border-radius: 40px;
+
+        /* GCV 네온 박스 */
+        .gcv-neon-border {
+            border: 2px solid #00FF00; border-radius: 50px;
             background: rgba(0, 255, 0, 0.05);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.15);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
         }
-        .btn-menu {
-            background: #181818;
-            border: 1px solid #282828;
-            border-radius: 18px;
-            transition: all 0.2s ease-in-out;
+
+        /* 언어 선택 드롭다운 로직 전용 스타일 */
+        .lang-dropdown-panel {
+            display: none; position: absolute; right: 20px; top: 70px;
+            width: 180px; background: #111; border: 1px solid #333;
+            border-radius: 15px; z-index: 10000; max-height: 350px; overflow-y: auto;
         }
-        .btn-menu:active {
-            transform: scale(0.92);
-            background: #252525;
-        }
-        .lang-dropdown {
-            display: none;
-            position: absolute;
-            right: 20px;
-            top: 70px;
-            width: 180px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 15px;
-            z-index: 9999;
-            max-height: 450px;
-            overflow-y: auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        }
-        .lang-item {
-            padding: 14px 18px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 14px;
-            border-bottom: 1px solid #222;
-            cursor: pointer;
-        }
-        .lang-item:hover { background: #222; }
-        .flag-icon { width: 24px; height: 16px; border-radius: 2px; object-fit: cover; }
-        
-        /* 스크롤바 디자인 */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: #444; border-radius: 10px; }
+        .lang-option { padding: 15px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #222; cursor: pointer; }
+        .flag-icon { width: 20px; height: 14px; object-fit: cover; border-radius: 2px; }
+
+        /* 카드 메뉴 터치 효과 */
+        .menu-card { background: #111; border: 1px solid #222; border-radius: 20px; transition: 0.1s; }
+        .menu-card:active { transform: scale(0.96); background: #1a1a1a; }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <header class="p-6 flex justify-between items-center">
-            <h1 id="main-title" class="text-3xl font-black text-yellow-500 italic tracking-tighter">HK WORLD BANK</h1>
-            <div class="relative">
-                <button onclick="toggleLang()" class="flex items-center gap-2 bg-[#1a1a1a] border border-[#333] px-4 py-2 rounded-2xl text-sm font-bold shadow-lg">
-                    <img id="cur-flag" src="https://flagcdn.com/w20/kr.png" class="flag-icon">
-                    <span id="cur-text">KR</span>
-                    <i class="fa-solid fa-chevron-down text-[10px] text-zinc-500"></i>
-                </button>
-                <div id="langMenu" class="lang-dropdown">
-                    <div class="lang-item" onclick="setLang('KR','kr','한국어')"><img src="https://flagcdn.com/w20/kr.png" class="flag-icon"> 한국어</div>
-                    <div class="lang-item" onclick="setLang('US','us','English')"><img src="https://flagcdn.com/w20/us.png" class="flag-icon"> English</div>
-                    <div class="lang-item" onclick="setLang('CN','cn','中文')"><img src="https://flagcdn.com/w20/cn.png" class="flag-icon"> 中文</div>
-                    <div class="lang-item" onclick="setLang('JP','jp','日本語')"><img src="https://flagcdn.com/w20/jp.png" class="flag-icon"> 日本語</div>
-                    <div class="lang-item" onclick="setLang('SA','sa','العربية')"><img src="https://flagcdn.com/w20/sa.png" class="flag-icon"> العربية</div>
-                    <div class="lang-item" onclick="setLang('VN','vn','Tiếng Việt')"><img src="https://flagcdn.com/w20/vn.png" class="flag-icon"> Tiếng Việt</div>
-                    <div class="lang-item" onclick="setLang('ES','es','Español')"><img src="https://flagcdn.com/w20/es.png" class="flag-icon"> Español</div>
-                    <div class="lang-item" onclick="setLang('RU','ru','Русский')"><img src="https://flagcdn.com/w20/ru.png" class="flag-icon"> Русский</div>
-                    <div class="lang-item" onclick="setLang('IN','in','हिन्दी')"><img src="https://flagcdn.com/w20/in.png" class="flag-icon"> हिन्दी</div>
-                    <div class="lang-item" onclick="setLang('BR','br','Português')"><img src="https://flagcdn.com/w20/br.png" class="flag-icon"> Português</div>
-                    <div class="lang-item" onclick="setLang('UA','ua','Українська')"><img src="https://flagcdn.com/w20/ua.png" class="flag-icon"> Українська</div>
-                    <div class="lang-item" onclick="setLang('TH','th','ไทย')"><img src="https://flagcdn.com/w20/th.png" class="flag-icon"> ไทย</div>
-                    <div class="lang-item" onclick="setLang('DE','de','Deutsch')"><img src="https://flagcdn.com/w20/de.png" class="flag-icon"> Deutsch</div>
-                    <div class="lang-item" onclick="setLang('FR','fr','Français')"><img src="https://flagcdn.com/w20/fr.png" class="flag-icon"> Français</div>
-                    <div class="lang-item" onclick="setLang('IT','it','Italiano')"><img src="https://flagcdn.com/w20/it.png" class="flag-icon"> Italiano</div>
-                    <div class="lang-item" onclick="setLang('TR','tr','Türkçe')"><img src="https://flagcdn.com/w20/tr.png" class="flag-icon"> Türkçe</div>
-                    <div class="lang-item" onclick="setLang('ID','id','Indonesia')"><img src="https://flagcdn.com/w20/id.png" class="flag-icon"> Indonesia</div>
-                    <div class="lang-item" onclick="setLang('PH','ph','Filipino')"><img src="https://flagcdn.com/w20/ph.png" class="flag-icon"> Filipino</div>
-                    <div class="lang-item" onclick="setLang('PL','pl','Polski')"><img src="https://flagcdn.com/w20/pl.png" class="flag-icon"> Polski</div>
-                    <div class="lang-item" onclick="setLang('EG','eg','Arabic')"><img src="https://flagcdn.com/w20/eg.png" class="flag-icon"> Egypt</div>
-                </div>
+
+<div class="app-shell">
+    <header class="p-6 flex justify-between items-center">
+        <h1 class="text-[26px] font-black text-yellow-500 italic tracking-tighter">HK WORLD BANK</h1>
+        <div class="relative">
+            <button onclick="toggleLangMenu()" class="bg-[#151515] border border-[#333] px-4 py-2 rounded-xl flex items-center gap-2 text-xs font-bold">
+                <img id="active-flag" src="https://flagcdn.com/w20/kr.png" class="flag-icon">
+                <span id="active-lang">KR</span>
+                <i class="fa-solid fa-chevron-down text-[10px] text-zinc-500"></i>
+            </button>
+            <div id="langMenu" class="lang-dropdown-panel">
+                <div class="lang-option" onclick="selectLang('KR','kr','한국어')"><img src="https://flagcdn.com/w20/kr.png" class="flag-icon"> 한국어</div>
+                <div class="lang-option" onclick="selectLang('US','us','English')"><img src="https://flagcdn.com/w20/us.png" class="flag-icon"> English</div>
+                <div class="lang-option" onclick="selectLang('CN','cn','中文')"><img src="https://flagcdn.com/w20/cn.png" class="flag-icon"> 中文</div>
+                <div class="lang-option" onclick="selectLang('JP','jp','日本語')"><img src="https://flagcdn.com/w20/jp.png" class="flag-icon"> 日本語</div>
             </div>
-        </header>
+        </div>
+    </header>
 
-        <main class="mt-4">
-            <section class="text-center px-6 mb-10">
-                <p id="ledger-text" class="asset-ledger-title text-base mb-4">메인 자산 통합 원장</p>
-                <h2 class="text-[72px] pi-main-val leading-tight italic">400.0212</h2>
-                <p class="text-4xl font-black text-yellow-500 italic -mt-2">Pi</p>
-                <div class="mt-8 inline-block px-10 py-3.5 gcv-box">
-                    <span id="gcv-label" class="text-[#00ff00] font-black text-xl italic">가치 평가: $ 125,663,600 (GCV)</span>
-                </div>
-            </section>
+    <section class="text-center px-6 mt-4">
+        <p id="label-main-asset" class="text-white text-[15px] font-bold mb-5">메인 자산 통합 원장</p>
+        <h2 class="text-[80px] pi-main-balance leading-none italic">400.0212</h2>
+        <p class="text-[42px] font-black text-yellow-500 italic mt-1">Pi</p>
+        
+        <div class="mt-8 inline-block px-10 py-4 gcv-neon-border">
+            <span id="label-gcv-value" class="text-[#00FF00] font-black text-[19px] italic">가치 평가: $ 125,663,600 (GCV)</span>
+        </div>
+    </section>
 
-            <section class="grid grid-cols-3 gap-4 px-6 mt-6">
-                <div class="btn-menu p-6 flex flex-col items-center">
-                    <i class="fa-solid fa-paper-plane text-red-500 text-2xl mb-3"></i>
-                    <span id="m1" class="text-xs font-bold">송금</span>
-                </div>
-                <div class="btn-menu p-6 flex flex-col items-center">
-                    <i class="fa-solid fa-cart-shopping text-zinc-500 text-2xl mb-3"></i>
-                    <span id="m2" class="text-xs font-bold">결제</span>
-                </div>
-                <div class="btn-menu p-6 flex flex-col items-center border-yellow-600 ring-2 ring-yellow-600/30">
-                    <i class="fa-solid fa-vault text-yellow-500 text-2xl mb-3"></i>
-                    <span id="m3" class="text-xs font-black text-yellow-500">예치(31.4%)</span>
-                </div>
-                <div class="btn-menu p-6 flex flex-col items-center">
-                    <i class="fa-solid fa-gift text-orange-400 text-2xl mb-3"></i>
-                    <span id="m4" class="text-xs font-bold">보상</span>
-                </div>
-                <div class="btn-menu p-6 flex flex-col items-center">
-                    <i class="fa-solid fa-balance-scale text-blue-400 text-2xl mb-3"></i>
-                    <span id="m5" class="text-xs font-bold">기본소득</span>
-                </div>
-                <div class="btn-menu p-6 flex flex-col items-center">
-                    <i class="fa-solid fa-shuffle text-cyan-400 text-2xl mb-3"></i>
-                    <span id="m6" class="text-xs font-bold">스왑</span>
-                </div>
-            </section>
+    <section class="grid grid-cols-3 gap-4 px-6 mt-12">
+        <div class="menu-card p-6 flex flex-col items-center">
+            <i class="fa-solid fa-paper-plane text-red-500 text-2xl mb-3"></i>
+            <span id="btn-send" class="text-xs font-bold">송금</span>
+        </div>
+        <div class="menu-card p-6 flex flex-col items-center">
+            <i class="fa-solid fa-cart-shopping text-zinc-500 text-2xl mb-3"></i>
+            <span id="btn-pay" class="text-xs font-bold">결제</span>
+        </div>
+        <div class="menu-card p-6 flex flex-col items-center border-yellow-600 ring-1 ring-yellow-500/20">
+            <i class="fa-solid fa-vault text-yellow-500 text-2xl mb-3"></i>
+            <span id="btn-stake" class="text-xs font-black text-yellow-500">예치(31.4%)</span>
+        </div>
+    </section>
 
-            <section class="mt-12 px-8">
-                <div class="border-l-4 border-yellow-500 pl-6 mb-6">
-                    <p id="staking-label" class="text-yellow-500 text-[11px] font-black tracking-[0.2em] mb-1 uppercase">STAKING 31.4% | LIQUIDITY POOL</p>
-                    <h3 class="text-4xl font-black tracking-tighter">88,401,819,601</h3>
-                </div>
-                <div class="flex gap-3">
-                    <button class="flex-1 bg-white text-black font-black py-4 rounded-2xl text-xs uppercase shadow-xl">Pi Count</button>
-                    <button class="flex-1 bg-yellow-500 text-black font-black py-4 rounded-2xl text-xs uppercase shadow-xl">Swap</button>
-                    <button class="flex-1 bg-green-500 text-white font-black py-4 rounded-2xl text-xs uppercase shadow-xl">LP Supply</button>
-                </div>
-            </section>
+    <section class="mt-14 px-8">
+        <div class="border-l-4 border-yellow-500 pl-6 mb-6">
+            <p class="text-yellow-500 text-[11px] font-black tracking-widest uppercase">STAKING 31.4% | 유동성 풀 $</p>
+            <h3 class="text-[34px] font-black tracking-tighter">88,401,819,601</h3>
+        </div>
+    </section>
 
-            <section class="px-6 mt-12 space-y-4">
-                <button id="support-btn" class="w-full bg-red-600 py-5 rounded-2xl font-black text-lg italic shadow-2xl active:scale-95 transition-transform">
-                    <i class="fa-solid fa-headset mr-3"></i>GLOBAL SUPPORT
-                </button>
-                <div class="flex gap-4">
-                    <a href="https://www.youtube.com" target="_blank" class="flex-1 bg-[#FF0000] py-4 rounded-2xl flex justify-center items-center gap-3 font-black italic text-sm shadow-xl active:scale-95 transition-transform">
-                        <i class="fa-brands fa-youtube text-2xl"></i> YOUTUBE
-                    </a>
-                    <a href="https://www.tiktok.com" target="_blank" class="flex-1 bg-zinc-900 border border-zinc-700 py-4 rounded-2xl flex justify-center items-center gap-3 font-black text-sm shadow-xl active:scale-95 transition-transform">
-                        <i class="fa-brands fa-tiktok text-2xl"></i> TIKTOK
-                    </a>
-                </div>
-            </section>
-        </main>
+    <section class="px-6 mt-10 space-y-4">
+        <button class="w-full bg-red-600 py-5 rounded-2xl font-black text-lg shadow-xl active:bg-red-700 transition-colors">
+            <i class="fa-solid fa-headset mr-2"></i> 글로벌 고객지원센터
+        </button>
+        <div class="flex gap-4">
+            <a href="https://www.youtube.com/@Hyekong2025" target="_blank" class="flex-1 bg-[#FF0000] py-4 rounded-2xl flex justify-center items-center gap-3 font-black text-[13px] shadow-lg">
+                <i class="fa-brands fa-youtube text-2xl"></i> YOUTUBE
+            </a>
+            <a href="https://www.tiktok.com/@hyekong2025" target="_blank" class="flex-1 bg-zinc-900 border border-zinc-700 py-4 rounded-2xl flex justify-center items-center gap-3 font-black text-[13px] shadow-lg">
+                <i class="fa-brands fa-tiktok text-2xl"></i> TIKTOK
+            </a>
+        </div>
+    </section>
 
-        <footer class="mt-20 px-6 pb-16 border-t border-zinc-900 pt-10">
-            <div class="bg-gradient-to-br from-zinc-950 to-zinc-900 border border-zinc-800 rounded-3xl p-7 shadow-inner">
-                <div class="flex items-center gap-3 text-cyan-400 font-black mb-5">
-                    <i class="fa-solid fa-shield-halved text-2xl"></i>
-                    <span class="text-sm tracking-widest uppercase">HK Quantum Shield Active</span>
-                </div>
-                <div class="text-[11px] text-zinc-500 space-y-4 leading-relaxed">
-                    <p class="flex gap-2"><span class="text-cyan-600">■</span> <span id="p1">개인정보보호법(Privacy Policy) 기반 양자 암호화 보안망 가동</span></p>
-                    <p class="flex gap-2"><span class="text-cyan-600">■</span> <span id="p2">Form of Private Assets: 탈중앙화 자산 익명성 보호 프로토콜 적용</span></p>
-                    <p class="flex gap-2"><span class="text-cyan-600">■</span> <span id="p3">HK-ROBOT: 실시간 비정상 트랜잭션 탐지 및 자산 자동 방어 중</span></p>
-                </div>
-            </div>
-            <div class="mt-10 text-center">
-                <p class="text-[10px] text-zinc-600 font-bold tracking-[0.3em] uppercase mb-3">Privacy | Terms | Form of Private | Security</p>
-                <p class="text-[8px] text-zinc-800">© 2026 HK GROUP GLOBAL MANAGEMENT. CHAIRMAN JAE-WAN LEE.</p>
-            </div>
-        </footer>
-    </div>
+    <footer class="mt-20 px-6 pb-20 text-center">
+        <div class="bg-[#080808] border border-zinc-900 p-6 rounded-3xl mb-10 text-[10px] text-zinc-500 space-y-2 leading-relaxed">
+            <p class="text-cyan-400 font-black mb-3">HK_QUANTUM_SHIELD_ACTIVE</p>
+            <p>● 개인정보보호법 준수: 양자 암호화 보안 시스템 적용</p>
+            <p>● Form of Private: 탈중앙화 자산 보호 프로토콜 가동</p>
+            <p>● HK-ROBOT: AI 실시간 위협 탐지 시스템 최신 업데이트</p>
+        </div>
+        <p class="text-[8px] text-zinc-800 italic uppercase">© 2026 HK GROUP GLOBAL MANAGEMENT. CHAIRMAN JAE-WAN LEE.</p>
+    </footer>
+</div>
 
-    <script>
-        function toggleLang() {
-            const menu = document.getElementById('langMenu');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+<script>
+    // 언어 메뉴 토글 로직
+    function toggleLangMenu() {
+        const menu = document.getElementById('langMenu');
+        menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // 언어 선택 및 텍스트 변환 로직
+    function selectLang(code, flag, name) {
+        document.getElementById('active-lang').innerText = code;
+        document.getElementById('active-flag').src = `https://flagcdn.com/w20/${flag}.png`;
+        document.getElementById('langMenu').style.display = 'none';
+
+        if(code === 'US') {
+            document.getElementById('label-main-asset').innerText = 'MAIN ASSET LEDGER';
+            document.getElementById('label-gcv-value').innerText = 'VALUE: $ 125,663,600 (GCV)';
+            document.getElementById('btn-send').innerText = 'SEND';
+            document.getElementById('btn-stake').innerText = 'STAKE(31.4%)';
+        } else {
+            document.getElementById('label-main-asset').innerText = '메인 자산 통합 원장';
+            document.getElementById('label-gcv-value').innerText = '가치 평가: $ 125,663,600 (GCV)';
+            document.getElementById('btn-send').innerText = '송금';
+            document.getElementById('btn-stake').innerText = '예치(31.4%)';
         }
+    }
 
-        function setLang(code, flag, name) {
-            document.getElementById('cur-text').innerText = code;
-            document.getElementById('cur-flag').src = `https://flagcdn.com/w20/${flag}.png`;
+    // 메뉴 외부 클릭 시 닫기
+    window.onclick = function(event) {
+        if (!event.target.closest('.relative')) {
             document.getElementById('langMenu').style.display = 'none';
-
-            // 언어별 텍스트 변환 로직 (예시: 영어)
-            if(code === 'US') {
-                document.getElementById('ledger-text').innerText = 'MAIN ASSET LEDGER';
-                document.getElementById('gcv-label').innerText = 'Value: $ 125,663,600 (GCV)';
-                document.getElementById('m1').innerText = 'SEND';
-                document.getElementById('m2').innerText = 'PAY';
-                document.getElementById('m3').innerText = 'STAKE(31.4%)';
-                document.getElementById('m4').innerText = 'REWARD';
-                document.getElementById('m5').innerText = 'UBI';
-                document.getElementById('m6').innerText = 'SWAP';
-                document.getElementById('support-btn').innerHTML = '<i class="fa-solid fa-headset mr-3"></i>GLOBAL SUPPORT';
-            } else {
-                // 한국어 기본값으로 복구
-                document.getElementById('ledger-text').innerText = '메인 자산 통합 원장';
-                document.getElementById('gcv-label').innerText = '가치 평가: $ 125,663,600 (GCV)';
-                document.getElementById('m1').innerText = '송금';
-                document.getElementById('m3').innerText = '예치(31.4%)';
-            }
         }
+    }
+</script>
 
-        // 메뉴 외부 클릭 시 닫기
-        window.onclick = function(e) {
-            if (!e.target.closest('.relative')) {
-                document.getElementById('langMenu').style.display = 'none';
-            }
-        }
-    </script>
 </body>
 </html>
