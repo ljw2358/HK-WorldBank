@@ -2,139 +2,147 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>HK WORLD BANK</title>
-    <script src="https://sdk.minepi.com/pi-sdk.js"></script>
-    <script>Pi.init({ version: "1.5", sandbox: true });</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK WORLD BANK - Global Settlement System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --hk-gold: #FFD700; --hk-dark: #000; --hk-green: #00FF00; --hk-blue: #007AFF; }
-        * { box-sizing: border-box; margin: 0; padding: 0; word-break: keep-all; }
-        body { background-color: var(--hk-dark); color: white; font-family: -apple-system, sans-serif; display: flex; justify-content: center; }
-        .wrapper { width: 100%; max-width: 480px; padding: 20px; }
-        .top-nav { display: flex; justify-content: flex-end; margin-bottom: 10px; }
-        .lang-select { background: #111; color: var(--hk-gold); border: 1px solid var(--hk-gold); padding: 5px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
-        .brand { font-size: 32px; font-weight: 900; color: var(--hk-gold); margin: 20px 0; text-align: center; }
-        .asset-card { background: linear-gradient(180deg, #1a1a1a, #000); border-radius: 25px; padding: 40px 15px; text-align: center; border: 1px solid #333; margin-bottom: 25px; }
-        .asset-val { font-size: 50px; font-weight: 900; margin: 10px 0; }
-        .gcv-badge { display: inline-block; padding: 8px 20px; border-radius: 50px; border: 1.5px solid var(--hk-green); color: var(--hk-green); font-size: 15px; font-weight: bold; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; }
-        .grid-box { background: #111; padding: 25px 5px; border-radius: 15px; text-align: center; border: 1px solid #222; cursor: pointer; }
-        .grid-box i { font-size: 30px; margin-bottom: 10px; display: block; }
-        .grid-box span { font-size: 14px; font-weight: bold; }
-        /* 결제창(모달) 스타일 */
-        #payModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 10000; justify-content: center; align-items: center; }
-        .modal-box { background: #1a1a1a; width: 85%; max-width: 360px; padding: 30px; border-radius: 20px; border: 1px solid var(--hk-gold); text-align: center; }
-        #payInput { width: 100%; padding: 15px; margin-top: 15px; background: #000; border: 1px solid #333; color: #fff; text-align: center; font-size: 24px; border-radius: 10px; outline: none; }
-        .pay-confirm { width: 100%; padding: 15px; background: var(--hk-gold); border: none; border-radius: 10px; font-weight: 900; margin-top: 20px; cursor: pointer; }
-        footer { text-align: center; border-top: 1px solid #222; padding-top: 40px; padding-bottom: 40px; color: #555; font-size: 11px; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Noto+Sans+KR:wght@300;500;900&display=swap');
+        
+        body {
+            background: radial-gradient(circle at top, #1a1a1a 0%, #000000 100%);
+            color: #ffffff;
+            font-family: 'Noto Sans KR', sans-serif;
+            min-height: 100vh;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(to right, #facc15, #eab308, #fef08a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+        .gcv-border {
+            border: 2px solid #22c55e;
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.3);
+        }
+        .payment-input {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 12px;
+        }
     </style>
 </head>
-<body>
+<body class="pb-20">
 
-<div class="wrapper">
-    <div class="top-nav">
-        <select class="lang-select" id="langSel" onchange="applyLang()">
-            <option value="ko">한국어 🇰🇷</option>
-            <option value="en">English 🇺🇸</option>
-        </select>
+    <nav class="p-6 flex justify-between items-center">
+        <div class="flex space-x-3">
+            <span class="text-2xl grayscale hover:grayscale-0 cursor-pointer transition">🇺🇸</span>
+            <span class="text-2xl cursor-pointer">🇰🇷</span>
+            <span class="text-2xl grayscale hover:grayscale-0 cursor-pointer transition">🇯🇵</span>
+            <span class="text-2xl grayscale hover:grayscale-0 cursor-pointer transition">🇨🇳</span>
+            <span class="text-2xl grayscale hover:grayscale-0 cursor-pointer transition">🇻🇳</span>
+        </div>
+        <div class="text-yellow-400 font-bold">HK GROUP 🌐</div>
+    </nav>
+
+    <header class="text-center mb-8">
+        <h1 class="text-4xl font-black gold-gradient-text tracking-widest mb-1">HK WORLD BANK</h1>
+        <p class="text-xs text-gray-500 uppercase tracking-widest">Global Asset Ledger System</p>
+    </header>
+
+    <main class="max-w-md mx-auto px-4 space-y-6">
+        
+        <section class="glass-card p-8 text-center relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+                <i class="fa-solid fa-building-columns text-6xl text-white"></i>
+            </div>
+            <h2 class="text-yellow-500 font-bold mb-4">메인 자산 통합 원장</h2>
+            <div class="flex justify-center items-center space-x-2 mb-6">
+                <span class="text-5xl font-black">400.0212</span>
+                <span class="text-3xl font-bold text-yellow-500">Pi</span>
+            </div>
+            <div class="gcv-border inline-block px-6 py-2 rounded-full">
+                <span class="text-green-400 font-bold">가치 평가: $ 125,663,600 (GCV)</span>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-3 gap-4">
+            <div class="glass-card p-4 text-center cursor-pointer hover:bg-white/5 transition">
+                <i class="fa-solid fa-paper-plane text-2xl text-blue-400 mb-2"></i>
+                <p class="text-xs font-bold">송금</p>
+            </div>
+            <div class="glass-card p-4 text-center border-yellow-500 border cursor-pointer bg-yellow-500/10">
+                <i class="fa-solid fa-qrcode text-2xl text-yellow-500 mb-2"></i>
+                <p class="text-xs font-bold">결제</p>
+            </div>
+            <div class="glass-card p-4 text-center cursor-pointer hover:bg-white/5 transition">
+                <i class="fa-solid fa-vault text-2xl text-yellow-300 mb-2"></i>
+                <p class="text-xs font-bold">예치</p>
+            </div>
+        </section>
+
+        <section class="glass-card p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-700 pb-2">
+                <h3 class="font-bold text-yellow-500">REAL-TIME SETTLEMENT</h3>
+                <span class="text-[10px] bg-red-600 px-2 py-0.5 rounded text-white animate-pulse">LIVE</span>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="flex flex-col">
+                    <label class="text-[10px] text-gray-400 mb-1">결제 대상 (Wallet Address / Merchant)</label>
+                    <input type="text" value="HK-ROBOTICS-CENTER-01" class="payment-input p-3 text-sm" readonly>
+                </div>
+                <div class="flex flex-col">
+                    <label class="text-[10px] text-gray-400 mb-1">결제 수량 (Pi)</label>
+                    <input type="number" placeholder="0.0000" class="payment-input p-3 text-xl font-bold text-yellow-400">
+                </div>
+                <button class="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-black py-4 rounded-xl transition transform active:scale-95">
+                    CONFIRM PAYMENT (결제 승인)
+                </button>
+            </div>
+        </section>
+
+        <section class="glass-card p-5 border-l-4 border-yellow-500">
+            <div class="flex justify-between items-end">
+                <div>
+                    <p class="text-xs text-yellow-500 font-bold mb-1">Staking 31.4% | 유동성풀 $</p>
+                    <p class="text-3xl font-black tracking-tighter">88,410,819,601</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] text-gray-500">ESTIMATED APY</p>
+                    <p class="text-xl font-bold text-yellow-400">31.4%</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center py-10 opacity-50">
+            <p class="text-sm font-bold tracking-[0.3em]">CHAIRMAN LEE JAEWAN (HYEKONG)</p>
+            <p class="text-[10px] mt-2">© 2026 HK GROUP. ALL RIGHTS RESERVED.</p>
+            <div class="mt-4 flex justify-center space-x-4">
+                <i class="fa-brands fa-bitcoin text-xl"></i>
+                <i class="fa-solid fa-microchip text-xl"></i>
+                <i class="fa-solid fa-rocket text-xl"></i>
+            </div>
+        </footer>
+
+    </main>
+
+    <div class="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-md border-t border-gray-800 p-4 flex justify-around items-center max-w-md mx-auto">
+        <i class="fa-solid fa-house text-yellow-500 text-xl"></i>
+        <i class="fa-solid fa-chart-line text-gray-500 text-xl"></i>
+        <div class="bg-yellow-500 w-12 h-12 rounded-full flex items-center justify-center -mt-10 border-4 border-black shadow-lg">
+            <i class="fa-solid fa-qrcode text-black text-2xl"></i>
+        </div>
+        <i class="fa-solid fa-wallet text-gray-500 text-xl"></i>
+        <i class="fa-solid fa-gear text-gray-500 text-xl"></i>
     </div>
 
-    <div class="brand">HK WORLD BANK</div>
-
-    <div class="asset-card">
-        <div id="t-ledger" style="color:var(--hk-gold); font-weight:bold; margin-bottom:10px;">메인 자산 통합 원장</div>
-        <div class="asset-val">400.0212 <span style="color:var(--hk-gold); font-size:0.5em;">Pi</span></div>
-        <div class="gcv-badge" id="t-gcv">가치 평가: $ 125,663,600 (GCV)</div>
-    </div>
-
-    <div class="grid-3">
-        <div class="grid-box"><i class="fas fa-paper-plane" style="color:var(--hk-blue)"></i><span>송금</span></div>
-        <div class="grid-box" onclick="openPay()"><i class="fas fa-shopping-cart" style="color:#FF9500"></i><span>결제</span></div>
-        <div class="grid-box"><i class="fas fa-piggy-bank" style="color:var(--hk-gold)"></i><span>예치</span></div>
-    </div>
-
-    <footer>
-        <div style="color:var(--hk-gold); font-size:36px; font-weight:900; margin-bottom:10px;">APY 31.4%</div>
-        <p>Chairman Lee Jaewan (Hyekong)<br>&copy; 2026 HK Group.</p>
-    </footer>
-</div>
-
-<div id="payModal">
-    <div class="modal-box">
-        <h2 id="m-title" style="color:var(--hk-gold);">PI 결제</h2>
-        <input type="number" id="payInput" placeholder="0.00 Pi">
-        <button class="pay-confirm" onclick="executePay()" id="m-btn">결제 승인</button>
-        <p style="margin-top:15px; color:#666; cursor:pointer;" onclick="closePay()">취소</p>
-    </div>
-</div>
-
-<script>
-    // ★★★ [형님 확인] 여기에 형님의 진짜 파이 지갑 주소를 넣으세요 ★★★
-    const MASTER_WALLET = "G...형님의_지갑_주소를_여기에_복사";
-
-    const i18n = {
-        ko: { ledger: "메인 자산 통합 원장", gcv: "가치 평가: $ 125,663,600 (GCV)", pT: "PI 결제", pB: "결제 승인", pM: " Pi 결제가 완료되었습니다" },
-        en: { ledger: "Main Asset Ledger", gcv: "Value: $ 125,663,600 (GCV)", pT: "PI Payment", pB: "Approve", pM: " Pi payment successful" }
-    };
-
-    function applyLang() {
-        const lang = document.getElementById('langSel').value;
-        const d = i18n[lang] || i18n['en'];
-        document.getElementById('t-ledger').innerText = d.ledger;
-        document.getElementById('t-gcv').innerText = d.gcv;
-        document.getElementById('m-title').innerText = d.pT;
-        document.getElementById('m-btn').innerText = d.pB;
-    }
-
-    function openPay() { 
-        document.getElementById('payModal').style.display = 'flex'; 
-        document.getElementById('payInput').focus(); 
-    }
-    
-    function closePay() { 
-        document.getElementById('payModal').style.display = 'none'; 
-        document.getElementById('payInput').value = ''; 
-    }
-
-    // ★ 결제 성공 시 형님의 지갑주소와 거래번호(TXID)를 띄워주는 진짜 함수 ★
-    async function executePay() {
-        const amt = document.getElementById('payInput').value;
-        const lang = document.getElementById('langSel').value;
-        const msg = i18n[lang]?.pM || i18n['en'].pM;
-
-        if (amt <= 0 || !amt) { alert("금액을 정확히 입력하세요"); return; }
-
-        try {
-            const payment = await Pi.createPayment({
-                amount: parseFloat(amt),
-                memo: "HK WORLD BANK DEPOSIT",
-                metadata: { target: MASTER_WALLET }
-            }, {
-                onReadyForServerApproval: (id) => { console.log("ID: " + id); },
-                onReadyForServerCompletion: (id, txid) => {
-                    // ★ 형님이 원하시던 '진짜 리포트' 출력 부분 ★
-                    const report = `
-[ 결제 성공 리포트 ]
-수령 지갑: ${MASTER_WALLET}
-거래 번호: ${txid}
-결제 금액: ${amt} Pi
-상태: ${msg}
-                    `;
-                    alert(report); // 지갑주소와 거래번호가 알림창에 딱 뜹니다!
-                    closePay();
-                },
-                onCancel: () => { alert("결제가 취소되었습니다."); },
-                onError: (e) => { alert("에러 발생: " + e.message); }
-            });
-        } catch (err) {
-            // 파이 브라우저가 아닐 때 뜨는 안내 (지갑 주소 확인용)
-            alert(`[테스트 모드]\n수령 지갑: ${MASTER_WALLET}\n금액: ${amt} Pi\n(실제 전송은 파이 브라우저에서만 작동합니다)`);
-            closePay();
-        }
-    }
-
-    window.onload = applyLang;
-</script>
 </body>
 </html>
