@@ -159,7 +159,7 @@
     async function processPayment() {
         const amt = 5; // 시연용 고정 5 Pi
         const btn = document.getElementById('confirmBtn');
-        btn.disabled = true; btn.innerText = "지갑 연결 중...";
+        btn.disabled = false; btn.innerText = "지갑 연결 중...";
 
         // 1. 실제 파이 SDK 시도
         if (window.Pi && window.Pi.createPayment) {
