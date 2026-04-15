@@ -178,79 +178,22 @@
         document.getElementById('s3').innerText = d.s3;
         document.getElementById('cs_btn').innerText = d.cs;
     }
-// 버튼 연결 함수 (이름이 정확해야 작동합니다)
-    // [182번 시작] V3 프로토콜 및 실무 구동 로직
-    async function runHKV3Protocol() {
-        console.log("HK-WorldBank V3 시퀀스 가동...");
-        try {
-            // 테스트넷 지갑 연동 및 결제 시뮬레이션
-            const payment = await Pi.createPayment({
-                amount: 3.14,
-                memo: "HK-WorldBank 테스트 결제 및 유동성 공급",
-                metadata: { protocol: "V23_Ready", platform: "HK-Group" }
-            }, {
-                onReadyForServerApproval: (paymentId) => { console.log("승인 대기: " + paymentId); },
-                onReadyForServerCompletion: (paymentId, txid) => { 
-                    alert("축하합니다! 테스트 코인 예치 및 연동 성공!");
-                    console.log("TXID 확인: " + txid);
-                },
-                onCancel: (paymentId) => { console.log("결제 취소"); },
-                onError: (error, payment) => { console.error("결제 오류", error); }
-            });
-        } catch (err) {
-            console.error("DEX 연동 오류: " + err.message);
-            alert("지갑 연결을 확인해주세요. 메인넷 전환 준비 중입니다.");
-        }
+
+    function piTest(func) {
+        alert(`[HK WORLD BANK] ${func} feature is initializing on Pi Testnet...`);
     }
 
-    // 버튼 클릭 이벤트 리스너 (DEX 스왑 및 LP 공급 연동)
-    document.addEventListener("DOMContentLoaded", function() {
-        const swapBtn = document.querySelector(".btn-yellow"); // DEX 스왑 버튼
-        const lpBtn = document.querySelector(".btn-green"); // LP 공급 버튼
-        
-        if(swapBtn) swapBtn.onclick = runHKV3Protocol;
-        if(lpBtn) lpBtn.onclick = runHKV3Protocol;
-    });
+    let tvl = 88428554367;
+    setInterval(() => {
+        tvl += Math.floor(Math.random() * 900000);
+        document.getElementById('lp-amount').innerText = "$ " + tvl.toLocaleString();
+        document.getElementById('stk-val').innerText = (14 + (Math.random() * 4)).toFixed(2) + "%";
+        document.getElementById('lp-val').innerText = (20 + (Math.random() * 12)).toFixed(2) + "%";
+    }, 2000);
+
+    window.onload = applyTranslation;
 </script>
-
-<div class="container">
-    <header>
-        <h1 style="color: var(--gold);">HK WORLD BANK</h1>
-        <p style="font-size: 14px;">메인 자산 통합 원장</p>
-    </header>
-
-    <div class="main-card">
-        <h2 id="ledger" style="font-size: 40px; margin: 20px 0;">400.0212 <span style="font-size: 24px; color: var(--gold);">Pi</span></h2>
-        <div class="gcv-badge" style="color: var(--green); border: 1px solid var(--green); padding: 5px 15px; border-radius: 20px; display: inline-block;">
-            Value: $ 125,663,600 (GCV)
-        </div>
-        
-        <div class="rates" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px;">
-            <div class="rate-box">
-                <p style="font-size: 12px; color: var(--green);">스테이킹 이율</p>
-                <strong style="font-size: 22px;">15.48%</strong>
-            </div>
-            <div class="rate-box">
-                <p style="font-size: 12px; color: var(--green);">유동성 수익</p>
-                <strong style="font-size: 22px;">23.26%</strong>
-            </div>
-        </div>
-
-        <div class="lp-total" style="margin-top: 25px; border-top: 1px solid #333; padding-top: 20px;">
-            <p style="font-size: 11px; color: #888;">전체 유동성 LP 공급</p>
-            <h3 style="font-size: 28px;">$ 88,428,554,367</h3>
-        </div>
-    </div>
-
-    <div class="btn-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 30px;">
-        <button class="btn-white" style="background: #fff; color: #000; padding: 15px 0; border-radius: 15px; font-weight: bold;">PI 수량</button>
-        <button class="btn-yellow" style="background: var(--gold); color: #000; padding: 15px 0; border-radius: 15px; font-weight: bold;">DEX 스왑</button>
-        <button class="btn-green" style="background: var(--green); color: #000; padding: 15px 0; border-radius: 15px; font-weight: bold;">LP 공급</button>
-    </div>
-</div>
-
 </body>
 </html>
-
 
 
