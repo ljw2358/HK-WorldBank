@@ -178,22 +178,23 @@
         document.getElementById('s3').innerText = d.s3;
         document.getElementById('cs_btn').innerText = d.cs;
     }
-
+// 버튼 연결 함수 (이름이 정확해야 작동합니다)
 function pitest(func) {
     var messages = {
-        'Transfer': '안전한 자산 송금을 위해 보안 네트워크를 최적화 중입니다.',
-        'Payment': '결제 시스템 인프라를 구축하고 있습니다. 잠시만 기다려 주세요.',
-        'Vault': '금고 자산 보호를 위한 양자 방패 시스템이 가동 준비 중입니다.',
-        'Reward': '보상 데이터를 동기화하고 있습니다.',
-        'UBI': '기본소득 분배 알고리즘을 계산 중입니다.',
-        'Swap': '유동성 풀 연결을 준비 중입니다.'
+        'Transfer': '안전한 자산 송금을 위해 보안망을 최적화 중입니다.',
+        'Payment': '결제 시스템 인프라를 구축 중입니다. 잠시만 기다려 주세요.',
+        'Vault': '금고 보호를 위한 양자 방패 시스템이 가동 중입니다.',
+        'Reward': '실시간 보상 데이터를 동기화하고 있습니다.',
+        'UBI': '글로벌 기본소득 분배 알고리즘을 계산 중입니다.',
+        'Swap': '유동성 풀 연결 경로를 탐색 중입니다.'
     };
 
-    var msg = messages[func] || func + " 기능을 준비 중입니다.";
-    alert("[HK-Nexus] " + msg + "\n\nHK WORLD BANK - Protocol v23");
+    var msg = messages[func] || "시스템 최적화 중입니다.";
+    alert("[HK-Nexus]\n" + msg + "\n\nHK WORLD BANK - Protocol v23");
 }
 
-var tvl = 88435820776;
+// 실시간 숫자 상승 로직
+var tvl = 88428781913;
 setInterval(function() {
     tvl += Math.floor(Math.random() * 90000);
     var lpElem = document.getElementById('lp-amount');
@@ -203,3 +204,5 @@ setInterval(function() {
 window.onload = applyTranslation;
 </script>
 </body>
+</html>
+
