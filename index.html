@@ -138,19 +138,21 @@
         ro: { name: "Română RO", ledger: "Lichiditate totală", stk: "Profit staking", lp: "Randament LP", dex: "Schimb DEX" },
         hu: { name: "Magyar HU", ledger: "Összes likviditás", stk: "Staking profit", lp: "LP hozam", dex: "DEX Csere" },
         cs: { name: "Čeština CZ", ledger: "Celková likvidita", stk: "Staking zisk", lp: "LP výnos", dex: "DEX Swap" },
-        el: { name: "Ελληνικά GR", ledger: "Συνολική ρευστότητα", stk: "Κέρδος staking", lp: "Απόδοση LP", dex: "Ανταλλαγή DEX" },
-        fi: { name: "Suomi FI", ledger: "Kokonaislikviditeetti", stk: "Staking-voitto", lp: "LP-tuotto", dex: "DEX-vaihto" },
-        da: { name: "Dansk DK", ledger: "Total likviditet", stk: "Staking profit", lp: "LP afkast", dex: "DEX Swap" },
+        bn: { name: "বাংলা BD", ledger: "মোট তারল্য", stk: "স্ট্যাকিং লাভ", lp: "তারল্য রিটার্ন", b1: "PI পরিমাণ", b2: "ডেক্স সোয়াপ", b3: "এল피 공급", m1: "পাঠান", m2: "পেমেন্ট", m3: "ভল্ট", m4: "পুরস্কার", m5: "베이직 인컴", m6: "Swap", s1: "HK 양자 방어", s2: "V23 보안", s3: "Mainnet 연결", btn: "পাই ওয়ালেট সংযোগ" },
+        ro: { name: "Română RO", ledger: "Lichiditate totală", stk: "Profit staking", lp: "Randament LP", b1: "Cantitate PI", b2: "Schimb DEX", b3: "Furnizare LP", m1: "Trimite", m2: "Plată", m3: "Seif", m4: "Recompense", m5: "Venit de bază", m6: "Swap", s1: "Scut Cuantic HK", s2: "Securitate V23", s3: "Sincronizare Mainnet", btn: "Conectați Pi Wallet" },
+        hu: { name: "Magyar HU", ledger: "Összes likviditás", stk: "Staking profit", lp: "LP hozam", b1: "PI mennyiség", b2: "DEX Csere", b3: "LP Ellátás", m1: "Küldés", m2: "Fizetés", m3: "Széf", m4: "Jutalmak", m5: "Alapjövedelem", m6: "Csere", s1: "HK Kvantumpajzs", s2: "V23 보안", s3: "Mainnet 연결", btn: "Pi Wallet csatlakoztatás" },
+        cs: { name: "Čeština CZ", ledger: "Celková likvidita", stk: "Staking zisk", lp: "LP výnos", b1: "Množství PI", b2: "DEX Swap", b3: "LP Nabídka", m1: "Poslat", m2: "Platba", m3: "Trezor", m4: "Odměny", m5: "Základní příjem", m6: "Swap", s1: "HK Kvantový štít", s2: "V23 보안", s3: "Mainnet 연결", btn: "Připojit Pi Wallet" },
+        el: { name: "Ελληνικά GR", ledger: "Συνολική ρευστότητα", stk: "Κέρδος staking", lp: "Απόδοση LP", b1: "Ποσότητα PI", b2: "Ανταλλαγή DEX", b3: "Παροχή LP", m1: "Αποστολή", m2: "Πληρωμή", m3: "Θησαυροφυλάκιο", m4: "Αμοιβές", m5: "Βασικό εισόδημα", m6: "Ανταλλαγή", s1: "Κβαντική Ασπίδα HK", s2: "V23 보안", s3: "Σύνδεση Mainnet", btn: "Σύνδεση Pi Wallet" },
+        fi: { name: "Suomi FI", ledger: "Kokonaislikviditeetti", stk: "Staking-voitto", lp: "LP-tuotto", b1: "PI määrä", b2: "DEX-vaihto", b3: "LP-tarjonta", m1: "Lähetä", m2: "Maksu", m3: "Holvi", m4: "Palkkiot", m5: "Perustulo", m6: "Vaihto", s1: "HK-kvanttikilpi", s2: "V23 보안", s3: "Mainnet 연결", btn: "Yhdistä Pi-lompakko" },
+        da: { name: "Dansk DK", ledger: "Total likviditet", stk: "Staking profit", lp: "LP afkast", b1: "PI mængde", b2: "DEX Swap", b3: "LP Forsyning", m1: "Send", m2: "Betaling", m3: "Boks", m4: "Belønninger", m5: "Basisindkomst", m6: "Swap", s1: "HK Kvanteskjold", s2: "V23 보안", s3: "Mainnet 연결", btn: "Tilslut Pi Wallet" }
     };
 
-    const select = document.getElementById('langSelect');
-    Object.keys(i18n).forEach(lang => {
-        const opt = document.createElement('option');
-        opt.value = lang;
-        opt.innerText = i18n[lang].name;
-        select.appendChild(opt);
-    });
+    let currentLang = 'ko';
 
+    function t(key) {
+        // 안전장치: 번역이 없으면 무조건 영어(en)를 가져오고, 그것도 없으면 이름표(key) 자체를 보여줌
+        return (i18n[currentLang] && i18n[currentLang][key]) || (i18n['en'] && i18n['en'][key]) || key;
+    }
     function applyTranslation() {
         const lang = select.value;
         const d = i18n[lang];
