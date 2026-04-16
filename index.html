@@ -178,44 +178,49 @@
         document.getElementById('s3').innerText = d.s3;
         document.getElementById('cs_btn').innerText = d.cs;
     }
+    // 언어 선택 박스 요소 연결
+    const select = document.getElementById('langSelect');
 
-    let tvl = 88428554367;
-    setInterval(() => {
-        tvl += Math.floor(Math.random() * 900000);
-        document.getElementById('lp-amount').innerText = "$ " + tvl.toLocaleString();
-        document.getElementById('stk-val').innerText = (14 + (Math.random() * 4)).toFixed(2) + "%";
-        document.getElementById('lp-val').innerText = (20 + (Math.random() * 12)).toFixed(2) + "%";
-    }, 2000);
-    // --- 1단계: 파이 SDK 초기화 및 로그인 ---
-    
-    // 1. 초기화 (버전 2.0, 테스트 모드)
-    Pi.init({ version: "2.0", sandbox: false });
+    function applyTranslation() {
+        if (!select) return;
+        const lang = select.value;
+        const d = i18n[lang];
+        if (!d) return;
 
-    // 2. 로그인 함수 정의
-    function loginWithPi() {
-        Pi.authenticate(['payments', 'username', 'wallet_address'], onIncompletePaymentFound)
-            .then(function(auth) {
-                // 로그인 성공 시 알림
-                alert(auth.user.username + " 형님, HK-WorldBank 접속을 환영합니다!");
-            })
-            .catch(function(error) {
-                console.error("로그인 실패:", error);
-            });
+        // 1. data-i18n 처리 (버튼 및 일반 텍스트)
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (d[key]) el.innerText = d[key];
+        });
+
+        // 2. ID 기반 핵심 라벨 보정 (상단 카드 메뉴 및 UMB)
+        const mapping = { 
+            'ledger': 'ledger', 
+            'stk_label': 'stk', 
+            'lp_label': 'lp', 
+            'tvl_label': 'tvl', 
+            'b1': 'b1', 
+            'b2': 'b2', 
+            'b3': 'b3' 
+        };
+
+        Object.keys(mapping).forEach(id => {
+            const el = document.getElementById(id);
+            if (el && d[mapping[id]]) el.innerText = d[mapping[id]];
+        });
     }
 
-    // 미완료 결제 처리 (필수)
-    function onIncompletePaymentFound(payment) {
-        console.log("미완료 결제 발견:", payment);
-    };
-
-    // 3. 페이지가 로드될 때 로그인 실행
-    // 기존 window.onload 부분을 아래처럼 수정하거나 합치시면 됩니다.
-    window.onload = function() {
-        applyTranslation(); // 기존 번역 기능
-        loginWithPi(); 
-    };
-    // 221번 줄부터 아래를 지우고 이 내용으로 마무리하세요!
-    
+    // 선택 박스 초기화 및 이벤트 연결 (KO, EN 위주)
+    if (select) {
+        select.innerHTML = ''; 
+        Object.keys(i18n).forEach(l => {
+            const opt = document.createElement('option');
+            opt.value = l;
+            opt.innerText = i18n[l].name;
+            select.appendChild(opt);
+        });
+        select.onchange = applyTranslation;
+        applyTranslation(); // 초기 실행
+    }
 </script>
-</body>
-</html>
+  
