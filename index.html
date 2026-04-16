@@ -179,12 +179,12 @@
         document.getElementById('s3').innerText = d.s3;
         document.getElementById('cs_btn').innerText = d.cs;
     }
+function piTest(func) {
+    console.log(func + " 기능을 실행합니다.");
+    // 여기에 진짜 파이 결제창(SDK) 코드가 들어올 자리입니다.
+}
 
-    function piTest(func) {
-        alert(`[HK WORLD BANK] ${func} feature is initializing on Pi Testnet...`);
-    }
-
-    let tvl = 88428554367;
+  let tvl = 88428554367;
     setInterval(() => {
         tvl += Math.floor(Math.random() * 900000);
         document.getElementById('lp-amount').innerText = "$ " + tvl.toLocaleString();
