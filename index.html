@@ -159,24 +159,23 @@
         const d = i18n[lang];
         if(!d) return;
 
+             const d = i18n[lang];
+        if (!d) return;
+
+        // 형님, 여기 이름표들이 단어장(i18n)에 있는 이름이랑 똑같아야 합니다!
         document.getElementById('ledger').innerText = d.ledger;
-        document.getElementById('stk_label').innerText = d.stk;
-        document.getElementById('lp_label').innerText = d.lp;
-        document.getElementById('tvl_label').innerText = d.tvl;
-        document.getElementById('b1').innerText = d.b1;
-        document.getElementById('b2').innerText = d.b2;
-        document.getElementById('b3').innerText = d.b3;
-        document.getElementById('m1').innerText = d.m1;
-        document.getElementById('m2').innerText = d.m2;
-        document.getElementById('m3').innerText = d.m3;
-        document.getElementById('m4').innerText = d.m4;
-        document.getElementById('m5').innerText = d.m5;
-        document.getElementById('m6').innerText = d.m6;
-        document.getElementById('shield_t').innerText = d.shield;
-        document.getElementById('s1').innerText = d.s1;
-        document.getElementById('s2').innerText = d.s2;
-        document.getElementById('s3').innerText = d.s3;
-        document.getElementById('cs_btn').innerText = d.cs;
+        document.getElementById('stk_label').innerText = d.stk; 
+        document.getElementById('lp_label').innerText = d.lp;   
+        document.getElementById('tvl_label').innerText = d.tvl; 
+        document.getElementById('b1').innerText = d.b1; 
+        document.getElementById('b2').innerText = d.m6; // '스왑'은 데이터에 m6라고 되어있어서 m6로 불렀습니다!
+        document.getElementById('b3').innerText = d.b3; // LP공급
+        document.getElementById('m1').innerText = d.m1; 
+        document.getElementById('m2').innerText = d.m2; 
+        document.getElementById('m3').innerText = d.m3; 
+        document.getElementById('m4').innerText = d.m4; 
+        document.getElementById('m5').innerText = d.m5; // 기본소득
+        document.getElementById('m6').innerText = d.m6; // 스왑 
     }
 
     let tvl = 88428554367;
