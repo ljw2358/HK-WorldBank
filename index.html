@@ -159,25 +159,25 @@
         const d = i18n[lang];
         if(!d) return;
 
+           // 162번 줄 시작
+        const d = i18n[lang];
+        if (!d) return;
+
+        // 화면의 각 ID에 맞는 텍스트를 단어장에서 찾아 매칭합니다.
         document.getElementById('ledger').innerText = d.ledger;
-        document.getElementById('stk_label').innerText = d.stk;
-        document.getElementById('lp_label').innerText = d.lp;
-        document.getElementById('tvl_label').innerText = d.tvl;
+        document.getElementById('stk_label').innerText = d.stk; // d.stk_label 아님!
+        document.getElementById('lp_label').innerText = d.lp; // d.lp_label 아님!
+        document.getElementById('tvl_label').innerText = d.tvl; // d.tvl_label 아님!
         document.getElementById('b1').innerText = d.b1;
-        document.getElementById('b2').innerText = d.b2;
-        document.getElementById('b3').innerText = d.b3;
+        document.getElementById('b2').innerText = d.m6; // 단어장의 m6(스왑)을 가져옴
+        document.getElementById('b3').innerText = d.b3; // LP 공급
         document.getElementById('m1').innerText = d.m1;
         document.getElementById('m2').innerText = d.m2;
         document.getElementById('m3').innerText = d.m3;
         document.getElementById('m4').innerText = d.m4;
-        document.getElementById('m5').innerText = d.m5;
-        document.getElementById('m6').innerText = d.m6;
-        document.getElementById('shield_t').innerText = d.shield;
-        document.getElementById('s1').innerText = d.s1;
-        document.getElementById('s2').innerText = d.s2;
-        document.getElementById('s3').innerText = d.s3;
-        document.getElementById('cs_btn').innerText = d.cs;
-    }
+        document.getElementById('m5').innerText = d.m5; // 기본소득
+        document.getElementById('m6').innerText = d.m6; // 스왑
+        // 179번 줄 끝 
 
     let tvl = 88428554367;
     setInterval(() => {
