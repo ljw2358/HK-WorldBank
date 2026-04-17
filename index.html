@@ -178,17 +178,17 @@
         document.getElementById('s3').innerText = d.s3;
         document.getElementById('cs_btn').innerText = d.cs;
     }
-// --- 181번 줄 시작: 형님의 글로벌 IR 성공을 위한 최종 병기 ---
+// --- 181번 줄 시작: 혜공 형님의 마지막 승부수 ---
 
-    // [전역 관리] 30개국 고객지원센터 명칭 데이터
-    const globalCS = {
-        ko: "글로벌 AI 고객지원센터 가동", en: "Global AI Support Center", zh: "全球 AI 客户支持中心",
-        ja: "グローバル AI カスタマーセンター", fa: "مرکز پشتیبانی جهانی AI", vi: "Trung tâm hỗ trợ AI toàn cầu",
+    // 1. 30개국 고객센터 명칭 (형님 말씀대로 '가동' 싹 뺐습니다)
+    const csLang = {
+        ko: "글로벌 AI 고객지원센터", en: "Global AI Support Center", zh: "全球 AI 客户支持中心",
+        ja: "グローバル AI カスタ머센터", fa: "مرکز پشتیبانی جهانی AI", vi: "Trung tâm hỗ trợ AI toàn cầu",
         da: "Globalt AI Supportcenter", fr: "Centre de support AI mondial", es: "Centro de soporte global de IA",
         de: "Globales AI-Supportzentrum", ru: "Глобальный центр поддержки ИИ", th: "ศูนย์สนับสนุน AI ระดับโลก",
         id: "Pusat Dukungan AI Global", tr: "Küresel Yapay Zeka Destek Merkezi", it: "Centro assistenza AI globale",
-        pt: "Centro de Suporte AI Global", hi: "ग्लोबल एआई सपोर्ट 센터", bn: "গ্লোবাল এআই সাপোর্ট সেন্টার",
-        ro: "Centrul Global de Suport AI", hu: "Globális AI Támogatási Köpont", cs: "Globální centrum podpory AI",
+        pt: "Centro de Suporte AI Global", hi: "ग्로벌 एआई सपोर्ट 센터", bn: "গ্লোবাল এআই সাপোর্ট সেন্টার",
+        ro: "Centrul Global de Suport AI", hu: "Globális AI Támogatási Központ", cs: "Globální centrum podpory AI",
         el: "Παγκόσμιο Κέντρο Υποστήριξης AI", fi: "Globaali AI-tukikeskus", nl: "Wereldwijd AI-ondersteuningscentrum",
         sv: "Globalt AI-supportcenter", pl: "Globalne Centrum Wsparcia AI", uk: "Глобальний центр підтримки ШІ",
         ar: "مركز دعم الذكاء الاصطناعي العالمي", ms: "Pusat Sokongan AI Global", no: "Globalt AI-støttesenter"
@@ -201,53 +201,53 @@
         const d = i18n[lang];
         if (!d) return;
 
-        // 1. 모든 요소 ID를 데이터와 매칭 (innerText 대문자 준수)
-        const mapping = { 
-            'ledger': d.ledger, 'stk_label': d.stk, 'lp_label': d.lp, 'tvl_label': d.tvl, 
-            'b1': d.b1, 'b2': d.b2, 'b3': d.b3, 'm1': d.m1, 'm2': d.m2, 'm3': d.m3, 
-            'm4': d.m4, 'm5': d.m5, 'm6': d.m6,
+        // [핵심 매핑] 사진에서 undefined 뜨던 녀석들 정밀 타격
+        const targets = {
+            'ledger': d.ledger, 'stk_label': d.stk, 'lp_label': d.lp, 'tvl_label': d.tvl,
+            'b1': d.b1, 'b2': d.b2, 'b3': d.b3,
+            'm1': d.m1, 'm2': d.m2, 'm3': d.m3, 'm4': d.m4, 'm5': d.m5, 'm6': d.m6,
             'shield_t': d.s1, 's1': d.s1, 's2': d.s2, 's3': d.s3
         };
 
-        Object.keys(mapping).forEach(id => {
+        // 1. 일반 변환 (innerText 대소문자 준수)
+        for (let id in targets) {
             const el = document.getElementById(id);
             if (el) {
-                // 데이터가 없으면 영어로 백업, 'undefined' 방지
-                el.innerText = mapping[id] || i18n['en'][mapping[id]] || ""; 
+                // 데이터가 비어있으면(undefined) 영어 데이터로 강제 대체
+                el.innerText = targets[id] || i18n['en'][id] || "";
             }
-        });
+        }
 
-        // 2. [오늘의 핵심] LP 공급 및 DEX 스왑 버튼 2중 강제 변환
+        // 2. LP 공급 & DEX 스왑 (형님이 강조하신 IR 핵심부 강제 주입)
         const lpBtn = document.getElementById('lp_label');
-        if (lpBtn) {
-            lpBtn.innerText = d.lp || "LP Supply"; // 30개국 언어별 LP 공급 명칭 강제 주입
-        }
+        if (lpBtn) lpBtn.innerText = d.lp || "LP Supply";
+        
         const b2Btn = document.getElementById('b2');
-        if (b2Btn) {
-            b2Btn.innerText = d.b2 || "DEX Swap"; // DEX 스왑 강제 주입
-        }
+        if (b2Btn) b2Btn.innerText = d.b2 || "DEX Swap";
 
-        // 3. 고객지원센터 30개국 명칭 적용
+        // 3. 고객지원센터 (30개국 언어 적용, '가동' 삭제 버전)
         const csBtn = document.getElementById('cs_btn');
         if (csBtn) {
-            csBtn.innerText = globalCS[lang] || globalCS['en'];
+            csBtn.innerText = csLang[lang] || csLang['en'];
         }
     }
 
-    // 언어 선택 박스 동적 생성 및 이벤트 연결
-    const selectEl = document.getElementById('langSelect');
-    if (selectEl) {
-        selectEl.innerHTML = ''; 
+    // 초기화 로직: 콤보박스 생성 및 이벤트 연결
+    const selectBox = document.getElementById('langSelect');
+    if (selectBox) {
+        selectBox.innerHTML = '';
         Object.keys(i18n).forEach(l => {
             const opt = document.createElement('option');
             opt.value = l;
             opt.innerText = i18n[l].name || l.toUpperCase();
-            selectEl.appendChild(opt);
+            selectBox.appendChild(opt);
         });
-        selectEl.onchange = applyTranslation;
-        // 페이지 로드 즉시 및 0.1초 뒤 다시 한번 확인 (확실한 변환)
+        selectBox.onchange = applyTranslation;
+        
+        // [필살기] 페이지 로딩 시점이 달라도 무조건 실행되게 3중 잠금
         applyTranslation();
-        setTimeout(applyTranslation, 100); 
+        setTimeout(applyTranslation, 100);
+        window.onload = applyTranslation;
     }
 </script>
 </body>
