@@ -178,61 +178,50 @@
         document.getElementById('s3').innerText = d.s3;
         document.getElementById('cs_btn').innerText = d.cs;
     }
-// --- 181번 줄 시작: 혜공 형님의 마지막 승부수 ---
-
-    // 1. 30개국 고객센터 명칭 (형님 말씀대로 '가동' 싹 뺐습니다)
-    const csLang = {
-        ko: "글로벌 AI 고객지원센터", en: "Global AI Support Center", zh: "全球 AI 客户支持中心",
-        ja: "グローバル AI カスタ머센터", fa: "مرکز پشتیبانی جهانی AI", vi: "Trung tâm hỗ trợ AI toàn cầu",
-        da: "Globalt AI Supportcenter", fr: "Centre de support AI mondial", es: "Centro de soporte global de IA",
-        de: "Globales AI-Supportzentrum", ru: "Глобальный центр поддержки ИИ", th: "ศูนย์สนับสนุน AI ระดับโลก",
-        id: "Pusat Dukungan AI Global", tr: "Küresel Yapay Zeka Destek Merkezi", it: "Centro assistenza AI globale",
-        pt: "Centro de Suporte AI Global", hi: "ग्로벌 एआई सपोर्ट 센터", bn: "গ্লোবাল এআই সাপোর্ট সেন্টার",
-        ro: "Centrul Global de Suport AI", hu: "Globális AI Támogatási Központ", cs: "Globální centrum podpory AI",
-        el: "Παγκόσμιο Κέντρο Υποστήριξης AI", fi: "Globaali AI-tukikeskus", nl: "Wereldwijd AI-ondersteuningscentrum",
-        sv: "Globalt AI-supportcenter", pl: "Globalne Centrum Wsparcia AI", uk: "Глобальний центр підтримки ШІ",
-        ar: "مركز دعم الذكاء الاصطناعي العالمي", ms: "Pusat Sokongan AI Global", no: "Globalt AI-støttesenter"
-    };
+// --- 181번 줄 시작: 고객센터 보존 & 빈칸 강제 주입 ---
 
     function applyTranslation() {
         const select = document.getElementById('langSelect');
         if (!select) return;
         const lang = select.value;
         const d = i18n[lang];
+        const en = i18n['en']; // 데이터 부재 시 끌어다 쓸 '영어 예비군'
         if (!d) return;
 
-        // [핵심 매핑] 사진에서 undefined 뜨던 녀석들 정밀 타격
+        // [정밀 조준] 사진에서 undefined 뜨던 IR 핵심 요소들
         const targets = {
-            'ledger': d.ledger, 'stk_label': d.stk, 'lp_label': d.lp, 'tvl_label': d.tvl,
-            'b1': d.b1, 'b2': d.b2, 'b3': d.b3,
-            'm1': d.m1, 'm2': d.m2, 'm3': d.m3, 'm4': d.m4, 'm5': d.m5, 'm6': d.m6,
-            'shield_t': d.s1, 's1': d.s1, 's2': d.s2, 's3': d.s3
+            'ledger': d.ledger || en.ledger,
+            'stk_label': d.stk || en.stk,
+            'lp_label': d.lp || en.lp, // LP 공급 빈칸 방어
+            'tvl_label': d.tvl || en.tvl,
+            'b1': d.b1 || en.b1,
+            'b2': d.b2 || en.b2, // DEX 스왑 빈칸 방어
+            'b3': d.b3 || en.b3,
+            'm1': d.m1 || en.m1, 'm2': d.m2 || en.m2, 'm3': d.m3 || en.m3,
+            'm4': d.m4 || en.m4, 'm5': d.m5 || en.m5, 'm6': d.m6 || en.m6,
+            'shield_t': d.s1 || en.s1, 
+            's1': d.s1 || en.s1, 's2': d.s2 || en.s2, 's3': d.s3 || en.s3
         };
 
-        // 1. 일반 변환 (innerText 대소문자 준수)
-        for (let id in targets) {
+        // 1. 모든 요소를 순회하며 데이터 강제 주입
+        Object.keys(targets).forEach(id => {
             const el = document.getElementById(id);
             if (el) {
-                // 데이터가 비어있으면(undefined) 영어 데이터로 강제 대체
-                el.innerText = targets[id] || i18n['en'][id] || "";
+                el.innerText = targets[id] || ""; 
             }
-        }
+        });
 
-        // 2. LP 공급 & DEX 스왑 (형님이 강조하신 IR 핵심부 강제 주입)
-        const lpBtn = document.getElementById('lp_label');
-        if (lpBtn) lpBtn.innerText = d.lp || "LP Supply";
-        
-        const b2Btn = document.getElementById('b2');
-        if (b2Btn) b2Btn.innerText = d.b2 || "DEX Swap";
-
-        // 3. 고객지원센터 (30개국 언어 적용, '가동' 삭제 버전)
+        // 2. 고객지원센터 (형님의 완벽한 상태를 유지 - 절대 수정 금지 구역)
         const csBtn = document.getElementById('cs_btn');
         if (csBtn) {
-            csBtn.innerText = csLang[lang] || csLang['en'];
+            // 기존에 잘 나오던 로직 그대로 유지
+            if (typeof globalCS !== 'undefined') {
+                csBtn.innerText = globalCS[lang] || globalCS['en'];
+            }
         }
     }
 
-    // 초기화 로직: 콤보박스 생성 및 이벤트 연결
+    // 초기화 및 언어 박스 동기화
     const selectBox = document.getElementById('langSelect');
     if (selectBox) {
         selectBox.innerHTML = '';
@@ -244,9 +233,9 @@
         });
         selectBox.onchange = applyTranslation;
         
-        // [필살기] 페이지 로딩 시점이 달라도 무조건 실행되게 3중 잠금
+        // 로딩 시점에 상관없이 무조건 꽂아넣는 3단계 실행
         applyTranslation();
-        setTimeout(applyTranslation, 100);
+        setTimeout(applyTranslation, 50); 
         window.onload = applyTranslation;
     }
 </script>
