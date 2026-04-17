@@ -178,24 +178,38 @@
         document.getElementById('s3').innerText = d.s3;
         document.getElementById('cs_btn').innerText = d.cs;
     }
-// --- 181번 줄 시작: 고객센터 보존 & 빈칸 강제 주입 ---
+// --- 181번 줄 시작: 형님의 고객센터 성역 보존 및 30개국어 강제 주입 ---
+
+    // [데이터 보호 구역] 30개국 고객지원센터 명칭 ('가동' 제외)
+    const finalCSMap = {
+        ko: "글로벌 AI 고객지원센터", en: "Global AI Support Center", zh: "全球 AI 客户支持中心",
+        ja: "グローバル AI カスタマーセンター", fa: "مرکز پشتیبانی جهانی AI", vi: "Trung tâm hỗ trợ AI toàn cầu",
+        da: "Globalt AI Supportcenter", fr: "Centre de support AI mondial", es: "Centro de soporte global de IA",
+        de: "Globales AI-Supportzentrum", ru: "Глобальный центр поддержки ИИ", th: "ศูนย์สนับสนุน AI ระดับโลก",
+        id: "Pusat Dukungan AI Global", tr: "Küresel Yapای Zeka Destek Merkezi", it: "Centro assistenza AI globale",
+        pt: "Centro de Suporte AI Global", hi: "ग्로벌 एआई सहायता केंद्र", bn: "গ্লোবাল এআই সহায়তা কেন্দ্র",
+        ro: "Centrul Global de Suport AI", hu: "Globális AI Támogatási Központ", cs: "Globální centrum podpory AI",
+        el: "Παγκόσμιο Κέντρο Υποστήριξης AI", fi: "Globaali AI-tukikeskus", nl: "Wereldwijd AI-ondersteuningscentrum",
+        sv: "Globalt AI-supportcenter", pl: "Globalne Centrum Wsparcia AI", uk: "Глобальний центр підтримки ШІ",
+        ar: "مركز دعم الذكاء الاصطناعي العالمي", ms: "Pusat Sokongan AI Global", no: "Globalt AI-støttesenter"
+    };
 
     function applyTranslation() {
         const select = document.getElementById('langSelect');
         if (!select) return;
         const lang = select.value;
         const d = i18n[lang];
-        const en = i18n['en']; // 데이터 부재 시 끌어다 쓸 '영어 예비군'
+        const en = i18n['en']; 
         if (!d) return;
 
-        // [정밀 조준] 사진에서 undefined 뜨던 IR 핵심 요소들
+        // 1. DEX 스왑, LP 공급 등 IR 핵심 요소 (빈칸/undefined 절대 방어)
         const targets = {
             'ledger': d.ledger || en.ledger,
             'stk_label': d.stk || en.stk,
-            'lp_label': d.lp || en.lp, // LP 공급 빈칸 방어
+            'lp_label': d.lp || en.lp,       
             'tvl_label': d.tvl || en.tvl,
             'b1': d.b1 || en.b1,
-            'b2': d.b2 || en.b2, // DEX 스왑 빈칸 방어
+            'b2': d.b2 || en.b2,             
             'b3': d.b3 || en.b3,
             'm1': d.m1 || en.m1, 'm2': d.m2 || en.m2, 'm3': d.m3 || en.m3,
             'm4': d.m4 || en.m4, 'm5': d.m5 || en.m5, 'm6': d.m6 || en.m6,
@@ -203,25 +217,19 @@
             's1': d.s1 || en.s1, 's2': d.s2 || en.s2, 's3': d.s3 || en.s3
         };
 
-        // 1. 모든 요소를 순회하며 데이터 강제 주입
         Object.keys(targets).forEach(id => {
             const el = document.getElementById(id);
-            if (el) {
-                el.innerText = targets[id] || ""; 
-            }
+            if (el) el.innerText = targets[id];
         });
 
-        // 2. 고객지원센터 (형님의 완벽한 상태를 유지 - 절대 수정 금지 구역)
+        // 2. 고객지원센터 (형님의 명령: 성역 유지 + 가동 제외 30개국어)
         const csBtn = document.getElementById('cs_btn');
         if (csBtn) {
-            // 기존에 잘 나오던 로직 그대로 유지
-            if (typeof globalCS !== 'undefined') {
-                csBtn.innerText = globalCS[lang] || globalCS['en'];
-            }
+            csBtn.innerText = finalCSMap[lang] || finalCSMap['en'];
         }
     }
 
-    // 초기화 및 언어 박스 동기화
+    // [실행 엔진] 초기화 및 이벤트 연결
     const selectBox = document.getElementById('langSelect');
     if (selectBox) {
         selectBox.innerHTML = '';
@@ -233,7 +241,7 @@
         });
         selectBox.onchange = applyTranslation;
         
-        // 로딩 시점에 상관없이 무조건 꽂아넣는 3단계 실행
+        // 어떤 상황에서도 무조건 실행되는 3중 락(Lock)
         applyTranslation();
         setTimeout(applyTranslation, 50); 
         window.onload = applyTranslation;
