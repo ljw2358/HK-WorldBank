@@ -82,7 +82,14 @@
     <button onclick="loginWithPi()" class="hkwb-btn">
         HKWB 로그인 (Pi Network)
     </button>
-
+    <div class="main-btn-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 15px;">
+        <button class="m-btn" id="m1" style="background:#1a1a1a; color:#fff; border:1px solid #333; padding:15px 5px; border-radius:12px; font-weight:bold;" onclick="alert('송금 준비중')">송금</button>
+        <button class="m-btn" id="m2" style="background:#1a1a1a; color:#fff; border:1px solid #333; padding:15px 5px; border-radius:12px; font-weight:bold;" onclick="alert('결제 준비중')">결제</button>
+        <button class="m-btn" id="m3" style="background:#1a1a1a; color:#fff; border:1px solid #333; padding:15px 5px; border-radius:12px; font-weight:bold;" onclick="alert('예치 준비중')">예치</button>
+        <button class="m-btn" id="m4" style="background:#1a1a1a; color:#fff; border:1px solid #333; padding:15px 5px; border-radius:12px; font-weight:bold;" onclick="alert('보상 준비중')">보상</button>
+        <button class="m-btn" id="m5" style="background:linear-gradient(45deg, #FFD700, #FFA500); color:#000; border:none; padding:15px 5px; border-radius:12px; font-weight:bold;" onclick="alert('기본소득 지급 대상 확인 중')">기본소득</button>
+        <button class="m-btn" id="m6" style="background:#1a1a1a; color:#fff; border:1px solid #333; padding:15px 5px; border-radius:12px; font-weight:bold;" onclick="alert('스왑 준비중')">스왑</button>
+    </div>
     <div class="main-btn-grid">
         <button class="m-btn" id="b1" onclick="runEngine('pi', 1)">PI 수량</button>
         <button class="m-btn" id="b2" onclick="alert('DEX 준비중')">DEX 스왑</button>
